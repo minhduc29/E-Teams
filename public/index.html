@@ -1,80 +1,179 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="en">
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.21.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.21.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.21.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.21.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.21.1/firebase-storage.js"></script>
-    <script defer src="/__/firebase/7.21.1/firebase-analytics.js"></script>
-    <script defer src="/__/firebase/7.21.1/firebase-remote-config.js"></script>
-    <script defer src="/__/firebase/7.21.1/firebase-performance.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Teams</title>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <!-- Nav bar -->
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper blue-grey darken-4">
+        <a href="index.html" class="brand-logo">E-Teams</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a class="font-size-18" href="">Class</a></li>
+          <li><a class="font-size-18" href="">Discussion</a></li>
+          <li><a class="font-size-18" href="">Room</a></li>
+          <li><a class="font-size-18" href="">Learning Log</a></li>
+          <li><a class="font-size-18" href="">Log In</a></li>
+          <li><a class="font-size-18" href="">Register</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Responsive side nav -->
+  <ul class="sidenav blue-grey darken-4" id="mobile-demo">
+    <li><a class="white-text font-size-18" href="">Class</a></li>
+    <li><a class="white-text font-size-18" href="">Discussion</a></li>
+    <li><a class="white-text font-size-18" href="">Room</a></li>
+    <li><a class="white-text font-size-18" href="">Learning Log</a></li>
+    <li><a class="white-text font-size-18" href="">Log In</a></li>
+    <li><a class="white-text font-size-18" href="">Register</a></li>
+  </ul>
+
+  <!-- Main content -->
+  <div id="body">
+    <!-- Main title -->
+    <div class="section no-pad-bot" id="index-banner">
+      <div class="container">
+        <br><br>
+        <h1 class="header center orange-text">E-Teams</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">A modern website mainly for online learning</h5>
+        </div>
+        <div class="row center">
+          <a href="" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
+        </div>
+        <br><br>
+      </div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    <!-- Description -->
+    <div class="container">
+      <div class="section">
+        <div class="row">
+          <div class="col s12 m4">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text height-140">
+                <span class="card-title">Class</span>
+                <p>Where teachers assign homework for students</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Enter or create your class</a>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m4">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text height-140">
+                <span class="card-title">Discussion</span>
+                <p>Where people discuss a topic or a question</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Discuss or ask a question</a>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m4">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text height-140">
+                <span class="card-title">Room</span>
+                <p>Where people can make video call and voice chat</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Make video call and voice chat</a>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m4">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text height-140">
+                <span class="card-title">Learning Log</span>
+                <p>Keep track of your learning about specific topic</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Keep track your learning</a>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m4">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text height-140">
+                <span class="card-title">Log In</span>
+                <p>Already have an account?</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Log In</a>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m4">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text height-140">
+                <span class="card-title">Register</span>
+                <p>Don't have an account?</p>
+              </div>
+              <div class="card-action">
+                <a href="#">Register</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+  <!-- Footer -->
+  <footer class="page-footer blue-grey darken-4">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">About</h5>
+          <p class="white-text">About content</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Contact</h5>
+          <ul>
+            <li><a class="white-text" href="">Link 1</a></li>
+            <li><a class="white-text" href="">Link 2</a></li>
+            <li><a class="white-text" href="">Our Team</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container" id="cpr">Copyright &#169; </div>
+    </div>
+  </footer>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="/__/firebase/7.21.1/firebase-app.js"></script>
+
+  <!-- Include only Firebase features as you need -->
+  <script src="/__/firebase/7.21.1/firebase-auth.js"></script>
+  <script src="/__/firebase/7.21.1/firebase-firestore.js"></script>
+  <script src="/__/firebase/7.21.1/firebase-functions.js"></script>
+
+  <!-- Initialize Firebase -->
+  <script src="/__/firebase/init.js"></script>
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <script src="./js/materialize.js"></script>
+</body>
+
 </html>

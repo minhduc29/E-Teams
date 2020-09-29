@@ -1,0 +1,13 @@
+html,
+body {
+    height: 100%;
+}
+#body {
+    min-height: 100%;
+}
+.font-size-18 {
+    font-size: 18px !important;
+}
+.height-140 {
+    height: 140px;
+}
