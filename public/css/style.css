@@ -11,3 +11,7 @@ body {
 .height-140 {
     height: 140px;
 }
+.login,
+.logout {
+    display: none;
+}
