@@ -17,15 +17,19 @@ registerForm.addEventListener('submit', (e) => {
     } else if (password !== pwcf) {
         alert('Password and password confirmation must be the same');
     } else if (password === pwcf) {
-        auth.createUserWithEmailAndPassword(email, password).then(cred => {
+        auth.createUserWithEmailAndPassword(email, password).then(() => {
+            // Update profile
+            auth.currentUser.updateProfile({
+                displayName: username
+            });
+
             // Reset form
             const modal = document.querySelector('#register-modal');
             M.Modal.getInstance(modal).close();
             registerForm.reset();
         }).catch(err => {
             // Catch error
-            let errMsg = err.message;
-            alert(errMsg);
+            alert(err.message);
         });
     };
 });
@@ -40,15 +44,14 @@ loginForm.addEventListener('submit', (e) => {
     const password = loginForm['password'].value;
 
     // Login user
-    auth.signInWithEmailAndPassword(email, password).then(cred => {
+    auth.signInWithEmailAndPassword(email, password).then(() => {
         // Reset form
         const modal = document.querySelector('#login-modal');
         M.Modal.getInstance(modal).close();
         loginForm.reset();
     }).catch(err => {
         // Catch error
-        let errMsg = err.message;
-        alert(errMsg);
+        alert(err.message);
     });
 });
 
@@ -61,10 +64,15 @@ for (let i = 0; i < logoutBtn.length; i++) {
     })
 }
 
-// Listen for auth status
+// Listen for auth status and allow user to delete their account
+const delBtn = document.getElementById('del-btn');
 auth.onAuthStateChanged(user => {
     if (user) {
         setupUI(user);
+        delBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            deleteAccount(user);
+        });
     } else {
         setupUI();
     };
