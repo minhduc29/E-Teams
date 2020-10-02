@@ -11,13 +11,14 @@ const login = document.querySelectorAll('.login');
 const profile = document.getElementById('profile');
 function setupUI(user) {
     if (user) {
-        // Display profile
-        profile.innerHTML = ''
-        const html = `
+        db.collection('users').doc(user.uid).get().then(doc => {
+            // Display profile
+            const html = `
                 <br><h5>Email: ${user.email}</h5>
-                <br><h5>Username: ${user.displayName}</h5>
+                <br><h5>Username: ${doc.data().username}</h5>
             `;
-        profile.innerHTML += html;
+            profile.innerHTML = html;
+        })
 
         // Toggle UI
         login.forEach(item => item.style.display = 'block');

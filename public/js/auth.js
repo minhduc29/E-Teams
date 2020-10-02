@@ -17,12 +17,13 @@ registerForm.addEventListener('submit', (e) => {
     } else if (password !== pwcf) {
         alert('Password and password confirmation must be the same');
     } else if (password === pwcf) {
-        auth.createUserWithEmailAndPassword(email, password).then(() => {
-            // Update profile
-            auth.currentUser.updateProfile({
-                displayName: username
+        auth.createUserWithEmailAndPassword(email, password).then(cred => {
+            // Create data firestore
+            return db.collection('users').doc(cred.user.uid).set({
+                username: username,
+                email: email
             });
-
+        }).then(() => {
             // Reset form
             const modal = document.querySelector('#register-modal');
             M.Modal.getInstance(modal).close();
@@ -64,16 +65,18 @@ for (let i = 0; i < logoutBtn.length; i++) {
     })
 }
 
-// Listen for auth status and allow user to delete their account
-const delBtn = document.getElementById('del-btn');
+// Listen for auth status
 auth.onAuthStateChanged(user => {
     if (user) {
         setupUI(user);
-        delBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            deleteAccount(user);
-        });
     } else {
         setupUI();
     };
+});
+
+// Delete account
+const delBtn = document.getElementById('del-btn');
+delBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    deleteAccount(auth.currentUser);
 });
