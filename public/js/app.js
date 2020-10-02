@@ -30,7 +30,7 @@ function setupUI(user) {
     }
 }
 
-// Delete account
+// Setup delete account
 function deleteAccount(user) {
     const credential = firebase.auth.EmailAuthProvider.credential(
         email = prompt('Enter your email: '),

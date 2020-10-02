@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Teams</title>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <!-- Nav bar -->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper blue-grey darken-4">
+                <a href="../index.html" class="brand-logo">E-Teams</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li class="login"><a class="font-size-18 modal-trigger" href="#profile-modal">Profile</a></li>
+                    <li class="login"><a class="font-size-18" href="">Class</a></li>
+                    <li class="login"><a class="font-size-18" href="discussion.html">Discussion</a></li>
+                    <li class="login"><a class="font-size-18" href="">Room</a></li>
+                    <li class="login"><a class="font-size-18"
+                            href="http://minhduc29-learning-log.herokuapp.com/">Learning Log</a></li>
+                    <li class="login"><a class="font-size-18 logout-btn" href="#">Logout</a></li>
+                    <li class="logout"><a class="font-size-18 modal-trigger" href="#login-modal">Login</a></li>
+                    <li class="logout"><a class="font-size-18 modal-trigger" href="#register-modal">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Responsive side nav -->
+    <ul class="sidenav blue-grey darken-4" id="mobile-demo">
+        <li class="login"><a class="white-text font-size-18 modal-trigger" href="#profile-modal">Profile</a></li>
+        <li class="login"><a class="white-text font-size-18" href="">Class</a></li>
+        <li class="login"><a class="white-text font-size-18" href="discussion.html">Discussion</a></li>
+        <li class="login"><a class="white-text font-size-18" href="">Room</a></li>
+        <li class="login"><a class="white-text font-size-18"
+                href="http://minhduc29-learning-log.herokuapp.com/">Learning Log</a></li>
+        <li class="login"><a class="white-text font-size-18 logout-btn" href="#">Logout</a></li>
+        <li class="logout"><a class="white-text font-size-18 modal-trigger" href="#login-modal">Login</a></li>
+        <li class="logout"><a class="white-text font-size-18 modal-trigger" href="#register-modal">Register</a></li>
+    </ul>
+
+    <!-- Main content -->
+    <div id="body">
+        <!-- Main title -->
+        <div class="section no-pad-bot" id="index-banner">
+            <div class="container">
+                <br><br>
+                <h1 class="header center orange-text">Discussion</h1>
+                <div class="row center">
+                    <h5 class="header col s12 light">Where people discuss a topic or a question</h5>
+                    <h5 class="logout header col s12 light">Login or Register to get more information</h5>
+                </div>
+                <div class="logout row center">
+                    <a href="#register-modal" class="btn-large waves-effect waves-light orange modal-trigger">Get
+                        Started</a>
+                </div>
+                <div class="login row center">
+                    <a href="#discuss-modal" class="btn-large waves-effect waves-light orange modal-trigger">Add Discussion</a>
+                </div>
+                <br><br>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="container">
+            <div class="section">
+                <div class="row">
+                    <div class="logout col s12 m6">
+                        <div class="card light-blue darken-4">
+                            <div class="card-content white-text height-140">
+                                <span class="card-title">Login</span>
+                                <p>Already have an account?</p>
+                            </div>
+                            <div class="card-action">
+                                <a class="teal-text text-accent-3 modal-trigger" href="#login-modal">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logout col s12 m6">
+                        <div class="card light-blue darken-4">
+                            <div class="card-content white-text height-140">
+                                <span class="card-title">Register</span>
+                                <p>Don't have an account?</p>
+                            </div>
+                            <div class="card-action">
+                                <a class="teal-text text-accent-3 modal-trigger" href="#register-modal">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add discussion -->
+        <div id="discuss-modal" class="modal">
+            <div class="modal-content">
+                <h4 class="center">Discussion</h4>
+                <div class="row">
+                    <form id="discuss" class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="title" class="materialize-textarea"></textarea>
+                                <label for="title">Title</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="description" class="materialize-textarea"></textarea>
+                                <label for="description">Description</label>
+                            </div>
+                        </div>
+                        <button class="btn">Add Discussion</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login form -->
+        <div id="login-modal" class="modal">
+            <div class="modal-content">
+                <h4 class="center">Login</h4>
+                <div class="row">
+                    <form id="login" class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="email" type="email" class="validate">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="password" type="password" class="validate">
+                                <label for="password">Password</label>
+                            </div>
+                        </div>
+                        <button class="btn">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register form -->
+        <div id="register-modal" class="modal">
+            <div class="modal-content">
+                <h4 class="center">Register</h4>
+                <div class="row">
+                    <form id="register" class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="username" type="text" class="validate">
+                                <label for="username">Username</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="email2" type="email" class="validate">
+                                <label for="email2">Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="password2" type="password" class="validate">
+                                <label for="password2">Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="pwconfirmation" type="password" class="validate">
+                                <label for="pwconfirmation">Password Confirmation</label>
+                            </div>
+                        </div>
+                        <button class="btn">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile modal -->
+        <div id="profile-modal" class="modal">
+            <div class="modal-content row">
+                <h4 class="center">Profile</h4>
+                <div id="profile"></div><br>
+                <button class="btn" id="del-btn">Delete account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer blue-grey darken-4">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">About</h5>
+                    <p class="white-text">About content</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Contact</h5>
+                    <ul>
+                        <li><a class="white-text" href="">Link 1</a></li>
+                        <li><a class="white-text" href="">Link 2</a></li>
+                        <li><a class="white-text" href="">Our Team</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container" id="cpr">Copyright &#169; </div>
+        </div>
+    </footer>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+
+    <!-- Include only Firebase features as you need -->
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-functions.js"></script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyD_yopXnQQVNKUGRiosoZCMJwC59lE-agw",
+            authDomain: "e-teams.firebaseapp.com",
+            databaseURL: "https://e-teams.firebaseio.com",
+            projectId: "e-teams",
+            storageBucket: "e-teams.appspot.com",
+            messagingSenderId: "287123351392",
+            appId: "1:287123351392:web:ee07b0b4255b6a70baa005"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Make reference
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+
+</html>
