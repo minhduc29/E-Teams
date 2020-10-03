@@ -18,7 +18,7 @@ discussionForm.addEventListener('submit', (e) => {
             // Reset form
             const modal = document.querySelector('#discuss-modal');
             M.Modal.getInstance(modal).close();
-            loginForm.reset();
+            discussionForm.reset();
         }).catch(err => {
             alert(err.message);
         });
@@ -26,43 +26,54 @@ discussionForm.addEventListener('submit', (e) => {
 });
 
 // Display discussion
-const ref = firebase.firestore().collection('discussions');
+const ref = db.collection('discussions');
+const ref2 = db.collection('comments');
 ref.onSnapshot(snapshot => {
-    var id = [];
+    let id = [];
     let discussions = [];
     snapshot.forEach(doc => {
         discussions.push({ ...doc.data(), id: doc.id });
     });
     let html = '';
     discussions.forEach(discussion => {
-        id.push(discussion.id)
-        html += `<div class="row">
-                    <div class="col s12 m12">
-                        <div class="card light-blue darken-4">
-                            <div class="card-content white-text">
-                                <span class="card-title">${discussion.title}</span>
-                                <p>${discussion.description}</p><br>
-                                <span class="teal-text text-accent-3">by: ${discussion.owner}</span>
-                                <div class="float-right">
-                                    <span>${discussion.like}</span>
-                                    <button class="btn like"><i class="material-icons">thumb_up</i></button>
-                                </div>
+        id.push(discussion.id);
+        html += `<div class="col s12 m12 row">
+                    <div data-id="${discussion.id}" class="card light-blue darken-4">
+                        <div class="card-content white-text">
+                            <span class="card-title">${discussion.title}</span>
+                            <p>${discussion.description}</p><br>
+                            <span class="teal-text text-accent-3">by ${discussion.owner}</span>
+                            <div class="float-right">
+                                <span>${discussion.like}</span>
+                                <button class="btn like"><i class="material-icons">thumb_up</i></button>
                             </div>
                         </div>
+                        <form class="comment-form col s12">
+                            <textarea class="comment materialize-textarea" placeholder="Comment"></textarea>
+                            <button class="btn">Post</button>
+                        </form>
                     </div>
+                    <div class="comment-display"></div>
                 </div>`
     });
     document.querySelector('#discuss-display').innerHTML = html;
 
-    // Get like button
-    var like = document.getElementsByClassName('like');
+    // Get element
+    let likes = document.getElementsByClassName('like');
+    let commentForms = document.getElementsByClassName('comment-form');
+    let comments = document.getElementsByClassName('comment');
+    let commentDisplay = document.getElementsByClassName('comment-display');
 
-    // Like discussion
+    // Action with discussion
     for (let i = 0; i < id.length; i++) {
-        like[i].addEventListener('click', () => {
-            // Define firestore data
-            let user = db.collection('users').doc(auth.currentUser.uid);
-            let discussion = db.collection('discussions').doc(id[i]);
+        // Define firestore data
+        let user = db.collection('users').doc(auth.currentUser.uid);
+        let discussion = db.collection('discussions').doc(id[i]);
+        let comment = db.collection('comments').doc(id[i]);
+
+        // Like discussion
+        likes[i].addEventListener('click', (e) => {
+            e.preventDefault();
 
             return user.get().then(doc => {
                 // Check if user hasn't already liked
@@ -89,5 +100,52 @@ ref.onSnapshot(snapshot => {
                 };
             });
         });
+
+        // Save comment to firestore
+        commentForms[i].addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            return user.get().then(doc => {
+                return comment.set({
+                    comment: firebase.firestore.FieldValue.arrayUnion({
+                        owner: doc.data().username,
+                        comment: comments[i].value
+                    })
+                }, {
+                    merge: true
+                }).then(() => {
+                    // Reset form
+                    commentForms[i].reset();
+                });
+            });
+        });
     };
+    // Display comment
+    ref2.onSnapshot(snapshot => {
+        for (let i = 0; i < id.length; i++) {
+            commentDisplay[i].innerHTML = '';
+        };
+        let comments = [];
+        snapshot.forEach(doc => {
+            comments.push({ ...doc.data(), id: doc.id });
+        });
+        for (let i = 0; i < comments.length; i++) {
+            for (let e = 0; e < comments[i].comment.length; e++) {
+                let uid = comments[i].id;
+                let cmt_html = `<div class="row col s12 m12">
+                                    <div data-id="${uid}" class="card light-blue darken-1">
+                                        <div class="card-content white-text">
+                                            <p>${comments[i].comment[e].comment}</p><br>
+                                            <span class="teal-text text-accent-3">by ${comments[i].comment[e].owner}</span>
+                                        </div>
+                                    </div>
+                                </div>`
+                for (let i = 0; i < id.length; i++) {
+                    if (uid == id[i]) {
+                        commentDisplay[i].innerHTML += cmt_html;
+                    };
+                };
+            };
+        };
+    });
 });
