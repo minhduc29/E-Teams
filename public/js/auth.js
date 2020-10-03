@@ -21,7 +21,8 @@ registerForm.addEventListener('submit', (e) => {
             // Create data firestore
             return db.collection('users').doc(cred.user.uid).set({
                 username: username,
-                email: email
+                email: email,
+                liked: []
             });
         }).then(() => {
             // Reset form
