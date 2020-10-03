@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Teams | Discussion</title>
+    <title>E-Teams | Class</title>
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -40,8 +40,8 @@
     <!-- Responsive side nav -->
     <ul class="sidenav blue-grey darken-4" id="mobile-demo">
         <li class="login"><a class="white-text font-size-18 modal-trigger" href="#profile-modal">Profile</a></li>
-        <li class="login"><a class="white-text font-size-18" href="./class.html">Class</a></li>
-        <li class="login"><a class="white-text font-size-18" href="./discussion.html">Discussion</a></li>
+        <li class="login"><a class="white-text font-size-18" href="class.html">Class</a></li>
+        <li class="login"><a class="white-text font-size-18" href="discussion.html">Discussion</a></li>
         <li class="login"><a class="white-text font-size-18" href="">Room</a></li>
         <li class="login"><a class="white-text font-size-18"
                 href="http://minhduc29-learning-log.herokuapp.com/">Learning Log</a></li>
@@ -56,9 +56,9 @@
         <div class="section no-pad-bot">
             <div class="container">
                 <br><br>
-                <h1 class="header center orange-text">Discussion</h1>
+                <h1 class="header center orange-text">Class</h1>
                 <div class="row center">
-                    <h5 class="header col s12 light">Where people discuss a topic or a question</h5>
+                    <h5 class="header col s12 light">Where teachers assign homework for students</h5>
                     <h5 class="logout header col s12 light">Login or Register to get more information</h5>
                 </div>
                 <div class="logout row center">
@@ -66,15 +66,11 @@
                         Started</a>
                 </div>
                 <div class="login row center">
-                    <a href="#discuss-modal" class="btn-large waves-effect waves-light orange modal-trigger">Add
-                        Discussion</a>
+                    <a href="#class-modal" class="btn-large waves-effect waves-light orange modal-trigger">Create Class</a>
                 </div>
                 <br><br>
             </div>
         </div>
-
-        <!-- Display discussion and comment -->
-        <div id="discuss-display" class="container login"></div>
 
         <!-- Description -->
         <div class="container">
@@ -106,25 +102,31 @@
             </div>
         </div>
 
-        <!-- Add discussion -->
-        <div id="discuss-modal" class="modal">
+        <!-- Create class -->
+        <div id="class-modal" class="modal">
             <div class="modal-content">
-                <h4 class="center">Discussion</h4>
+                <h4 class="center">Class</h4>
                 <div class="row">
-                    <form id="discuss" class="col s12">
+                    <form id="class" class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
-                                <textarea id="title" class="materialize-textarea"></textarea>
-                                <label for="title">Title</label>
+                                <input id="clname" type="text">
+                                <label for="clname">Class name</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <textarea id="description" class="materialize-textarea"></textarea>
-                                <label for="description">Description</label>
+                                <input id="clpassword" type="password" class="validate">
+                                <label for="clpassword">Password for Class</label>
                             </div>
                         </div>
-                        <button class="btn">Add Discussion</button>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="clpwconfirmation" type="password" class="validate">
+                                <label for="clpwconfirmation">Password Confirmation</label>
+                            </div>
+                        </div>
+                        <button class="btn">Create</button>
                     </form>
                 </div>
             </div>
@@ -253,7 +255,7 @@
     </script>
     <script src="../js/app.js"></script>
     <script src="../js/auth.js"></script>
-    <script src="../js/discussion.js"></script>
+    <script src="../js/class.js"></script>
 </body>
 
 </html>
