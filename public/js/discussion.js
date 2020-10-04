@@ -38,7 +38,7 @@ ref.onSnapshot(snapshot => {
     discussions.forEach(discussion => {
         id.push(discussion.id);
         html += `<div class="col s12 m12 row">
-                    <div class="card light-blue darken-4">
+                    <div class="card indigo">
                         <div class="card-content white-text">
                             <a href="#${discussion.id}" class="modal-trigger">
                                 <span class="card-title white-text">${discussion.title}</span>
@@ -141,8 +141,8 @@ ref.onSnapshot(snapshot => {
             for (let e = 0; e < comments[i].comment.length; e++) {
                 let uid = comments[i].id;
                 let cmt_html = `<div class="row col s12 m12">
-                                    <div data-id="${uid}" class="card light-blue darken-1">
-                                        <div class="card-content white-text">
+                                    <div data-id="${uid}" class="card">
+                                        <div class="card-content light-blue-text text-darken-1">
                                             <p>${comments[i].comment[e].comment}</p><br>
                                             <span class="teal-text text-accent-3">by ${comments[i].comment[e].owner}</span>
                                         </div>

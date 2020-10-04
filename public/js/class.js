@@ -104,12 +104,12 @@ refClass.onSnapshot(snapshot => {
     });
     let html = '';
     classes.forEach(cl => {
-        html += `<div class="class card light-blue darken-4">
+        html += `<div class="class card indigo">
                     <div class="card-content white-text">
                         <h4 class="center">${cl.name}</h4>
                         <p class="teal-text text-accent-3 center">by ${cl.owner}</p>
                         <a href="#${cl.id}" class="modal-trigger"><p class="center white-text">Details</p></a>
-                        <div id="${cl.id}" class="modal card-content light-blue darken-4">
+                        <div id="${cl.id}" class="modal card-content indigo">
                             <span class="card-title">Members:</span>
                             <ul class="member-display row modal-content"></ul>
                             <form class="col s12">
