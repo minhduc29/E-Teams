@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Teams | Class</title>
+    <title>E-Teams || Class</title>
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -65,8 +65,14 @@
                     <a href="#register-modal" class="btn-large waves-effect waves-light orange modal-trigger">Get
                         Started</a>
                 </div>
+                <br><br>
                 <div class="login row center">
-                    <a href="#class-modal" class="btn-large waves-effect waves-light orange modal-trigger">Create Class</a>
+                    <div class="col s12 m6">
+                        <a href="#create-class-modal" class="btn-large waves-effect waves-light orange modal-trigger">Create Class</a>
+                    </div>
+                    <div class="col s12 m6">
+                        <a href="#enter-class-modal" class="btn-large waves-effect waves-light orange modal-trigger">Enter Class</a>
+                    </div>
                 </div>
                 <br><br>
             </div>
@@ -103,15 +109,15 @@
         </div>
 
         <!-- Create class -->
-        <div id="class-modal" class="modal">
+        <div id="create-class-modal" class="modal">
             <div class="modal-content">
-                <h4 class="center">Class</h4>
+                <h4 class="center">Create Class</h4>
                 <div class="row">
-                    <form id="class" class="col s12">
+                    <form id="create-class" class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="clname" type="text">
-                                <label for="clname">Class name</label>
+                                <label for="clname">Class Name</label>
                             </div>
                         </div>
                         <div class="row">
@@ -127,6 +133,30 @@
                             </div>
                         </div>
                         <button class="btn">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enter class -->
+        <div id="enter-class-modal" class="modal">
+            <div class="modal-content">
+                <h4 class="center">Enter Class</h4>
+                <div class="row">
+                    <form id="enter-class" class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="clname2" type="text">
+                                <label for="clname2">Class Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="clpassword2" type="password" class="validate">
+                                <label for="clpassword2">Class Password</label>
+                            </div>
+                        </div>
+                        <button class="btn">Enter</button>
                     </form>
                 </div>
             </div>

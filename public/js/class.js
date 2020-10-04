@@ -1,12 +1,12 @@
 // Add class data to firebase
-const classForm = document.querySelector('#class');
-classForm.addEventListener('submit', (e) => {
+const createClassForm = document.querySelector('#create-class');
+createClassForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Get data
-    const className = classForm['clname'].value;
-    const clPassword = classForm['clpassword'].value;
-    const clpwConfirmation = classForm['clpwconfirmation'].value;
+    // Get element
+    const className = createClassForm['clname'].value;
+    const clPassword = createClassForm['clpassword'].value;
+    const clpwConfirmation = createClassForm['clpwconfirmation'].value;
 
     // Check valid information
     if (clpwConfirmation !== clPassword) {
@@ -14,9 +14,10 @@ classForm.addEventListener('submit', (e) => {
     } else {
         // Reference
         const classRef = db.collection('classes').doc(className);
+
+        // Check valid class id
         classRef.get().then(doc => {
             if (doc.exists) {
-                // Check valid class id
                 alert('Please try another class name')
             } else {
                 // Add data to firestore
@@ -25,17 +26,57 @@ classForm.addEventListener('submit', (e) => {
                         name: className,
                         password: clPassword,
                         owner: doc.data().username,
-                        member: []
+                        member: [auth.currentUser.uid]
                     }).then(() => {
                         // Reset form
-                        const modal = document.querySelector('#class-modal');
+                        const modal = document.querySelector('#create-class-modal');
                         M.Modal.getInstance(modal).close();
-                        classForm.reset();
-                    }).catch(err => {
-                        alert(err.message);
+                        createClassForm.reset();
                     });
                 });
             };
         });
     };
+});
+
+// Enter class
+const enterClassForm = document.querySelector('#enter-class');
+enterClassForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Get element
+    const className = enterClassForm['clname2'].value;
+    const clPassword = enterClassForm['clpassword2'].value;
+
+    // Reference to data in firestore
+    const classRef = db.collection('classes').doc(className);
+
+    // Check valid class id
+    classRef.get().then(doc => {
+        if (doc.exists) {
+            // Check valid password
+            if (doc.data().password == clPassword) {
+                // Check if user already in class
+                if (doc.data().member.includes(auth.currentUser.uid)) {
+                    alert('You are already in this class')
+                } else {
+                    // Update class data in firestore
+                    return classRef.set({
+                        member: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.uid)
+                    }, {
+                        merge: true
+                    }).then(() => {
+                        // Reset form
+                        const modal = document.querySelector('#enter-class-modal');
+                        M.Modal.getInstance(modal).close();
+                        enterClassForm.reset();
+                    });
+                }
+            } else {
+                alert('Wrong password')
+            }
+        } else {
+            alert(`There is no class named ${className}`)
+        };
+    });
 });
