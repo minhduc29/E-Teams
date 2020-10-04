@@ -99,7 +99,7 @@ refClass.onSnapshot(snapshot => {
     let id = [];
     let classes = [];
     snapshot.forEach(doc => {
-        classes.push(doc.data());
+        classes.push({...doc.data(), id: doc.id});
         id.push(doc.id);
     });
     let html = '';
@@ -112,7 +112,6 @@ refClass.onSnapshot(snapshot => {
                         <div id="${cl.id}" class="modal card-content light-blue darken-4">
                             <span class="card-title">Members:</span>
                             <ul class="member-display row modal-content"></ul>
-                            <ul class="files"></ul>
                             <form class="col s12">
                                 <div class="row">
                                     <input type="file" class="fileUpload">
@@ -155,29 +154,38 @@ refClass.onSnapshot(snapshot => {
         for (let i = 0; i < members.length; i++) {
             const memRef = db.collection('members').doc(members[i].id);
             memRef.get().then(doc => {
-                if (doc.data().member.includes(auth.currentUser.uid)) {
-                    classed[i].style.display = 'block';
+                if (auth.currentUser) {
+                    if (doc.data().member.includes(auth.currentUser.uid)) {
+                        classed[i].style.display = 'block';
+                    } else {
+                        classed[i].style.display = 'none';
+                    };
                 } else {
-                    classed[i].style.display = 'none';
+                    console.log();
                 };
             });
         };
     });
 });
 
-auth.onAuthStateChanged(() => {
+auth.onAuthStateChanged(user => {
     window.setTimeout(() => {
-        let classed = document.getElementsByClassName('class');
-        for (let i = 0; i < members.length; i++) {
-            const memRef = db.collection('members').doc(members[i].id);
-            memRef.get().then(doc => {
-                if (doc.data().member.includes(auth.currentUser.uid)) {
-                    classed[i].style.display = 'block';
-                } else {
-                    classed[i].style.display = 'none';
-                };
-            });
-        };
+        M.AutoInit();
+        if (user) {
+            let classed = document.getElementsByClassName('class');
+            for (let i = 0; i < members.length; i++) {
+                const memRef = db.collection('members').doc(members[i].id);
+                memRef.get().then(doc => {
+                    if (doc.data().member.includes(auth.currentUser.uid)) {
+                        classed[i].style.display = 'block';
+                    } else {
+                        classed[i].style.display = 'none';
+                    };
+                });
+            };
+        } else {
+            console.log()
+        }
     }, 2000);
 });
 
@@ -196,19 +204,6 @@ window.setTimeout(() => {
 
             // Upload file
             storageRef.put(file);
-
-            // Download files
-            let storageRef2 = storage.ref();
-            storageRef2.child(`${members[i].id}/`).getDownloadURL().then(url => {
-                let xhr = new XMLHttpRequest();
-                xhr.responseType = 'blob';
-                xhr.onload = function (event) {
-                    var blob = xhr.response;
-                };
-                xhr.open('GET', url);
-                xhr.send();
-            });
-
         });
     };
 }, 2000);

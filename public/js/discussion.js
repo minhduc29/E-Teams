@@ -124,6 +124,9 @@ ref.onSnapshot(snapshot => {
             });
         });
     };
+    window.setTimeout(() => {
+        M.AutoInit();
+    }, 2000)
     
     // Display comment
     ref2.onSnapshot(snapshot => {
@@ -152,9 +155,12 @@ ref.onSnapshot(snapshot => {
                 };
             };
         };
+        window.setTimeout(() => {
+            M.AutoInit();
+        }, 2000)
     });
 });
 
 window.setTimeout(() => {
     M.AutoInit();
-}, 1000)
+}, 2000)
