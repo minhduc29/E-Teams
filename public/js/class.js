@@ -14,6 +14,7 @@ createClassForm.addEventListener('submit', (e) => {
     } else {
         // Reference
         const classRef = db.collection('classes').doc(className);
+        const memRef = db.collection('members').doc(className);
 
         // Check valid class id
         classRef.get().then(doc => {
@@ -25,13 +26,16 @@ createClassForm.addEventListener('submit', (e) => {
                     return classRef.set({
                         name: className,
                         password: clPassword,
-                        owner: doc.data().username,
-                        member: [auth.currentUser.uid]
+                        owner: doc.data().username
                     }).then(() => {
                         // Reset form
                         const modal = document.querySelector('#create-class-modal');
                         M.Modal.getInstance(modal).close();
                         createClassForm.reset();
+                    });
+                }).then(() => {
+                    return memRef.set({
+                        member: [auth.currentUser.uid]
                     });
                 });
             };
@@ -50,6 +54,7 @@ enterClassForm.addEventListener('submit', (e) => {
 
     // Reference to data in firestore
     const classRef = db.collection('classes').doc(className);
+    const memRef = db.collection('members').doc(className);
 
     // Check valid class id
     classRef.get().then(doc => {
@@ -57,21 +62,23 @@ enterClassForm.addEventListener('submit', (e) => {
             // Check valid password
             if (doc.data().password == clPassword) {
                 // Check if user already in class
-                if (doc.data().member.includes(auth.currentUser.uid)) {
-                    alert('You are already in this class')
-                } else {
-                    // Update class data in firestore
-                    return classRef.set({
-                        member: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.uid)
-                    }, {
-                        merge: true
-                    }).then(() => {
-                        // Reset form
-                        const modal = document.querySelector('#enter-class-modal');
-                        M.Modal.getInstance(modal).close();
-                        enterClassForm.reset();
-                    });
-                }
+                memRef.get().then(mem => {
+                    if (mem.data().member.includes(auth.currentUser.uid)) {
+                        alert('You are already in this class');
+                    } else {
+                        // Update class data in firestore
+                        return memRef.set({
+                            member: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.uid)
+                        }, {
+                            merge: true
+                        }).then(() => {
+                            // Reset form
+                            const modal = document.querySelector('#enter-class-modal');
+                            M.Modal.getInstance(modal).close();
+                            enterClassForm.reset();
+                        })
+                    }
+                })
             } else {
                 alert('Wrong password')
             }
@@ -80,3 +87,128 @@ enterClassForm.addEventListener('submit', (e) => {
         };
     });
 });
+
+// Reference
+const refClass = db.collection('classes');
+const refMem = db.collection('members');
+
+let members = [];
+
+// Display class
+refClass.onSnapshot(snapshot => {
+    let id = [];
+    let classes = [];
+    snapshot.forEach(doc => {
+        classes.push(doc.data());
+        id.push(doc.id);
+    });
+    let html = '';
+    classes.forEach(cl => {
+        html += `<div class="class card light-blue darken-4">
+                    <div class="card-content white-text">
+                        <h4 class="center">${cl.name}</h4>
+                        <p class="teal-text text-accent-3 center">by ${cl.owner}</p>
+                        <a href="#${cl.id}" class="modal-trigger"><p class="center white-text">Details</p></a>
+                        <div id="${cl.id}" class="modal card-content light-blue darken-4">
+                            <span class="card-title">Members:</span>
+                            <ul class="member-display row modal-content"></ul>
+                            <ul class="files"></ul>
+                            <form class="col s12">
+                                <div class="row">
+                                    <input type="file" class="fileUpload">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>`
+    });
+    document.querySelector('#class-display').innerHTML += html
+
+    // Get element
+    let memberDisplay = document.getElementsByClassName('member-display');
+
+    // Display member
+    refMem.onSnapshot(snapshot => {
+        for (let i = 0; i < id.length; i++) {
+            memberDisplay[i].innerHTML = '';
+        };
+
+        snapshot.forEach(doc => {
+            members.push({ ...doc.data(), id: doc.id });
+        });
+
+        for (let i = 0; i < members.length; i++) {
+            for (let e = 0; e < members[i].member.length; e++) {
+                let uid = members[i].id;
+                db.collection('users').doc(members[i].member[e]).get().then(doc => {
+                    let mem_html = `<li class="col s12 m3">${doc.data().username}</li>`;
+                    for (let x = 0; x < uid.length; x++) {
+                        if (uid == id[x]) {
+                            memberDisplay[x].innerHTML += mem_html;
+                        };
+                    };
+                });
+            };
+        };
+
+        let classed = document.getElementsByClassName('class');
+        for (let i = 0; i < members.length; i++) {
+            const memRef = db.collection('members').doc(members[i].id);
+            memRef.get().then(doc => {
+                if (doc.data().member.includes(auth.currentUser.uid)) {
+                    classed[i].style.display = 'block';
+                } else {
+                    classed[i].style.display = 'none';
+                };
+            });
+        };
+    });
+});
+
+auth.onAuthStateChanged(() => {
+    window.setTimeout(() => {
+        let classed = document.getElementsByClassName('class');
+        for (let i = 0; i < members.length; i++) {
+            const memRef = db.collection('members').doc(members[i].id);
+            memRef.get().then(doc => {
+                if (doc.data().member.includes(auth.currentUser.uid)) {
+                    classed[i].style.display = 'block';
+                } else {
+                    classed[i].style.display = 'none';
+                };
+            });
+        };
+    }, 2000);
+});
+
+window.setTimeout(() => {
+    M.AutoInit();
+
+    // Firebase storage
+    let fileUpload = document.getElementsByClassName('fileUpload');
+    for (let i = 0; i < fileUpload.length; i++) {
+        fileUpload[i].addEventListener('change', (e) => {
+            // Get file
+            let file = e.target.files[0];
+
+            // Storage ref
+            let storageRef = storage.ref(`${members[i].id}/` + file.name);
+
+            // Upload file
+            storageRef.put(file);
+
+            // Download files
+            let storageRef2 = storage.ref();
+            storageRef2.child(`${members[i].id}/`).getDownloadURL().then(url => {
+                let xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.onload = function (event) {
+                    var blob = xhr.response;
+                };
+                xhr.open('GET', url);
+                xhr.send();
+            });
+
+        });
+    };
+}, 2000);

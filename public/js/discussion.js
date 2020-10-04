@@ -38,11 +38,13 @@ ref.onSnapshot(snapshot => {
     discussions.forEach(discussion => {
         id.push(discussion.id);
         html += `<div class="col s12 m12 row">
-                    <div data-id="${discussion.id}" class="card light-blue darken-4">
+                    <div class="card light-blue darken-4">
                         <div class="card-content white-text">
-                            <span class="card-title">${discussion.title}</span>
-                            <p>${discussion.description}</p><br>
-                            <span class="teal-text text-accent-3">by ${discussion.owner}</span>
+                            <a href="#${discussion.id}" class="modal-trigger">
+                                <span class="card-title white-text">${discussion.title}</span>
+                                <p class="white-text">${discussion.description}</p><br>
+                                <span class="teal-text text-accent-3">by ${discussion.owner}</span>
+                            </a>
                             <div class="float-right">
                                 <span>${discussion.like}</span>
                                 <button class="btn like"><i class="material-icons">thumb_up</i></button>
@@ -53,7 +55,9 @@ ref.onSnapshot(snapshot => {
                             <button class="btn">Post</button>
                         </form>
                     </div>
-                    <div class="comment-display"></div>
+                    <div id="${discussion.id}" class="modal light-blue darken-1">
+                        <div class="comment-display modal-content"></div>
+                    </div>
                 </div>`
     });
     document.querySelector('#discuss-display').innerHTML = html;
@@ -120,6 +124,7 @@ ref.onSnapshot(snapshot => {
             });
         });
     };
+    
     // Display comment
     ref2.onSnapshot(snapshot => {
         for (let i = 0; i < id.length; i++) {
@@ -149,3 +154,7 @@ ref.onSnapshot(snapshot => {
         };
     });
 });
+
+window.setTimeout(() => {
+    M.AutoInit();
+}, 1000)
