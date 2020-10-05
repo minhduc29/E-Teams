@@ -1,0 +1,23 @@
+{
+  "name": "e-teams",
+  "version": "1.0.0",
+  "description": "Project #5 - A web application mainly for online learning using Firebase and Materialize CSS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minhduc29/E-Teams.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/minhduc29/E-Teams/issues"
+  },
+  "homepage": "https://github.com/minhduc29/E-Teams#readme",
+  "dependencies": {
+    "chromedriver": "^85.0.1",
+    "selenium-webdriver": "^4.0.0-alpha.7"
+  }
+}

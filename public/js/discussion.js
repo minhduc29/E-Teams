@@ -55,7 +55,7 @@ ref.onSnapshot(snapshot => {
                             <button class="btn">Post</button>
                         </form>
                     </div>
-                    <div id="${discussion.id}" class="modal light-blue darken-1">
+                    <div id="${discussion.id}" class="modal light-blue darken-4">
                         <div class="comment-display modal-content"></div>
                     </div>
                 </div>`
@@ -142,7 +142,7 @@ ref.onSnapshot(snapshot => {
                 let uid = comments[i].id;
                 let cmt_html = `<div class="row col s12 m12">
                                     <div data-id="${uid}" class="card">
-                                        <div class="card-content light-blue-text text-darken-1">
+                                        <div class="card-content light-blue-text text-darken-4">
                                             <p>${comments[i].comment[e].comment}</p><br>
                                             <span class="teal-text text-accent-3">by ${comments[i].comment[e].owner}</span>
                                         </div>

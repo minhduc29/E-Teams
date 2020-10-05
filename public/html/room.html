@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Teams || Class</title>
+    <title>E-Teams || Room</title>
 
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -56,32 +56,21 @@
         <div class="section no-pad-bot">
             <div class="container">
                 <br><br>
-                <h1 class="header center orange-text">Class</h1>
+                <h1 class="header center orange-text">Room</h1>
                 <div class="row center">
-                    <h5 class="header col s12 light">Where teachers assign homework for students</h5>
+                    <h5 class="header col s12 light">Where people can make video call and voice chat</h5>
                     <h5 class="logout header col s12 light">Login or Register to get more information</h5>
                 </div>
                 <div class="logout row center">
                     <a href="#register-modal" class="btn-large waves-effect waves-light orange modal-trigger">Get
                         Started</a>
                 </div>
-                <br><br>
                 <div class="login row center">
-                    <div class="col s12 m6">
-                        <a href="#create-class-modal"
-                            class="btn-large waves-effect waves-light orange modal-trigger">Create Class</a>
-                    </div>
-                    <div class="col s12 m6">
-                        <a href="#enter-class-modal"
-                            class="btn-large waves-effect waves-light orange modal-trigger">Enter Class</a>
-                    </div>
+                    <a href="" class="btn-large waves-effect waves-light orange modal-trigger">Video Call</a>
                 </div>
                 <br><br>
             </div>
         </div>
-
-        <!-- Display class -->
-        <div id="class-display" class="container login row"></div>
 
         <!-- Description -->
         <div class="container">
@@ -109,60 +98,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Create class -->
-        <div id="create-class-modal" class="modal">
-            <div class="modal-content">
-                <h4 class="center">Create Class</h4>
-                <div class="row">
-                    <form id="create-class" class="col s12">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="clname" type="text">
-                                <label for="clname">Class Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="clpassword" type="password" class="validate">
-                                <label for="clpassword">Password for Class</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="clpwconfirmation" type="password" class="validate">
-                                <label for="clpwconfirmation">Password Confirmation</label>
-                            </div>
-                        </div>
-                        <button class="btn">Create</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Enter class -->
-        <div id="enter-class-modal" class="modal">
-            <div class="modal-content">
-                <h4 class="center">Enter Class</h4>
-                <div class="row">
-                    <form id="enter-class" class="col s12">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="clname2" type="text">
-                                <label for="clname2">Class Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="clpassword2" type="password" class="validate">
-                                <label for="clpassword2">Class Password</label>
-                            </div>
-                        </div>
-                        <button class="btn">Enter</button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -245,7 +180,8 @@
                     <h5 class="white-text">About</h5>
                     <p class="white-text">Revolutionizing the tech industry - one step at a time. And E-Teams is exactly
                         what you need. Discussion posts, learning logs, real-time virtual meeting, and much more. Jump
-                        onto oursite, register for an account, and enjoy the benefit of this professional platform today!</p>
+                        onto oursite, register for an account, and enjoy the benefit of this professional platform
+                        today!</p>
                 </div>
                 <div class="col l4 offset-l2 s12">
                     <h5 class="white-text">Contact</h5>
@@ -268,7 +204,6 @@
     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-functions.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-storage.js"></script>
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -290,11 +225,9 @@
         // Make reference
         const auth = firebase.auth();
         const db = firebase.firestore();
-        const storage = firebase.storage();
     </script>
     <script src="../js/app.js"></script>
     <script src="../js/auth.js"></script>
-    <script src="../js/class.js"></script>
 </body>
 
 </html>
