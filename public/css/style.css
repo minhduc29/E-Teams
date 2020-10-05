@@ -21,3 +21,9 @@ body {
 .class {
     display: none;
 }
+.bg-gradient {
+    background: linear-gradient(#4568dc, #b06ab3) !important;
+}
+.bg-gradient-2 {
+    background: linear-gradient(#141e30, #243b55) !important;
+}

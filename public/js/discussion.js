@@ -55,7 +55,7 @@ ref.onSnapshot(snapshot => {
                             <button class="btn">Post</button>
                         </form>
                     </div>
-                    <div id="${discussion.id}" class="modal light-blue darken-4">
+                    <div id="${discussion.id}" class="modal bg-gradient-2">
                         <div class="comment-display modal-content"></div>
                     </div>
                 </div>`
