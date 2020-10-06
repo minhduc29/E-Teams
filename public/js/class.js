@@ -91,15 +91,16 @@ enterClassForm.addEventListener('submit', (e) => {
 // Reference
 const refClass = db.collection('classes');
 const refMem = db.collection('members');
+const refURL = db.collection('downloadURL');
 
 let members = [];
+let id = [];
 
 // Display class
 refClass.onSnapshot(snapshot => {
-    let id = [];
     let classes = [];
     snapshot.forEach(doc => {
-        classes.push({...doc.data(), id: doc.id});
+        classes.push({ ...doc.data(), id: doc.id });
         id.push(doc.id);
     });
     let html = '';
@@ -111,7 +112,8 @@ refClass.onSnapshot(snapshot => {
                         <a href="#${cl.id}" class="modal-trigger"><p class="center white-text">Details</p></a>
                         <div id="${cl.id}" class="modal card-content indigo">
                             <span class="card-title">Members:</span>
-                            <ul class="member-display row modal-content"></ul>
+                            <ul class="member-display row"></ul>
+                            <ul class="url-display row"></ul>
                             <form class="col s12">
                                 <div class="row">
                                     <input type="file" class="fileUpload">
@@ -194,16 +196,50 @@ window.setTimeout(() => {
 
     // Firebase storage
     let fileUpload = document.getElementsByClassName('fileUpload');
+    let urlDisplay = document.getElementsByClassName('url-display');
     for (let i = 0; i < fileUpload.length; i++) {
         fileUpload[i].addEventListener('change', (e) => {
             // Get file
             let file = e.target.files[0];
 
             // Storage ref
-            let storageRef = storage.ref(`${members[i].id}/` + file.name);
+            let storageRef = storage.ref(`${members[i].id}/${file.name}`);
 
             // Upload file
             storageRef.put(file);
+
+            // Get download URL
+            setTimeout(() => {
+                storage.ref().child(`${members[i].id}/${file.name}`).getDownloadURL().then(url => {
+                    refURL.doc(id[i]).set({
+                        file: firebase.firestore.FieldValue.arrayUnion({
+                            fileName: file.name,
+                            url: url
+                        })
+                    }, {
+                        merge: true
+                    });
+                });
+            }, 3000);
         });
     };
+
+    refURL.onSnapshot(docURL => {
+        for (let i = 0; i < urlDisplay.length; i++) {
+            urlDisplay[i].innerHTML = '';
+        };
+        let urls = [];
+        docURL.forEach(doc => {
+            urls.push(doc.data())
+        });
+        let url_html = '';
+        for (let i = 0; i < urls.length; i++) {
+            for (let e = 0; e < urls[i].file.length; e++) {
+                url_html += `<li>${urls[i].file[e].fileName}: ${urls[i].file[e].url}</li><br>`
+            };
+        };
+        for (let i = 0; i < urlDisplay.length; i++) {
+            urlDisplay[i].innerHTML += url_html;
+        };
+    });
 }, 2000);
