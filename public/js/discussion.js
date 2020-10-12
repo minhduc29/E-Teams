@@ -7,22 +7,27 @@ discussionForm.addEventListener('submit', (e) => {
     const title = discussionForm['title'].value;
     const description = discussionForm['description'].value;
 
-    // Add data to firestore
-    db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
-        db.collection('discussions').add({
-            title: title,
-            description: description,
-            owner: doc.data().username,
-            like: 0
-        }).then(() => {
-            // Reset form
-            const modal = document.querySelector('#discuss-modal');
-            M.Modal.getInstance(modal).close();
-            discussionForm.reset();
-        }).catch(err => {
-            alert(err.message);
+    // Check blank value
+    if (title == '' || description == '') {
+        alert('Missing title or description');
+    } else {
+        // Add data to firestore
+        db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
+            db.collection('discussions').add({
+                title: title,
+                description: description,
+                owner: doc.data().username,
+                like: 0
+            }).then(() => {
+                // Reset form
+                const modal = document.querySelector('#discuss-modal');
+                M.Modal.getInstance(modal).close();
+                discussionForm.reset();
+            }).catch(err => {
+                alert(err.message);
+            });
         });
-    });
+    };
 });
 
 // Display discussion
@@ -127,7 +132,7 @@ ref.onSnapshot(snapshot => {
     window.setTimeout(() => {
         M.AutoInit();
     }, 2000)
-    
+
     // Display comment
     ref2.onSnapshot(snapshot => {
         for (let i = 0; i < id.length; i++) {
