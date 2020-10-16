@@ -12,14 +12,13 @@ body {
     height: 140px;
 }
 .login,
-.logout {
+.logout,
+.class,
+.topic {
     display: none;
 }
 .float-right {
     float: right;
-}
-.class {
-    display: none;
 }
 .bg-gradient {
     background: linear-gradient(#4568dc, #b06ab3) !important;

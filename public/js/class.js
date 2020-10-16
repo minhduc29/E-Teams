@@ -163,7 +163,7 @@ refClass.onSnapshot(snapshot => {
                         classed[i].style.display = 'none';
                     };
                 } else {
-                    console.log();
+                    classed[i].style.display = 'none';
                 };
             });
         };
@@ -186,8 +186,10 @@ auth.onAuthStateChanged(user => {
                 });
             };
         } else {
-            console.log()
-        }
+            for (let i = 0; i < members.length; i++) {
+                classed[i].style.display = 'none';
+            };
+        };
     }, 2000);
 });
 
