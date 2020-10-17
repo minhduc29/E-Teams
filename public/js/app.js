@@ -73,3 +73,13 @@ function changePassword(user) {
         alert(err.message);
     });
 };
+
+// Forgot password
+function forgotPassword() {
+    let email = prompt('Enter your email: ');
+    auth.sendPasswordResetEmail(email).then(() => {
+        alert('Please check your email')
+    }).catch(err => {
+        alert(err.message);
+    });
+};

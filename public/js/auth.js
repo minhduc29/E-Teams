@@ -89,3 +89,10 @@ changePw.addEventListener('click', (e) => {
     e.preventDefault();
     changePassword(auth.currentUser);
 });
+
+// Forgot password
+const forgotPw = document.getElementById('forgot-pw');
+forgotPw.addEventListener('click', (e) => {
+    e.preventDefault();
+    forgotPassword();
+});

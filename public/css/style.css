@@ -26,3 +26,6 @@ body {
 .bg-gradient-2 {
     background: linear-gradient(#141e30, #243b55) !important;
 }
+#forgot-pw {
+    margin: 20px;
+}
