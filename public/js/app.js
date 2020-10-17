@@ -37,9 +37,38 @@ function deleteAccount(user) {
         password = prompt('Enter your password: ')
     );
     user.reauthenticateWithCredential(credential).then(() => {
-        user.delete();
+        user.delete().catch(err => {
+            alert(err.message);
+        });
         const modal = document.querySelector('#profile-modal');
         M.Modal.getInstance(modal).close();
+    }).catch(err => {
+        alert(err.message);
+    });
+};
+
+// Change password
+function changePassword(user) {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+        email = prompt('Enter your email: '),
+        password = prompt('Enter your password: ')
+    );
+    user.reauthenticateWithCredential(credential).then(() => {
+        let newPw = prompt('Enter your new password: ');
+        let newPwCf = prompt('Confirm your new password: ');
+        if (newPw == newPwCf) {
+            user.updatePassword(newPw).catch(err => {
+                alert(err.message);
+            });
+        } else {
+            alert('Wrong new password confirmation');
+        };
+
+        return db.collection('users').doc(user.uid).update({
+            password: newPw
+        }).then(() => {
+            alert('Password has been changed');
+        });
     }).catch(err => {
         alert(err.message);
     });

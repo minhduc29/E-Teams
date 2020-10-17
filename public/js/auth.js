@@ -21,6 +21,7 @@ registerForm.addEventListener('submit', (e) => {
             // Create data firestore
             return db.collection('users').doc(cred.user.uid).set({
                 username: username,
+                password: password,
                 email: email,
                 liked: []
             });
@@ -80,4 +81,11 @@ const delBtn = document.getElementById('del-btn');
 delBtn.addEventListener('click', (e) => {
     e.preventDefault();
     deleteAccount(auth.currentUser);
+});
+
+// Change password
+const changePw = document.getElementById('change-pw');
+changePw.addEventListener('click', (e) => {
+    e.preventDefault();
+    changePassword(auth.currentUser);
 });
