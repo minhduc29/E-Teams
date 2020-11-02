@@ -58,3 +58,6 @@ body {
 .text-4b88a2 {
     color: #4b88a2 !important;
 }
+::-webkit-scrollbar {
+    width: 0;
+}
