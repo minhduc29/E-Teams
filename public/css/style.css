@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
 html,
 body {
     height: 100%;
@@ -28,4 +29,9 @@ body {
 }
 #forgot-pw {
     margin: 20px;
+}
+.about {
+    line-height: 2;
+    font-family: 'Dosis', sans-serif;
+    font-size: 16.5px;
 }

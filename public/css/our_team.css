@@ -62,12 +62,8 @@ body {
     z-index: -2;
     filter: blur(20px);
 }
-.box:nth-child(1)::before,
-.box:nth-child(1)::after {
-    background: linear-gradient(235deg,#ff0b00,#ffc800,#57a6a9,#006dff);
-}
-.box:nth-child(2)::before,
-.box:nth-child(2)::after {
+.box::before,
+.box::after {
     background: linear-gradient(235deg,#ff6600,#33ccff,blueviolet);
 }
 .content {
