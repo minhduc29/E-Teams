@@ -43,12 +43,12 @@ ref.onSnapshot(snapshot => {
     discussions.forEach(discussion => {
         id.push(discussion.id);
         html += `<div class="col s12 m12 row">
-                    <div class="card indigo">
+                    <div class="card bg-2f3162">
                         <div class="card-content white-text">
                             <a href="#${discussion.id}" class="modal-trigger">
                                 <span class="card-title white-text">${discussion.title}</span>
                                 <p class="white-text">${discussion.description}</p><br>
-                                <span class="teal-text text-accent-3">by ${discussion.owner}</span>
+                                <span class="text-faa275">by ${discussion.owner}</span>
                             </a>
                             <div class="float-right">
                                 <span>${discussion.like}</span>
@@ -147,9 +147,9 @@ ref.onSnapshot(snapshot => {
                 let uid = comments[i].id;
                 let cmt_html = `<div class="row col s12 m12">
                                     <div data-id="${uid}" class="card">
-                                        <div class="card-content light-blue-text text-darken-4">
-                                            <p>${comments[i].comment[e].comment}</p><br>
-                                            <span class="teal-text text-accent-3">by ${comments[i].comment[e].owner}</span>
+                                        <div class="card-content bg-2f3162">
+                                            <p class="white-text">${comments[i].comment[e].comment}</p><br>
+                                            <span class="text-faa275">by ${comments[i].comment[e].owner}</span>
                                         </div>
                                     </div>
                                 </div>`

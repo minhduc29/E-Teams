@@ -41,7 +41,7 @@ topicRef.onSnapshot(snapshot => {
     let topic_html = '';
     topics.forEach(topic => {
         topic_html += ` <div class="topic col s12 m12 row">
-                            <div class="card indigo">
+                            <div class="card bg-2f3162">
                                 <div class="card-content white-text">
                                     <a href="#${topic.id}" class="modal-trigger">
                                         <h4 class="center white-text">${topic.topicName}</h4>
@@ -116,8 +116,8 @@ topicRef.onSnapshot(snapshot => {
                 let uid = entries[i].id;
                 let entry_html = `  <div class="row col s12 m12">
                                         <div data-id="${uid}" class="card">
-                                            <div class="card-content light-blue-text text-darken-4">
-                                                <p>${entries[i].entry[e]}</p><br>
+                                            <div class="card-content bg-2f3162">
+                                                <p class="white-text">${entries[i].entry[e]}</p><br>
                                             </div>
                                         </div>
                                     </div>`
