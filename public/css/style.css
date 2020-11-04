@@ -28,7 +28,10 @@ body {
 .bg-gradient-2 {
     background-color: #f1edff !important;
 }
-#forgot-pw {
+#forgot-pw,
+#del-btn,
+#change-pw,
+.double {
     margin: 10.5px;
 }
 .about {
