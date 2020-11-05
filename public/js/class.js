@@ -108,7 +108,7 @@ refClass.onSnapshot(snapshot => {
         html += `<div class="class card bg-2f3162">
                     <div class="card-content white-text">
                         <h4 class="center">${cl.name}</h4>
-                        <p class="text-faa275 center">by ${cl.owner}</p>
+                        <p class="teal-text text-accent-3 center">by ${cl.owner}</p>
                         <a href="#${cl.id}" class="modal-trigger"><p class="center white-text">Details</p></a>
                         <div id="${cl.id}" class="modal card-content bg-2f3162">
                             <span class="card-title">Members:</span>

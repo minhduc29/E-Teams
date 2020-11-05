@@ -48,7 +48,7 @@ ref.onSnapshot(snapshot => {
                             <a href="#${discussion.id}" class="modal-trigger">
                                 <span class="card-title white-text">${discussion.title}</span>
                                 <p class="white-text">${discussion.description}</p><br>
-                                <span class="text-faa275">by ${discussion.owner}</span>
+                                <span class="teal-text text-accent-3">by ${discussion.owner}</span>
                             </a>
                             <div class="float-right">
                                 <span>${discussion.like}</span>
@@ -149,7 +149,7 @@ ref.onSnapshot(snapshot => {
                                     <div data-id="${uid}" class="card">
                                         <div class="card-content bg-2f3162">
                                             <p class="white-text">${comments[i].comment[e].comment}</p><br>
-                                            <span class="text-faa275">by ${comments[i].comment[e].owner}</span>
+                                            <span class="teal-text text-accent-3">by ${comments[i].comment[e].owner}</span>
                                         </div>
                                     </div>
                                 </div>`
