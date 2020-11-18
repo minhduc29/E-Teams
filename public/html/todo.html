@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Teams | Discussion</title>
+    <title>E-Teams | To-Do</title>
     <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
 
     <!--Import Google Icon Font-->
@@ -57,9 +57,9 @@
         <div class="section no-pad-bot">
             <div class="container">
                 <br><br>
-                <h1 class="header center text-4b88a2">Discussion</h1>
+                <h1 class="header center text-4b88a2">To-Do</h1>
                 <div class="row center">
-                    <h5 class="header col s12 light">Where people discuss a topic or a question</h5>
+                    <h5 class="header col s12 light">Where people take note and make to-do list</h5>
                     <h5 class="logout header col s12 light">Login or Register to get more information</h5>
                 </div>
                 <div class="logout row center">
@@ -67,15 +67,14 @@
                         Started</a>
                 </div>
                 <div class="login row center">
-                    <a href="#discuss-modal" class="btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Add
-                        Discussion</a>
+                    <a href="#todo-modal" class="btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Add To-Do</a>
                 </div>
                 <br><br>
             </div>
         </div>
 
-        <!-- Display discussion and comment -->
-        <div id="discuss-display" class="container login"></div>
+        <!-- Display To-Do -->
+        <div id="todo-display" class="container login"></div>
 
         <!-- Description -->
         <div class="container">
@@ -107,25 +106,19 @@
             </div>
         </div>
 
-        <!-- Add discussion -->
-        <div id="discuss-modal" class="modal bg-gradient-2">
+        <!-- Add To-Do -->
+        <div id="todo-modal" class="modal bg-gradient-2">
             <div class="modal-content">
-                <h4 class="center text-2f3162">Discussion</h4>
+                <h4 class="center text-2f3162">To-Do</h4>
                 <div class="row">
-                    <form id="discuss" class="col s12">
+                    <form id="add-todo" class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
-                                <textarea id="title" class="materialize-textarea"></textarea>
-                                <label for="title">Title</label>
+                                <input id="todo" type="text">
+                                <label for="todo">To-Do</label>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <textarea id="description" class="materialize-textarea"></textarea>
-                                <label for="description">Description</label>
-                            </div>
-                        </div>
-                        <button class="btn">Add Discussion</button>
+                        <button class="btn">Add</button>
                     </form>
                 </div>
             </div>
@@ -276,6 +269,9 @@
     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-functions.js"></script>
 
+    <!-- Agora SDK -->
+    <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.2.1.js"></script>
+
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
@@ -299,7 +295,6 @@
     </script>
     <script src="../js/app.js"></script>
     <script src="../js/auth.js"></script>
-    <script src="../js/discussion.js"></script>
 </body>
 
 </html>
