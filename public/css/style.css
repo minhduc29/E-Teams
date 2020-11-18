@@ -61,3 +61,8 @@ body {
 ::-webkit-scrollbar {
     width: 0;
 }
+.del-btn {
+    float: right;
+    cursor: pointer;
+    margin-top: -40px;
+}

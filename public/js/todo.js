@@ -25,15 +25,19 @@ $("#add-todo").submit((e) => {
     }
 })
 
-// Display todo
+// Realtime firestore
 let todoDisplay = document.querySelector("#todo-display")
 todoRef.onSnapshot(snapshot => {
     todoDisplay.innerHTML = ''
+
     let todos = []
+    let content = []
+
     snapshot.forEach(doc => {
         todos.push({...doc.data(), id: doc.id})
     })
 
+    // Display todo
     let todoHtml = ''
     for (let i = 0; i < todos.length; i++) {
         for (let j = 0; j < todos[i].todo.length; j++) {
@@ -46,8 +50,19 @@ todoRef.onSnapshot(snapshot => {
                             </div>
                         </div>`
             if (todos[i].id == auth.currentUser.uid) {
+                content.push(todos[i].todo[j])
                 todoDisplay.innerHTML += todoHtml
             }
         }
+    }
+
+    // Delete function
+    let delBtn = document.getElementsByClassName("del-btn")
+    for (let i = 0; i < delBtn.length; i++) {
+        delBtn[i].addEventListener("click", () => {
+            todoRef.doc(auth.currentUser.uid).update({
+                todo: firebase.firestore.FieldValue.arrayRemove(content[i])
+            })
+        })
     }
 })
