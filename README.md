@@ -9,6 +9,15 @@
 ## How to use
 - A full user guide, instruction, usage and update like the one in the website
 ---
+#### To-Do
+- Like normal to-do apps. This is where you can take note and make to-do list.
+
+- Click the ADD TO-DO button and create your to-do list.
+
+- The length of your to-do must be more than 1 character.
+
+- You can delete your to-do list after that if you want by clicking the X button.
+---
 #### Account
 - You must have an account to use this website. Register and login are very simple.
 
@@ -55,6 +64,8 @@
 - Create your topics and everytime you learn something new, add a new entry to the suitable topic. Only you can see your topics and entries.
 
 - Click the topic name and/or Entry to see your entries.
+
+- You can now delete the whole topic and its entries or just a single entry.
 ---
 #### Update
 - This is where we show our update, new features with date and time.
@@ -69,7 +80,11 @@
 
 - 17/10/2020: Update forgot password
 
-- 2/11/2020: Update color palette, font style, about and contact
+- 02/11/2020: Update color palette, font style, about and contact
+
+- 18/11/2020: Add To-Do functionality
+
+- 19/11/2020: Add deleting functionality in Learning Log
 ---
 #### Other
 - This is where we state some rules, errors, anything that's not relevant to the main features above. This part is vital. Don't miss anything in here.
