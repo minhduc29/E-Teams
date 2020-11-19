@@ -66,3 +66,8 @@ body {
     cursor: pointer;
     margin-top: -40px;
 }
+.ll-del-btn {
+    float: right;
+    cursor: pointer;
+    margin-top: -65px;
+}
