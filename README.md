@@ -1,6 +1,6 @@
 # E-Teams
 #### _Project #4_ 
-- A web application mainly for online learning using **_Firebase_**, **_Agora_** and **_Materialize CSS_**
+- A web application mainly for online learning using **_Firebase_**, **_Agora_**, **_Materialize CSS_** and **_jQuery_**
 
 ## Demo
 - [E-Teams](https://e-teams.web.app/)
