@@ -26,12 +26,15 @@ service cloud.firestore {
       allow delete: if false;
     }
     match /topics/{topicID} {
-    	allow read, create;
-      allow delete, update: if false;
+    	allow read, create, delete;
+      allow update: if false;
     }
     match /entries/{topicID} {
-    	allow read, create, update;
-      allow delete: if false;
+    	allow read, write;
+    }
+    match /todos/{userID} {
+    	allow read;
+      allow write: if request.auth != null && request.auth.uid == userID; 
     }
   }
 }
