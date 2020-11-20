@@ -65,7 +65,7 @@
 
 - Click the topic name and/or Entry to see your entries.
 
-- You can now delete the whole topic and its entries or just a single entry.
+- You can now delete the topic and its entries.
 ---
 #### Update
 - This is where we show our update, new features with date and time.

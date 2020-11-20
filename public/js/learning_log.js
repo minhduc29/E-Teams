@@ -113,9 +113,6 @@ topicRef.onSnapshot(snapshot => {
     }, 2000)
 
     // Display entry
-    let content = []
-    let entryID = []
-
     entryRef.onSnapshot(snapshot => {
         for (let i = 0; i < topicID.length; i++) {
             entryDisplay[i].innerHTML = '';
@@ -131,29 +128,16 @@ topicRef.onSnapshot(snapshot => {
                                         <div data-id="${uid}" class="card">
                                             <div class="card-content bg-2f3162">
                                                 <p class="white-text">${entries[i].entry[e]}</p><br>
-                                                <button class="del-btn btn"><i class="material-icons">clear</i></button>
                                             </div>
                                         </div>
                                     </div>`
                 for (let i = 0; i < topicID.length; i++) {
                     if (uid == topicID[i]) {
-                        entryID.push(uid)
-                        content.push(entries[i].entry[e])
                         entryDisplay[i].innerHTML += entry_html;
                     };
                 };
             };
         };
-
-        // Delete entry
-        let delBtn = document.getElementsByClassName("del-btn")
-        for (let i = 0; i < delBtn.length; i++) {
-            delBtn[i].addEventListener("click", () => {
-                entryRef.doc(entryID[i]).update({
-                    entry: firebase.firestore.FieldValue.arrayRemove(content[i])
-                })
-            })
-        }
 
         window.setTimeout(() => {
             M.AutoInit();
