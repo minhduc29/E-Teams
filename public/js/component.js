@@ -13,6 +13,7 @@ const COMPONENT = {
                         <li class="login"><a class="font-size-18" href="./discussion.html">Discussion</a></li>
                         <li class="login"><a class="font-size-18" href="./room.html">Room</a></li>
                         <li class="login"><a class="font-size-18" href="./learning_log.html">Learning Log</a></li>
+                        <li class="login"><a class="font-size-18" href="./playground.html">Playground</a></li>
                         <li class="login"><a class="font-size-18 logout-btn" href="#">Logout</a></li>
                         <li class="logout"><a class="font-size-18 modal-trigger" href="#login-modal">Login</a></li>
                         <li class="logout"><a class="font-size-18 modal-trigger" href="#register-modal">Register</a></li>
@@ -29,6 +30,7 @@ const COMPONENT = {
             <li class="login"><a class="white-text font-size-18" href="./discussion.html">Discussion</a></li>
             <li class="login"><a class="white-text font-size-18" href="./room.html">Room</a></li>
             <li class="login"><a class="white-text font-size-18" href="./learning_log.html">Learning Log</a></li>
+            <li class="login"><a class="white-text font-size-18" href="./playground.html">Playground</a></li>
             <li class="login"><a class="white-text font-size-18 logout-btn" href="#">Logout</a></li>
             <li class="logout"><a class="white-text font-size-18 modal-trigger" href="#login-modal">Login</a></li>
             <li class="logout"><a class="white-text font-size-18 modal-trigger" href="#register-modal">Register</a></li>
