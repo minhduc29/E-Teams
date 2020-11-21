@@ -83,6 +83,7 @@ ref.onSnapshot(snapshot => {
         // Like discussion
         likes[i].addEventListener('click', (e) => {
             e.preventDefault();
+            $("body").removeClass("loaded")
 
             return user.get().then(doc => {
                 // Check if user hasn't already liked
@@ -94,6 +95,8 @@ ref.onSnapshot(snapshot => {
                         // Update the likes on the discussion
                         return discussion.update({
                             like: firebase.firestore.FieldValue.increment(-1)
+                        }).then(() => {
+                            $("body").addClass("loaded")
                         });
                     })
                 } else {
@@ -104,6 +107,8 @@ ref.onSnapshot(snapshot => {
                         // Update the likes on the discussion
                         return discussion.update({
                             like: firebase.firestore.FieldValue.increment(1)
+                        }).then(() => {
+                            $("body").addClass("loaded")
                         });
                     });
                 };
@@ -129,8 +134,11 @@ ref.onSnapshot(snapshot => {
             });
         });
     };
+
+    $("body").removeClass("loaded")
     window.setTimeout(() => {
         M.AutoInit();
+        $("body").addClass("loaded")
     }, 2000)
 
     // Display comment
@@ -166,6 +174,8 @@ ref.onSnapshot(snapshot => {
     });
 });
 
+$("body").removeClass("loaded")
 window.setTimeout(() => {
     M.AutoInit();
+    $("body").addClass("loaded")
 }, 2000)

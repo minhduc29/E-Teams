@@ -210,9 +210,9 @@ const COMPONENT = {
 }
 
 $("#body").before(COMPONENT.preloader)
-setTimeout(() => {
+$(window).on("load", function() {
     $("body").addClass("loaded")
-}, 3000)
+})
 
 $("#body").before(COMPONENT.navBar)
 $("#body").before(COMPONENT.sideNav)

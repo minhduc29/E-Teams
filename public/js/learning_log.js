@@ -108,8 +108,10 @@ topicRef.onSnapshot(snapshot => {
         };
     };
     
+    $("body").removeClass("loaded")
     window.setTimeout(() => {
         M.AutoInit();
+        $("body").addClass("loaded")
     }, 2000)
 
     // Display entry
@@ -145,11 +147,14 @@ topicRef.onSnapshot(snapshot => {
     });
 });
 
+$("body").removeClass("loaded")
 window.setTimeout(() => {
     M.AutoInit();
+    $("body").addClass("loaded")
 }, 2000)
 
 auth.onAuthStateChanged(user => {
+    $("body").removeClass("loaded")
     window.setTimeout(() => {
         M.AutoInit();
         let topiced = document.getElementsByClassName('topic');
@@ -166,5 +171,6 @@ auth.onAuthStateChanged(user => {
                 topiced[i].style.display = 'none';
             };
         };
+        $("body").addClass("loaded")
     }, 2000);
 });
