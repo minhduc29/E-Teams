@@ -69,13 +69,11 @@ for (let i = 0; i < logoutBtn.length; i++) {
 
 // Listen for auth status
 auth.onAuthStateChanged(user => {
-    $("body").removeClass("loaded")
     if (user) {
         setupUI(user);
     } else {
         setupUI();
     };
-    $("body").addClass("loaded")
 });
 
 // Delete account

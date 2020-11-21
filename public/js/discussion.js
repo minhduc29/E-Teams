@@ -135,10 +135,8 @@ ref.onSnapshot(snapshot => {
         });
     };
 
-    $("body").removeClass("loaded")
     window.setTimeout(() => {
         M.AutoInit();
-        $("body").addClass("loaded")
     }, 2000)
 
     // Display comment
@@ -174,8 +172,6 @@ ref.onSnapshot(snapshot => {
     });
 });
 
-$("body").removeClass("loaded")
 window.setTimeout(() => {
     M.AutoInit();
-    $("body").addClass("loaded")
 }, 2000)
