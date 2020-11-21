@@ -172,7 +172,6 @@ refClass.onSnapshot(snapshot => {
 
 auth.onAuthStateChanged(user => {
     window.setTimeout(() => {
-        $("body").removeClass("loaded")
         M.AutoInit();
         if (user) {
             let classed = document.getElementsByClassName('class');
@@ -191,7 +190,6 @@ auth.onAuthStateChanged(user => {
                 classed[i].style.display = 'none';
             };
         };
-        $("body").addClass("loaded")
     }, 2000);
 });
 
@@ -203,7 +201,9 @@ window.setTimeout(() => {
     let urlDisplay = document.getElementsByClassName('url-display');
     for (let i = 0; i < fileUpload.length; i++) {
         fileUpload[i].addEventListener('change', (e) => {
+            M.Modal.getInstance($(".modal")).close()
             $("body").removeClass("loaded")
+            alert("If you have to wait more than 2s, please reload the page")
 
             // Get file
             let file = e.target.files[0];
@@ -227,7 +227,7 @@ window.setTimeout(() => {
                     });
                     $("body").addClass("loaded")
                 });
-            }, 3000);
+            }, 2000);
         });
     };
 
