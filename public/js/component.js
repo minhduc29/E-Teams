@@ -1,4 +1,11 @@
 const COMPONENT = {
+    preloader: `
+        <!-- Preloader -->
+        <div id="loader-wrapper">
+            <div id="loader"></div>
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+        </div>`,
     navBar: `
         <!-- Nav bar -->
         <div class="navbar-fixed">
@@ -201,6 +208,11 @@ const COMPONENT = {
             </div>
         </footer>`
 }
+
+$("#body").before(COMPONENT.preloader)
+setTimeout(() => {
+    $("body").addClass("loaded")
+}, 3000)
 
 $("#body").before(COMPONENT.navBar)
 $("#body").before(COMPONENT.sideNav)
