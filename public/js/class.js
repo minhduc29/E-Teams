@@ -15,6 +15,7 @@ createClassForm.addEventListener('submit', (e) => {
         // Reference
         const classRef = db.collection('classes').doc(className);
         const memRef = db.collection('members').doc(className);
+        const urlRef = db.collection('downloadURL').doc(className)
 
         // Check valid class id
         classRef.get().then(doc => {
@@ -26,7 +27,8 @@ createClassForm.addEventListener('submit', (e) => {
                     return classRef.set({
                         name: className,
                         password: clPassword,
-                        owner: doc.data().username
+                        owner: doc.data().username,
+                        ownerUID: auth.currentUser.uid
                     }).then(() => {
                         // Reset form
                         const modal = document.querySelector('#create-class-modal');
@@ -36,6 +38,10 @@ createClassForm.addEventListener('submit', (e) => {
                 }).then(() => {
                     return memRef.set({
                         member: [auth.currentUser.uid]
+                    }).then(() => {
+                        return urlRef.set({
+                            file: []
+                        })
                     });
                 });
             };
@@ -98,6 +104,8 @@ let id = [];
 
 // Display class
 refClass.onSnapshot(snapshot => {
+    document.querySelector('#class-display').innerHTML = ''
+    id = []
     let classes = [];
     snapshot.forEach(doc => {
         classes.push({ ...doc.data(), id: doc.id });
@@ -110,6 +118,7 @@ refClass.onSnapshot(snapshot => {
                         <h4 class="center">${cl.name}</h4>
                         <p class="teal-text text-accent-3 center">by ${cl.owner}</p>
                         <a href="#${cl.id}" class="modal-trigger"><p class="center white-text">Details</p></a>
+                        <button class="ll-del-btn btn"><i class="material-icons">clear</i></button>
                         <div id="${cl.id}" class="modal card-content bg-2f3162">
                             <span class="card-title">Members:</span>
                             <ul class="member-display row"></ul>
@@ -125,27 +134,44 @@ refClass.onSnapshot(snapshot => {
     });
     document.querySelector('#class-display').innerHTML += html
 
-    // Get element
-    let memberDisplay = document.getElementsByClassName('member-display');
+    setTimeout(() => {
+        M.AutoInit()
+    }, 2000)
+
+    // Delete class
+    let llDelBtn = document.getElementsByClassName("ll-del-btn")
+    for (let i = 0; i < llDelBtn.length; i++) {
+        llDelBtn[i].addEventListener("click", () => {
+            if (classes[i].ownerUID == auth.currentUser.uid) {
+                refClass.doc(classes[i].name).delete()
+                refMem.doc(classes[i].name).delete()
+                refURL.doc(classes[i].name).delete()
+            } else {
+                alert("You don't have permission to delete this class")
+            }
+        })
+    }
 
     // Display member
     refMem.onSnapshot(snapshot => {
-        for (let i = 0; i < id.length; i++) {
-            memberDisplay[i].innerHTML = '';
-        };
+        // Get element
+        let memberDisplay = document.getElementsByClassName('member-display');
 
+        members = []
         snapshot.forEach(doc => {
             members.push({ ...doc.data(), id: doc.id });
         });
 
         for (let i = 0; i < members.length; i++) {
+            let mem_html = ''
+            memberDisplay[i].innerHTML = ''
             for (let e = 0; e < members[i].member.length; e++) {
                 let uid = members[i].id;
                 db.collection('users').doc(members[i].member[e]).get().then(doc => {
-                    let mem_html = `<li class="col s12 m3">${doc.data().username}</li>`;
-                    for (let x = 0; x < uid.length; x++) {
+                    mem_html += `<li class="col s12 m3">${doc.data().username}</li>`;
+                    for (let x = 0; x < id.length; x++) {
                         if (uid == id[x]) {
-                            memberDisplay[x].innerHTML += mem_html;
+                            memberDisplay[x].innerHTML = mem_html;
                         };
                     };
                 });
@@ -194,14 +220,21 @@ auth.onAuthStateChanged(user => {
 });
 
 window.setTimeout(() => {
-    M.AutoInit();
+    setTimeout(() => {
+        M.AutoInit();
+    }, 2000)
 
     // Firebase storage
     let fileUpload = document.getElementsByClassName('fileUpload');
     let urlDisplay = document.getElementsByClassName('url-display');
     for (let i = 0; i < fileUpload.length; i++) {
         fileUpload[i].addEventListener('change', (e) => {
-            M.Modal.getInstance($(".modal")).close()
+            let md = document.querySelectorAll(".modal")
+            for (let i = 0; i < md.length; i++) {
+                if (md[i].style.display == "block") {
+                    M.Modal.getInstance(md[i]).close()
+                }
+            }
             $("body").removeClass("loaded")
             alert("If you have to wait more than 2s, please reload the page")
 
@@ -237,7 +270,7 @@ window.setTimeout(() => {
         };
         let urls = [];
         docURL.forEach(doc => {
-            urls.push(doc.data())
+            urls.push({ ...doc.data(), id: doc.id })
         });
         let url_html = '';
         for (let i = 0; i < urls.length; i++) {
