@@ -194,35 +194,6 @@ refClass.onSnapshot(snapshot => {
             });
         };
     });
-});
-
-auth.onAuthStateChanged(user => {
-    window.setTimeout(() => {
-        M.AutoInit();
-        if (user) {
-            let classed = document.getElementsByClassName('class');
-            for (let i = 0; i < members.length; i++) {
-                const memRef = db.collection('members').doc(members[i].id);
-                memRef.get().then(doc => {
-                    if (doc.data().member.includes(auth.currentUser.uid)) {
-                        classed[i].style.display = 'block';
-                    } else {
-                        classed[i].style.display = 'none';
-                    };
-                });
-            };
-        } else {
-            for (let i = 0; i < members.length; i++) {
-                classed[i].style.display = 'none';
-            };
-        };
-    }, 2000);
-});
-
-window.setTimeout(() => {
-    setTimeout(() => {
-        M.AutoInit();
-    }, 2000)
 
     // Firebase storage
     let fileUpload = document.getElementsByClassName('fileUpload');
@@ -265,21 +236,43 @@ window.setTimeout(() => {
     };
 
     refURL.onSnapshot(docURL => {
-        for (let i = 0; i < urlDisplay.length; i++) {
-            urlDisplay[i].innerHTML = '';
-        };
         let urls = [];
         docURL.forEach(doc => {
             urls.push({ ...doc.data(), id: doc.id })
         });
-        let url_html = '';
         for (let i = 0; i < urls.length; i++) {
+            let url_html = ''
+            urlDisplay[i].innerHTML = ''
             for (let e = 0; e < urls[i].file.length; e++) {
                 url_html += `<li>${urls[i].file[e].fileName}: ${urls[i].file[e].url}</li><br>`
+                for (let j = 0; j < id.length; j++) {
+                    if (urls[i].id == id[j])
+                        urlDisplay[j].innerHTML = url_html;
+                };
             };
         };
-        for (let i = 0; i < urlDisplay.length; i++) {
-            urlDisplay[i].innerHTML += url_html;
-        };
     });
-}, 2000);
+});
+
+auth.onAuthStateChanged(user => {
+    window.setTimeout(() => {
+        M.AutoInit();
+        if (user) {
+            let classed = document.getElementsByClassName('class');
+            for (let i = 0; i < members.length; i++) {
+                const memRef = db.collection('members').doc(members[i].id);
+                memRef.get().then(doc => {
+                    if (doc.data().member.includes(auth.currentUser.uid)) {
+                        classed[i].style.display = 'block';
+                    } else {
+                        classed[i].style.display = 'none';
+                    };
+                });
+            };
+        } else {
+            for (let i = 0; i < members.length; i++) {
+                classed[i].style.display = 'none';
+            };
+        };
+    }, 2000);
+});
