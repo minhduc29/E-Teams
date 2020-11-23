@@ -1,20 +1,20 @@
 // Add class data to firebase
-const createClassForm = document.querySelector('#create-class');
+const createClassForm = document.querySelector('#create-class')
 createClassForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     // Get element
-    const className = createClassForm['clname'].value;
-    const clPassword = createClassForm['clpassword'].value;
-    const clpwConfirmation = createClassForm['clpwconfirmation'].value;
+    const className = createClassForm['clname'].value
+    const clPassword = createClassForm['clpassword'].value
+    const clpwConfirmation = createClassForm['clpwconfirmation'].value
 
     // Check valid information
     if (clpwConfirmation !== clPassword) {
-        alert('Password and password confirmation must be the same');
+        alert('Password and password confirmation must be the same')
     } else {
         // Reference
-        const classRef = db.collection('classes').doc(className);
-        const memRef = db.collection('members').doc(className);
+        const classRef = db.collection('classes').doc(className)
+        const memRef = db.collection('members').doc(className)
         const urlRef = db.collection('downloadURL').doc(className)
 
         // Check valid class id
@@ -31,10 +31,10 @@ createClassForm.addEventListener('submit', (e) => {
                         ownerUID: auth.currentUser.uid
                     }).then(() => {
                         // Reset form
-                        const modal = document.querySelector('#create-class-modal');
-                        M.Modal.getInstance(modal).close();
-                        createClassForm.reset();
-                    });
+                        const modal = document.querySelector('#create-class-modal')
+                        M.Modal.getInstance(modal).close()
+                        createClassForm.reset()
+                    })
                 }).then(() => {
                     return memRef.set({
                         member: [auth.currentUser.uid]
@@ -42,25 +42,25 @@ createClassForm.addEventListener('submit', (e) => {
                         return urlRef.set({
                             file: []
                         })
-                    });
-                });
-            };
-        });
-    };
-});
+                    })
+                })
+            }
+        })
+    }
+})
 
 // Enter class
-const enterClassForm = document.querySelector('#enter-class');
+const enterClassForm = document.querySelector('#enter-class')
 enterClassForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     // Get element
-    const className = enterClassForm['clname2'].value;
-    const clPassword = enterClassForm['clpassword2'].value;
+    const className = enterClassForm['clname2'].value
+    const clPassword = enterClassForm['clpassword2'].value
 
     // Reference to data in firestore
-    const classRef = db.collection('classes').doc(className);
-    const memRef = db.collection('members').doc(className);
+    const classRef = db.collection('classes').doc(className)
+    const memRef = db.collection('members').doc(className)
 
     // Check valid class id
     classRef.get().then(doc => {
@@ -70,7 +70,7 @@ enterClassForm.addEventListener('submit', (e) => {
                 // Check if user already in class
                 memRef.get().then(mem => {
                     if (mem.data().member.includes(auth.currentUser.uid)) {
-                        alert('You are already in this class');
+                        alert('You are already in this class')
                     } else {
                         // Update class data in firestore
                         return memRef.set({
@@ -79,9 +79,9 @@ enterClassForm.addEventListener('submit', (e) => {
                             merge: true
                         }).then(() => {
                             // Reset form
-                            const modal = document.querySelector('#enter-class-modal');
-                            M.Modal.getInstance(modal).close();
-                            enterClassForm.reset();
+                            const modal = document.querySelector('#enter-class-modal')
+                            M.Modal.getInstance(modal).close()
+                            enterClassForm.reset()
                         })
                     }
                 })
@@ -90,29 +90,29 @@ enterClassForm.addEventListener('submit', (e) => {
             }
         } else {
             alert(`There is no class named ${className}`)
-        };
-    });
-});
+        }
+    })
+})
 
 // Reference
-const refClass = db.collection('classes');
-const refMem = db.collection('members');
-const refURL = db.collection('downloadURL');
+const refClass = db.collection('classes')
+const refMem = db.collection('members')
+const refURL = db.collection('downloadURL')
 const storageRef = storage.ref()
 
-let members = [];
-let id = [];
+let members = []
+let id = []
 
 // Display class
 refClass.onSnapshot(snapshot => {
     document.querySelector('#class-display').innerHTML = ''
     id = []
-    let classes = [];
+    let classes = []
     snapshot.forEach(doc => {
-        classes.push({ ...doc.data(), id: doc.id });
-        id.push(doc.id);
-    });
-    let html = '';
+        classes.push({ ...doc.data(), id: doc.id })
+        id.push(doc.id)
+    })
+    let html = ''
     classes.forEach(cl => {
         html += `<div class="class card bg-2f3162">
                     <div class="card-content white-text">
@@ -132,7 +132,7 @@ refClass.onSnapshot(snapshot => {
                         </div>
                     </div>
                 </div>`
-    });
+    })
     document.querySelector('#class-display').innerHTML += html
 
     setTimeout(() => {
@@ -159,53 +159,53 @@ refClass.onSnapshot(snapshot => {
     // Display member
     refMem.onSnapshot(snapshot => {
         // Get element
-        let memberDisplay = document.getElementsByClassName('member-display');
+        let memberDisplay = document.getElementsByClassName('member-display')
 
         members = []
         snapshot.forEach(doc => {
-            members.push({ ...doc.data(), id: doc.id });
-        });
+            members.push({ ...doc.data(), id: doc.id })
+        })
 
         for (let i = 0; i < members.length; i++) {
             let mem_html = ''
             memberDisplay[i].innerHTML = ''
             for (let e = 0; e < members[i].member.length; e++) {
-                let uid = members[i].id;
+                let uid = members[i].id
                 db.collection('users').doc(members[i].member[e]).get().then(doc => {
-                    mem_html += `<li class="col s12 m3">${doc.data().username}</li>`;
+                    mem_html += `<li class="col s12 m3">${doc.data().username}</li>`
                     for (let x = 0; x < id.length; x++) {
                         if (uid == id[x]) {
-                            memberDisplay[x].innerHTML = mem_html;
-                        };
-                    };
-                });
-            };
-        };
+                            memberDisplay[x].innerHTML = mem_html
+                        }
+                    }
+                })
+            }
+        }
 
-        let classed = document.getElementsByClassName('class');
+        let classed = document.getElementsByClassName('class')
         for (let i = 0; i < members.length; i++) {
-            const memRef = db.collection('members').doc(members[i].id);
+            const memRef = db.collection('members').doc(members[i].id)
             memRef.get().then(doc => {
                 if (auth.currentUser) {
                     if (doc.data().member.includes(auth.currentUser.uid)) {
-                        classed[i].style.display = 'block';
+                        classed[i].style.display = 'block'
                     } else {
-                        classed[i].style.display = 'none';
-                    };
+                        classed[i].style.display = 'none'
+                    }
                 } else {
-                    classed[i].style.display = 'none';
-                };
-            });
-        };
-    });
+                    classed[i].style.display = 'none'
+                }
+            })
+        }
+    })
 
     // Firebase storage
-    let fileUpload = document.getElementsByClassName('fileUpload');
-    let urlDisplay = document.getElementsByClassName('url-display');
+    let fileUpload = document.getElementsByClassName('fileUpload')
+    let urlDisplay = document.getElementsByClassName('url-display')
     for (let i = 0; i < fileUpload.length; i++) {
         fileUpload[i].addEventListener('change', (e) => {
             // Get file
-            let file = e.target.files[0];
+            let file = e.target.files[0]
 
             if (file) {
                 let md = document.querySelectorAll(".modal")
@@ -238,14 +238,14 @@ refClass.onSnapshot(snapshot => {
                     $("body").addClass("loaded")
                 }
             }
-        });
-    };
+        })
+    }
 
     refURL.onSnapshot(docURL => {
-        let urls = [];
+        let urls = []
         docURL.forEach(doc => {
             urls.push({ ...doc.data(), id: doc.id })
-        });
+        })
         for (let i = 0; i < urls.length; i++) {
             let url_html = ''
             urlDisplay[i].innerHTML = ''
@@ -253,32 +253,32 @@ refClass.onSnapshot(snapshot => {
                 url_html += `<li>${urls[i].file[e].fileName}: ${urls[i].file[e].url}</li><br>`
                 for (let j = 0; j < id.length; j++) {
                     if (urls[i].id == id[j])
-                        urlDisplay[j].innerHTML = url_html;
-                };
-            };
-        };
-    });
-});
+                        urlDisplay[j].innerHTML = url_html
+                }
+            }
+        }
+    })
+})
 
 auth.onAuthStateChanged(user => {
     window.setTimeout(() => {
-        M.AutoInit();
+        M.AutoInit()
         if (user) {
-            let classed = document.getElementsByClassName('class');
+            let classed = document.getElementsByClassName('class')
             for (let i = 0; i < members.length; i++) {
-                const memRef = db.collection('members').doc(members[i].id);
+                const memRef = db.collection('members').doc(members[i].id)
                 memRef.get().then(doc => {
                     if (doc.data().member.includes(auth.currentUser.uid)) {
-                        classed[i].style.display = 'block';
+                        classed[i].style.display = 'block'
                     } else {
-                        classed[i].style.display = 'none';
-                    };
-                });
-            };
+                        classed[i].style.display = 'none'
+                    }
+                })
+            }
         } else {
             for (let i = 0; i < members.length; i++) {
-                classed[i].style.display = 'none';
-            };
-        };
-    }, 2000);
-});
+                classed[i].style.display = 'none'
+            }
+        }
+    }, 2000)
+})
