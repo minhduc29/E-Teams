@@ -226,7 +226,7 @@ refClass.onSnapshot(snapshot => {
                     await storageRefFile.put(file)
 
                     // Get download URL
-                    url = await storage.ref().child(`${members[i].id}/${file.name}`).getDownloadURL()
+                    let url = await storage.ref().child(`${members[i].id}/${file.name}`).getDownloadURL()
                     refURL.doc(id[i]).set({
                         file: firebase.firestore.FieldValue.arrayUnion({
                             fileName: file.name,
