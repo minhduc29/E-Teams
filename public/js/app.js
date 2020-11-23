@@ -29,23 +29,6 @@ function setupUI(user) {
     }
 }
 
-// Setup delete account
-function deleteAccount(user) {
-    const credential = firebase.auth.EmailAuthProvider.credential(
-        email = prompt('Enter your email: '),
-        password = prompt('Enter your password: ')
-    )
-    user.reauthenticateWithCredential(credential).then(() => {
-        user.delete().catch(err => {
-            alert(err.message)
-        })
-        const modal = document.querySelector('#profile-modal')
-        M.Modal.getInstance(modal).close()
-    }).catch(err => {
-        alert(err.message)
-    })
-}
-
 // Change password
 function changePassword(user) {
     const credential = firebase.auth.EmailAuthProvider.credential(

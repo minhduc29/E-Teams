@@ -75,13 +75,6 @@ auth.onAuthStateChanged(user => {
     }
 })
 
-// Delete account
-const delBtn = document.getElementById('del-btn')
-delBtn.addEventListener('click', (e) => {
-    e.preventDefault()
-    deleteAccount(auth.currentUser)
-})
-
 // Change password
 const changePw = document.getElementById('change-pw')
 changePw.addEventListener('click', (e) => {

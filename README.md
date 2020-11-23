@@ -74,9 +74,7 @@
 
 - 16/10/2020: Fully connect Learning Log to E-Teams
 
-- 17/10/2020: Allow user to change password in profile
-
-- 17/10/2020: Update forgot password
+- 17/10/2020: Allow user to change password in profile and update forget password functionality
 
 - 02/11/2020: Update color palette, font style, about and contact
 
