@@ -98,7 +98,6 @@ enterClassForm.addEventListener('submit', (e) => {
 const refClass = db.collection('classes')
 const refMem = db.collection('members')
 const refURL = db.collection('downloadURL')
-const storageRef = storage.ref()
 
 let members = []
 let id = []
@@ -217,14 +216,14 @@ refClass.onSnapshot(snapshot => {
                 getURL(i, file)
 
                 async function getURL(i, file) {
-                    // Storage ref
-                    let storageRefFile = storage.ref(`${members[i].id}/${file.name}`)
+                    // File ref
+                    let fileRef = storageRef.child(`${members[i].id}/${file.name}`)
 
                     // Upload file
-                    await storageRefFile.put(file)
+                    await fileRef.put(file)
 
                     // Get download URL
-                    let url = await storage.ref().child(`${members[i].id}/${file.name}`).getDownloadURL()
+                    let url = await fileRef.getDownloadURL()
                     refURL.doc(id[i]).set({
                         file: firebase.firestore.FieldValue.arrayUnion({
                             fileName: file.name,

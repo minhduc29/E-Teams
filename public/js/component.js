@@ -136,11 +136,13 @@ const COMPONENT = {
     profile: `
         <!-- Profile modal -->
         <div id="profile-modal" class="modal bg-gradient-2">
-            <div class="modal-content row text-2f3162">
-                <h4 class="center">Profile</h4>
-                <div id="profile"></div><br>
-                <button class="btn" id="change-pw">Change password</button>
-            </div>
+        <div class="modal-content row text-2f3162">
+            <img id="profile-pic" src="" alt="Profile Picture" class="responsive-img">
+            <h4 class="center">Profile</h4>
+            <div id="profile"></div><br>
+            <button class="btn" id="change-pw">Change password</button>
+            <input type="file" id="change-pp">
+        </div>
         </div>`,
     contact: `
         <!-- Contact modal -->

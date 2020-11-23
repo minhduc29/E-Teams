@@ -28,6 +28,8 @@ body {
 .bg-gradient-2 {
     background-color: #f1edff !important;
 }
+#change-pw,
+#change-pp,
 #forgot-pw,
 .double {
     margin: 10.5px;
@@ -167,4 +169,12 @@ body {
     visibility: hidden; 
     transform: translateY(-100%);  
     transition: all 0.3s 1s ease-out; 
+}
+#profile-pic {
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    width: 50%;
+    display: block;
 }

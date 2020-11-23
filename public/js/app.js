@@ -21,6 +21,10 @@ function setupUI(user) {
                 <br><h5>Email: ${user.email}</h5>
                 <br><h5>Username: ${doc.data().username}</h5>`
             profile.innerHTML = html
+
+            if (doc.data().photoURL) {
+                $("#profile-pic").attr('src', doc.data().photoURL)
+            }
         })
 
         // Toggle UI
@@ -67,5 +71,32 @@ function forgotPassword() {
         alert('Please check your email')
     }).catch(err => {
         alert(err.message)
+    })
+}
+
+// Change profile picture
+async function changeProfilePic(e) {
+    let file = e.target.files[0]
+    userRef = db.collection('users').doc(auth.currentUser.uid)
+
+    if (file) {
+        $('body').removeClass('loaded')
+        M.Modal.getInstance($("#profile-modal")).close()
+
+        let fileRef = storageRef.child(`users/${auth.currentUser.uid}.jpg`)
+
+        await fileRef.put(file)
+        let url = await fileRef.getDownloadURL()
+
+        userRef.set({
+            photoURL: url
+        }, {
+            merge: true
+        })
+    }
+
+    userRef.onSnapshot(snapshot => {
+        $("#profile-pic").attr('src', snapshot.data().photoURL)
+        $('body').addClass('loaded')
     })
 }

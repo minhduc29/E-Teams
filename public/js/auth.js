@@ -22,7 +22,8 @@ registerForm.addEventListener('submit', (e) => {
             return db.collection('users').doc(cred.user.uid).set({
                 username: username,
                 email: email,
-                liked: []
+                liked: [],
+                photoURL: 'https://firebasestorage.googleapis.com/v0/b/e-teams.appspot.com/o/users%2Fprofile_picture.png?alt=media&token=b81c9c34-010c-4249-aa74-3c36d7ca183b'
             })
         }).then(() => {
             // Reset form
@@ -87,4 +88,11 @@ const forgotPw = document.getElementById('forgot-pw')
 forgotPw.addEventListener('click', (e) => {
     e.preventDefault()
     forgotPassword()
+})
+
+// Change profile picture
+const changePp = document.getElementById('change-pp')
+changePp.addEventListener('change', (e) => {
+    e.preventDefault()
+    changeProfilePic(e)
 })
