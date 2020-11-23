@@ -72,8 +72,6 @@
 
 - You should frequently take a look at this part to make sure you don't miss anything new.
 
-- 13/10/2020: Update security rules
-
 - 16/10/2020: Fully connect Learning Log to E-Teams
 
 - 17/10/2020: Allow user to change password in profile
@@ -84,7 +82,11 @@
 
 - 18/11/2020: Add To-Do functionality
 
-- 19/11/2020: Add deleting functionality in Learning Log
+- 19/11/2020: Allow user to delete topic in Learning Log
+
+- 21/11/2020: Update preloader
+
+- 23/11/2020: Allow user to delete class in Class
 ---
 #### Other
 - This is where we state some rules, errors, anything that's not relevant to the main features above. This part is vital. Don't miss anything in here.
