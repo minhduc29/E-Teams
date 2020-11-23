@@ -2,7 +2,8 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{userID} {
-    	allow read, write: if request.auth != null && request.auth.uid == userID;
+    	allow read;
+      allow write: if request.auth != null && request.auth.uid == userID;
     }
     match /discussions/{discussionID} {
     	allow read;
@@ -14,16 +15,14 @@ service cloud.firestore {
       allow delete: if false;
     }
     match /classes/{classID} {
-    	allow read, create;
-      allow delete, update: if false; 
+    	allow read, delete, create;
+      allow update: if false; 
     }
     match /members/{classID} {
-    	allow read, create, update;
-      allow delete: if false;
+    	allow read, write;
     }
     match /downloadURL/{classID} {
-    	allow read, create, update;
-      allow delete: if false;
+    	allow read, write;
     }
     match /topics/{topicID} {
     	allow read, create, delete;
