@@ -1,4 +1,8 @@
-M.AutoInit()
+function initialize() {
+    M.AutoInit()
+}
+
+initialize()
 
 // Copyright
 let cpr = document.getElementById('cpr')

@@ -107,10 +107,8 @@ topicRef.onSnapshot(snapshot => {
             topiced[i].style.display = 'none'
         }
     }
-    
-    window.setTimeout(() => {
-        M.AutoInit()
-    }, 2000)
+
+    initialize()
 
     // Display entry
     entryRef.onSnapshot(snapshot => {
@@ -138,33 +136,21 @@ topicRef.onSnapshot(snapshot => {
                 }
             }
         }
-
-        window.setTimeout(() => {
-            M.AutoInit()
-        }, 2000)
     })
 })
 
-window.setTimeout(() => {
-    M.AutoInit()
-}, 2000)
-
 auth.onAuthStateChanged(user => {
-    window.setTimeout(() => {
-        M.AutoInit()
-        let topiced = document.getElementsByClassName('topic')
+    initialize()
+    let topiced = document.getElementsByClassName('topic')
+    for (let i = 0; i < topics.length; i++) {
         if (user) {
-            for (let i = 0; i < topics.length; i++) {
-                if (topics[i].ownerUID == auth.currentUser.uid) {
-                    topiced[i].style.display = 'block'
-                } else {
-                    topiced[i].style.display = 'none'
-                }
-            }
-        } else {
-            for (let i = 0; i < topics.length; i++) {
+            if (topics[i].ownerUID == auth.currentUser.uid) {
+                topiced[i].style.display = 'block'
+            } else {
                 topiced[i].style.display = 'none'
             }
+        } else {
+            topiced[i].style.display = 'none'
         }
-    }, 2000)
+    }
 })

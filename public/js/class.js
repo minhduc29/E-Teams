@@ -135,9 +135,7 @@ refClass.onSnapshot(snapshot => {
     })
     document.querySelector('#class-display').innerHTML += html
 
-    setTimeout(() => {
-        M.AutoInit()
-    }, 2000)
+    initialize()
 
     // Delete class
     let llDelBtn = document.getElementsByClassName("ll-del-btn")
@@ -261,24 +259,20 @@ refClass.onSnapshot(snapshot => {
 })
 
 auth.onAuthStateChanged(user => {
-    window.setTimeout(() => {
-        M.AutoInit()
+    initialize()
+    let classed = document.getElementsByClassName('class')
+    for (let i = 0; i < members.length; i++) {
         if (user) {
-            let classed = document.getElementsByClassName('class')
-            for (let i = 0; i < members.length; i++) {
-                const memRef = db.collection('members').doc(members[i].id)
-                memRef.get().then(doc => {
-                    if (doc.data().member.includes(auth.currentUser.uid)) {
-                        classed[i].style.display = 'block'
-                    } else {
-                        classed[i].style.display = 'none'
-                    }
-                })
-            }
+            const memRef = db.collection('members').doc(members[i].id)
+            memRef.get().then(doc => {
+                if (doc.data().member.includes(auth.currentUser.uid)) {
+                    classed[i].style.display = 'block'
+                } else {
+                    classed[i].style.display = 'none'
+                }
+            })
         } else {
-            for (let i = 0; i < members.length; i++) {
-                classed[i].style.display = 'none'
-            }
+            classed[i].style.display = 'none'
         }
-    }, 2000)
+    }
 })
