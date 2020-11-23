@@ -98,6 +98,7 @@ enterClassForm.addEventListener('submit', (e) => {
 const refClass = db.collection('classes');
 const refMem = db.collection('members');
 const refURL = db.collection('downloadURL');
+const storageRef = storage.ref()
 
 let members = [];
 let id = [];
@@ -146,6 +147,9 @@ refClass.onSnapshot(snapshot => {
                 refClass.doc(classes[i].name).delete()
                 refMem.doc(classes[i].name).delete()
                 refURL.doc(classes[i].name).delete()
+                storageRef.child(classes[i].name).listAll().then(res => {
+                    res.items.forEach(f => f.delete())
+                })
             } else {
                 alert("You don't have permission to delete this class")
             }
@@ -200,27 +204,29 @@ refClass.onSnapshot(snapshot => {
     let urlDisplay = document.getElementsByClassName('url-display');
     for (let i = 0; i < fileUpload.length; i++) {
         fileUpload[i].addEventListener('change', (e) => {
-            let md = document.querySelectorAll(".modal")
-            for (let i = 0; i < md.length; i++) {
-                if (md[i].style.display == "block") {
-                    M.Modal.getInstance(md[i]).close()
-                }
-            }
-            $("body").removeClass("loaded")
-            alert("If you have to wait more than 2s, please reload the page")
-
             // Get file
             let file = e.target.files[0];
 
-            // Storage ref
-            let storageRef = storage.ref(`${members[i].id}/${file.name}`);
+            if (file) {
+                let md = document.querySelectorAll(".modal")
+                for (let i = 0; i < md.length; i++) {
+                    if (md[i].style.display == "block") {
+                        M.Modal.getInstance(md[i]).close()
+                    }
+                }
+                $("body").removeClass("loaded")
 
-            // Upload file
-            storageRef.put(file);
+                getURL(i, file)
 
-            // Get download URL
-            setTimeout(() => {
-                storage.ref().child(`${members[i].id}/${file.name}`).getDownloadURL().then(url => {
+                async function getURL(i, file) {
+                    // Storage ref
+                    let storageRefFile = storage.ref(`${members[i].id}/${file.name}`)
+
+                    // Upload file
+                    await storageRefFile.put(file)
+
+                    // Get download URL
+                    url = await storage.ref().child(`${members[i].id}/${file.name}`).getDownloadURL()
                     refURL.doc(id[i]).set({
                         file: firebase.firestore.FieldValue.arrayUnion({
                             fileName: file.name,
@@ -228,10 +234,10 @@ refClass.onSnapshot(snapshot => {
                         })
                     }, {
                         merge: true
-                    });
+                    })
                     $("body").addClass("loaded")
-                });
-            }, 2000);
+                }
+            }
         });
     };
 
