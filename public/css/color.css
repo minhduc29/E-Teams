@@ -1,0 +1,28 @@
+#score {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+*{
+    background-color: #282c34;
+    color: #fff
+}
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 100%;
+    margin-top: 0px;
+}
+.ball {
+    border-radius: 100%;
+    border: 3px black solid;
+    margin: 20px;
+    height: 100px;
+    width: 100px;
+}
+#rgb {
+    text-align: center;
+    font-size: 20px;
+}
