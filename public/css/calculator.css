@@ -1,5 +1,10 @@
+html,
 body {
     background-color: #f1edff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .container {
     width: 250px;
@@ -53,6 +58,6 @@ body {
     color: #ffffff;
 }
 .num:hover {
-    background-color: #282c34;
+    background: linear-gradient(#008aff, #00ffe7);
     color: #ffffff;
 }
