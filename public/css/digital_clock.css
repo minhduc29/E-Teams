@@ -17,7 +17,7 @@ body {
     font-family: "Segoe UI", sans-serif;
     width: 340px;
     padding: 15px 10px;
-    border: 3px solid #2E94E3;
+    border: 3px solid #2eb9e3;
     border-radius: 5px;
     -webkit-box-reflect: below 1px linear-gradient(transparent, rgba(255, 255, 255, 0.1));
     transition: 0.5s;
@@ -26,7 +26,7 @@ body {
 
 .datetime:hover {
     background: linear-gradient(#008aff, #00ffe7);
-    box-shadow: 0 0 40px #2E94E3;
+    box-shadow: 0 0 40px #2eb9e3;
 }
 
 .date {
@@ -98,17 +98,6 @@ body {
 }
 
 .light .datetime {
-    color: #091921;
+    color: #47627e;
     background-color: #d1dae3;
-    border: 3px solid #e3762e;
-}
-
-.light .datetime:hover {
-    background: linear-gradient(#e4572e, #ffc914);
-    box-shadow: 0 0 40px #e3762e;
-    border: 3px solid #e3762e;
-}
-
-.light .time span:last-child {
-    background: linear-gradient(#e4572e, #ffc914);
 }

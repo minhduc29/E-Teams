@@ -81,7 +81,7 @@ body {
     box-shadow: inset -8px -8px 15px rgba(0, 0, 0, 0.5), inset 20px 20px 20px rgba(0, 0, 0, 0.3);
 }
 .light .button {
-    background-color: #091921;
+    background-color: #1f2e3d;
     color: #fff;
     box-shadow: -8px -8px 15px rgba(255, 255, 255, 0.05),
                 20px 20px 20px rgba(0, 0, 0, 0.3),
