@@ -36,3 +36,7 @@ function initClock() {
     updateClock();
     window.setInterval("updateClock()", 1);
 }
+
+function toggle() {
+    document.querySelector('body').classList.toggle('light');
+}

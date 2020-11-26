@@ -22,7 +22,8 @@ body {
 }
 .light .clock::before {
     background-color: #008eff;
-}.light .m::before {
+}
+.light .m::before {
     background-color: #091921;
 }
 .clock {
@@ -74,7 +75,6 @@ body {
 .s {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
     position: absolute;
     border-radius: 50%;
 }

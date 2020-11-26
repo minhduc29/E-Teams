@@ -214,7 +214,7 @@ $("#body").before(COMPONENT.preloader)
 $(window).on("load", function() {
     setTimeout(() => {
         $("body").addClass("loaded")
-    }, 3000)
+    }, 2000)
 })
 
 $("#body").before(COMPONENT.navBar)
