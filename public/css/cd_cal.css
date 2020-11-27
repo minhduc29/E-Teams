@@ -8,16 +8,9 @@ body {
 h1 {
     text-align: center;
     color: #fff;
-    font-size: 150px;
-    margin: 0;
-}
-h3 {
-    text-align: center;
-    color: #fff;
-    font-size: 50px;
+    font-size: 75px;
     text-transform: uppercase;
-    letter-spacing: 5px;
-    margin-top: 0;
+    margin: 100px;
 }
 #clock {
     display: flex;
@@ -54,8 +47,7 @@ span:nth-child(2) {
 .light {
     background-color: #d1dae3;
 }
-.light h1,
-.light h3 {
+.light h1 {
     color: #47627e;
 }
 .light #clock div {
@@ -97,10 +89,6 @@ span:nth-child(2) {
 }
 @media screen and (max-width: 750px) {
     h1 {
-        font-size: 100px;
-        margin-top: 50px;
-    }
-    h3 {
         font-size: 30px;
     }
     #clock {
