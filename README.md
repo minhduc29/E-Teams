@@ -85,13 +85,15 @@
 
 - 02/11/2020: Update color palette, font style, about and contact
 
-- 18/11/2020: Add To-Do functionality
+- 18/11/2020: Publish To-Do functionality
 
 - 19/11/2020: Allow user to delete topic in Learning Log
 
 - 21/11/2020: Update preloader
 
 - 23/11/2020: Allow user to delete class in Class
+
+- 28/11/2020: Publish Playground functionality
 ---
 #### Other
 - This is where we state some rules, errors, anything that's not relevant to the main features above. This part is vital. Don't miss anything in here.
