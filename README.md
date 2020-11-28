@@ -67,6 +67,13 @@
 
 - You can now delete the topic and its entries.
 ---
+#### Playground
+- This is where you have fun after stressful hours of studying.
+
+- Click on a card and have fun.
+
+- Maybe you will find some interesting facts about yourself or just an interesting game.
+---
 #### Update
 - This is where we show our update, new features with date and time.
 
