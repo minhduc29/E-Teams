@@ -98,11 +98,7 @@
 #### Other
 - This is where we state some rules, errors, anything that's not relevant to the main features above. This part is vital. Don't miss anything in here.
 
-- DO NOT SPAM with constant clicks, this may cause some errors. We have to work with a lot of data so please wait for 1 - 2 seconds at least to make sure everything works fine. In that time, please don't do any other action.
-
-- If your files are too large, you may have to wait and/or reload page and try to upload the same files several times (often 2 times).
-
-- There maybe some errors or bugs in Class or Discussion, if they occur, don't worry, just easily reload the page. If it still occur, please contact us.
+- There maybe some errors or bugs that we haven't known, if they occur, don't worry, just easily reload the page. If it still occur, please contact us.
 
 - This website is currently in experiments. We're working really hard to improve our website.
 
