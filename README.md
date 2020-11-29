@@ -73,6 +73,14 @@
 - Click on a card and have fun.
 
 - Maybe you will find some interesting facts about yourself or just an interesting game.
+
+- Some of the games might need to be downloaded.
+
+- Click on the link to download the game. Install it, open the folder that contains it then click on the .exe file.
+
+- Now you can play it.
+
+- If you still cannot play it, please contact Nguyen Minh Duc.
 ---
 #### Update
 - This is where we show our update, new features with date and time.
