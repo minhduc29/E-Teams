@@ -178,3 +178,6 @@ body {
     width: 50%;
     display: block;
 }
+#token-display {
+    overflow: auto;
+}

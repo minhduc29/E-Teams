@@ -18,6 +18,7 @@
   "homepage": "https://github.com/minhduc29/E-Teams#readme",
   "dependencies": {
     "agora-access-token": "^2.0.4",
+    "browserify": "^17.0.0",
     "chromedriver": "^85.0.1",
     "selenium-webdriver": "^4.0.0-alpha.7"
   }

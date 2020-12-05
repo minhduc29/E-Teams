@@ -56,8 +56,11 @@
             <div class="row col s6 m6">
                 <div class="card">
                     <div class="card-content bg-2f3162">
-                        <p id="channel-name-display" class="white-text">Channel Name: </p><br>
-                        <p id="token-display" class="white-text">Token: </p>
+                        <span class="white-text">Room Name: </span>
+                        <span id="channel-name-display" class="white-text"></span><br>
+                        <p class="white-text">Token: </p>
+                        <p id="token-display" class="white-text"></p>
+                        <button class="btn" id="copy">Copy Token</button>
                     </div>
                 </div>
             </div>
@@ -72,7 +75,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="channel" type="text">
-                                <label for="channel">Channel Name</label>
+                                <label for="channel">Room Name</label>
                             </div>
                         </div>
                         <button class="btn">Create</button>
@@ -90,7 +93,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <input id="channel-name" type="text">
-                                <label for="channel-name">Channel Name</label>
+                                <label for="channel-name">Room Name</label>
                             </div>
                         </div>
                         <div class="row">
