@@ -26,10 +26,9 @@
         <div class="section no-pad-bot">
             <div class="container">
                 <br><br>
-                <h1 class="header center text-4b88a2">Room (Beta)</h1>
+                <h1 class="header center text-4b88a2">Room</h1>
                 <div class="row center">
                     <h5 class="header col s12 light">Where people can make video call and voice chat</h5>
-                    <h5 class="header col s12 light">This functionality is currently in experiments</h5>
                     <h5 class="logout header col s12 light">Login or Register to get more information</h5>
                 </div>
                 <div class="logout row center">
@@ -37,10 +36,72 @@
                         Started</a>
                 </div>
                 <div class="login row center">
-                    <a href="https://solutions.agora.io/education/web/#/"
-                        class="btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Video Call</a>
+                    <div class="col s12 m6">
+                        <a href="#create-room-modal"
+                            class="double btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Create
+                            Room</a>
+                    </div>
+                    <div class="col s12 m6">
+                        <a href="#join-room-modal"
+                            class="double btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Join
+                            Room</a>
+                    </div>
                 </div>
                 <br><br>
+            </div>
+        </div>
+
+        <!-- Room information display -->
+        <div class="container">
+            <div class="row col s6 m6">
+                <div class="card">
+                    <div class="card-content bg-2f3162">
+                        <p id="channel-name-display" class="white-text">Channel Name: </p><br>
+                        <p id="token-display" class="white-text">Token: </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Room -->
+        <div id="create-room-modal" class="modal bg-gradient-2">
+            <div class="modal-content">
+                <h4 class="center text-2f3162">Create Room</h4>
+                <div class="row">
+                    <form id="create-room" class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="channel" type="text">
+                                <label for="channel">Channel Name</label>
+                            </div>
+                        </div>
+                        <button class="btn">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Join Room -->
+        <div id="join-room-modal" class="modal bg-gradient-2">
+            <div class="modal-content text-2f3162">
+                <h4 class="center">Join Room</h4>
+                <div class="row">
+                    <form id="join-room" class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="channel-name" type="text">
+                                <label for="channel-name">Channel Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="token" type="text">
+                                <label for="token">Token</label>
+                            </div>
+                        </div>
+                        <button class="btn">Join</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
