@@ -28253,12 +28253,23 @@
         alert("Missing room name")
       } else {
         channelName = $("#channel").val()
-        token = RtcTokenBuilder.buildTokenWithAccount(appID, appCert, channelName, uid, role, privilegeExpiredTs)
-        $("#channel-name-display").html(channelName)
-        $("#token-display").html(token)
-        const modal = document.querySelector('#create-room-modal')
-        M.Modal.getInstance(modal).close()
-        document.querySelector("#create-room").reset()
+        const roomRef = db.collection('rooms').doc(channelName)
+        roomRef.get().then(doc => {
+          if (doc.exists) {
+            alert('Please try another room name')
+          } else {
+            roomRef.set({
+              ownerUID: auth.currentUser.uid
+            }).then(() => {
+              token = RtcTokenBuilder.buildTokenWithAccount(appID, appCert, channelName, uid, role, privilegeExpiredTs)
+              $("#channel-name-display").html(channelName)
+              $("#token-display").html(token)
+              const modal = document.querySelector('#create-room-modal')
+              M.Modal.getInstance(modal).close()
+              document.querySelector("#create-room").reset()
+            })
+          }
+        })
       }
     })
 
@@ -28437,6 +28448,12 @@
           }
           removeView(id)
         }
+        const roomRef = db.collection('rooms').doc(rtc.params.channel)
+        roomRef.get().then(doc => {
+          if (doc.data().ownerUID == rtc.params.uid) {
+            roomRef.delete()
+          }
+        })
         rtc.localStream = null
         rtc.remoteStreams = []
         rtc.client = null
