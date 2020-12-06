@@ -93,7 +93,7 @@
 
 - You should frequently take a look at this part to make sure you don't miss anything new.
 
-- 16/10/2020: Fully integrate Learning Log to E-Teams
+- 16/10/2020: Fully integrate Learning Log into E-Teams
 
 - 17/10/2020: Allow user to change password in profile and update forget password functionality
 
@@ -109,7 +109,7 @@
 
 - 28/11/2020: Publish Playground functionality
 
-- 06/12/2020: Fully integrate Agora to E-Teams
+- 06/12/2020: Fully integrate Agora into E-Teams
 ---
 #### Other
 - This is where we state some rules, errors, anything that's not relevant to the main features above. This part is vital. Don't miss anything in here.

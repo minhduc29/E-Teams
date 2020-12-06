@@ -56,7 +56,8 @@ $("#create-room").submit(function (e) {
                 alert('Please try another room name')
             } else {
                 roomRef.set({
-                    ownerUID: auth.currentUser.uid
+                    ownerUID: auth.currentUser.uid,
+                    createdAt: new Date()
                 }).then(() => {
                     token = RtcTokenBuilder.buildTokenWithUid(appID, appCert, channelName, uid, role, privilegeExpiredTs)
                     $("#channel-name-display").html(channelName)
