@@ -55,6 +55,14 @@
 - This functionality is still in experiments.
 
 - This works quite similar to Zoom.
+  
+- We have only implemented the basic functionality of a video call.
+  
+- We are working as hard as possible to implement more functionality.
+  
+- You have to create a room first and the room name must be unique.
+  
+- Send your token for others and join the meeting.
 ---
 #### Learning Log
 - This is where you keep track of your learning.
