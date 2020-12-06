@@ -1,6 +1,6 @@
 # E-Teams
 #### _Project #4_ 
-- A web application mainly for online learning using **_Firebase_**, **_Agora_**, **_Materialize CSS_** and **_jQuery_**
+- A web application mainly for online learning using **_Firebase_**, **_Agora_**, **_Browserify_**, **_Materialize CSS_** and **_jQuery_**
 
 ## Demo
 - [E-Teams](https://e-teams.web.app/)
@@ -52,11 +52,9 @@
 - We'll soon have admin team to check discussions and users.
 ---
 #### Room
-- This functionality is currently in experiments.
+- This functionality is still in experiments.
 
 - This works quite similar to Zoom.
-
-- We're working as hard as possible to fully integrate Agora into our website, you still can use this beta version with some limits.
 ---
 #### Learning Log
 - This is where you keep track of your learning.
@@ -87,7 +85,7 @@
 
 - You should frequently take a look at this part to make sure you don't miss anything new.
 
-- 16/10/2020: Fully connect Learning Log to E-Teams
+- 16/10/2020: Fully integrate Learning Log to E-Teams
 
 - 17/10/2020: Allow user to change password in profile and update forget password functionality
 
@@ -102,6 +100,8 @@
 - 23/11/2020: Allow user to delete class in Class
 
 - 28/11/2020: Publish Playground functionality
+
+- 06/12/2020: Fully integrate Agora to E-Teams
 ---
 #### Other
 - This is where we state some rules, errors, anything that's not relevant to the main features above. This part is vital. Don't miss anything in here.
