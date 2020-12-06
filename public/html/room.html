@@ -36,14 +36,19 @@
                         Started</a>
                 </div>
                 <div class="login row center">
-                    <div class="col s12 m6">
+                    <div class="col s12 m4">
                         <a href="#create-room-modal"
                             class="double btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Create
                             Room</a>
                     </div>
-                    <div class="col s12 m6">
+                    <div class="col s12 m4">
                         <a href="#join-room-modal"
                             class="double btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Join
+                            Room</a>
+                    </div>
+                    <div class="col s12 m4">
+                        <a id="leave" href="#"
+                            class="double btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Leave
                             Room</a>
                     </div>
                 </div>
@@ -52,7 +57,7 @@
         </div>
 
         <!-- Room information display -->
-        <div class="container">
+        <div class="container login">
             <div class="row col s6 m6">
                 <div class="card">
                     <div class="card-content bg-2f3162">
@@ -60,11 +65,25 @@
                         <span id="channel-name-display" class="white-text"></span><br>
                         <p class="white-text">Token: </p>
                         <p id="token-display" class="white-text"></p>
-                        <button class="btn" id="copy">Copy Token</button>
+                        <button class="btn waves-effect waves-light bg-4b88a2" id="copy">Copy Token</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Display video call -->
+        <div class="container login">
+            <div class="col s12 m6">
+                <div class="video-grid" id="video">
+                    <div class="video-view">
+                        <div id="local_stream" class="video-placeholder"></div>
+                        <div id="local_video_info" class="video-profile hide"></div>
+                        <div id="video_autoplay_local" class="autoplay-fallback hide"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Create Room -->
         <div id="create-room-modal" class="modal bg-gradient-2">
