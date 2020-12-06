@@ -58,7 +58,7 @@ $("#create-room").submit(function (e) {
                 roomRef.set({
                     ownerUID: auth.currentUser.uid
                 }).then(() => {
-                    token = RtcTokenBuilder.buildTokenWithAccount(appID, appCert, channelName, uid, role, privilegeExpiredTs)
+                    token = RtcTokenBuilder.buildTokenWithUid(appID, appCert, channelName, uid, role, privilegeExpiredTs)
                     $("#channel-name-display").html(channelName)
                     $("#token-display").html(token)
                     const modal = document.querySelector('#create-room-modal')
