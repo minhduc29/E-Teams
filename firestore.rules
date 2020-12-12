@@ -39,5 +39,9 @@ service cloud.firestore {
     	allow read, create, delete;
       allow update: if false;
     }
+    match /chats/{chatID} {
+    	allow create, update, read;
+      allow delete: if false;
+    }
   }
 }
