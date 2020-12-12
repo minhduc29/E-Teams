@@ -4,7 +4,7 @@ const chatRef = db.collection("chats")
 // Create chat room
 $("#create-chat").submit((e) => {
     e.preventDefault()
-    
+
     // Get value
     let chatName = $("#chat-name").val()
 
@@ -45,25 +45,62 @@ chatRef.onSnapshot(snapshot => {
     })
     let html = ''
     chats.forEach(chat => {
-        console.log(chat);
-        html += `<div class="col s12 m12 row">
-                    <div class="card bg-2f3162">
-                        <div class="card-content white-text">
-                            <a href="#${chat.id}" class="modal-trigger">
-                                <h4 class="center white-text">${chat.id}</h4>
-                            </a>
-                        </div>
-                        <form class="entry-form col s12">
-                            <textarea class="entry materialize-textarea" placeholder="Messages"></textarea>
+        html += `<li class="chat">
+                    <h4 class="collapsible-header bg-2f3162 white-text">${chat.id}</h4>
+                    <a href="#add-mem-modal" class="btn chat-btn waves-effect waves-light bg-4b88a2 modal-trigger"><i class="material-icons">person_add</i></a>
+                    <div class="collapsible-body">
+                        <div class="msg-display"></div>
+                        <form class="col s12 send-msg">
+                            <div class="input-field col s12">
+                                <input id="${chat.id}" type="text">
+                                <label for="${chat.id}">Message</label>
+                            </div>
                             <button class="btn">Send</button>
                         </form>
                     </div>
-                    <div id="${chat.id}" class="modal bg-gradient-2">
-                        <div class="modal-content"></div>
-                    </div>
-                </div>`
+                </li>`
     })
     document.querySelector('#chat-display').innerHTML += html
+
+    // Check member to switch display
+    let chated = document.getElementsByClassName("chat")
+    for (let i = 0; i < chated.length; i++) {
+        if (chats[i].uids.includes(auth.currentUser.uid)) {
+            chated[i].style.display = "block"
+        } else {
+            chated[i].style.display = "none"
+        }
+    }
+
+    // Add members
+    let chatBtn = document.getElementsByClassName("chat-btn")
+    for (let i = 0; i < chatBtn.length; i++) {
+        chatBtn[i].addEventListener("click", function () {
+            let chatID = chats[i].id
+            $("#add-mem").submit((e) => {
+                e.preventDefault()
+
+                let mail = $("#mem-email").val()
+                db.collection('users').where("email", "==", mail).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        return chatRef.doc(chatID).set({
+                            uids: firebase.firestore.FieldValue.arrayUnion(doc.id),
+                            infos: firebase.firestore.FieldValue.arrayUnion({
+                                photoURL: doc.data().photoURL,
+                                username: doc.data().username
+                            })
+                        }, {
+                            merge: true
+                        }).then(() => {
+                            const modal = document.querySelector('#add-mem-modal')
+                            M.Modal.getInstance(modal).close()
+                            document.querySelector('#add-mem').reset()
+                        })
+                    })
+                })
+            })
+        })
+    }
 
     initialize()
 })

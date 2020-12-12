@@ -43,8 +43,10 @@
         </div>
 
         <!-- Display Chat -->
-        <div id="chat-display" class="container login"></div>
-
+        <div class="container login">
+            <ul id="chat-display" class="collapsible popout"></ul>
+        </div>
+        
         <!-- Create Chat Room-->
         <div id="create-chat-modal" class="modal bg-gradient-2">
             <div class="modal-content">
@@ -58,6 +60,24 @@
                             </div>
                         </div>
                         <button class="btn">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Members -->
+        <div id="add-mem-modal" class="modal bg-gradient-2">
+            <div class="modal-content">
+                <h4 class="center text-2f3162">Add Members</h4>
+                <div class="row">
+                    <form id="add-mem" class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="mem-email" type="email">
+                                <label for="mem-email">Member Email</label>
+                            </div>
+                        </div>
+                        <button class="btn">Add</button>
                     </form>
                 </div>
             </div>
