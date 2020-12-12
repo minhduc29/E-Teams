@@ -9,7 +9,7 @@ discussionForm.addEventListener('submit', (e) => {
 
     // Check blank value
     if (title == '' || description == '') {
-        alert('Missing title or description')
+        M.toast({html: 'Missing title or description', classes: 'bg-4b88a2'})
     } else {
         // Add data to firestore
         db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
@@ -24,7 +24,7 @@ discussionForm.addEventListener('submit', (e) => {
                 M.Modal.getInstance(modal).close()
                 discussionForm.reset()
             }).catch(err => {
-                alert(err.message)
+                M.toast({html: err.message, classes: 'bg-4b88a2'})
             })
         })
     }

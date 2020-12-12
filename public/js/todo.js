@@ -21,7 +21,7 @@ $("#add-todo").submit((e) => {
             document.querySelector("#add-todo").reset()
         })
     } else {
-        alert("The length of to-do must be more than 1 character")
+        M.toast({html: "The length of to-do must be more than 1 character", classes: 'bg-4b88a2'})
     }
 })
 

@@ -12,7 +12,7 @@ topicForm.addEventListener('submit', (e) => {
 
     // Check blank value
     if (topicName == '') {
-        alert('Missing topic name')
+        M.toast({html: 'Missing topic name', classes: 'bg-4b88a2'})
     } else {
         // Add data to firestore
         topicRef.add({
@@ -24,7 +24,7 @@ topicForm.addEventListener('submit', (e) => {
             M.Modal.getInstance(modal).close()
             topicForm.reset()
         }).catch(err => {
-            alert(err.message)
+            M.toast({html: err.message, classes: 'bg-4b88a2'})
         })
     }
 })

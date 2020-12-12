@@ -12,7 +12,7 @@ $("#create-chat").submit((e) => {
     if (chatName.length > 0) {
         chatRef.doc(chatName).get().then(doc => {
             if (doc.exists) {
-                alert("Please try another chat room name")
+                M.toast({html: "Please try another chat room name", classes: 'bg-4b88a2'})
             } else {
                 // Add data to firestore
                 db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
@@ -33,7 +33,7 @@ $("#create-chat").submit((e) => {
             }
         })
     } else {
-        alert("Invalid chat room name")
+        M.toast({html: "Invalid chat room name", classes: 'bg-4b88a2'})
     }
 })
 

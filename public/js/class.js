@@ -10,7 +10,7 @@ createClassForm.addEventListener('submit', (e) => {
 
     // Check valid information
     if (clpwConfirmation !== clPassword) {
-        alert('Password and password confirmation must be the same')
+        M.toast({html: 'Password and password confirmation must be the same', classes: 'bg-4b88a2'})
     } else {
         // Reference
         const classRef = db.collection('classes').doc(className)
@@ -20,7 +20,7 @@ createClassForm.addEventListener('submit', (e) => {
         // Check valid class id
         classRef.get().then(doc => {
             if (doc.exists) {
-                alert('Please try another class name')
+                M.toast({html: 'Please try another class name', classes: 'bg-4b88a2'})
             } else {
                 // Add data to firestore
                 db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
@@ -70,7 +70,7 @@ enterClassForm.addEventListener('submit', (e) => {
                 // Check if user already in class
                 memRef.get().then(mem => {
                     if (mem.data().member.includes(auth.currentUser.uid)) {
-                        alert('You are already in this class')
+                        M.toast({html: 'You are already in this class', classes: 'bg-4b88a2'})
                     } else {
                         // Update class data in firestore
                         return memRef.set({
@@ -86,10 +86,10 @@ enterClassForm.addEventListener('submit', (e) => {
                     }
                 })
             } else {
-                alert('Wrong password')
+                M.toast({html: 'Wrong password', classes: 'bg-4b88a2'})
             }
         } else {
-            alert(`There is no class named ${className}`)
+            M.toast({html: `There is no class named ${className}`, classes: 'bg-4b88a2'})
         }
     })
 })
@@ -148,7 +148,7 @@ refClass.onSnapshot(snapshot => {
                     res.items.forEach(f => f.delete())
                 })
             } else {
-                alert("You don't have permission to delete this class")
+                M.toast({html: "You don't have permission to delete this class", classes: 'bg-4b88a2'})
             }
         })
     }

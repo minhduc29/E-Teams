@@ -11,11 +11,11 @@ registerForm.addEventListener('submit', (e) => {
 
     // Register user
     if (username == '') {
-        alert('Missing username')
+        M.toast({html: 'Missing username', classes: 'bg-4b88a2'})
     } else if (username.length < 6) {
-        alert('Username must be at least 6 characters')
+        M.toast({html: 'Username must be at least 6 characters', classes: 'bg-4b88a2'})
     } else if (password !== pwcf) {
-        alert('Password and password confirmation must be the same')
+        M.toast({html: 'Password and password confirmation must be the same', classes: 'bg-4b88a2'})
     } else if (password === pwcf) {
         auth.createUserWithEmailAndPassword(email, password).then(cred => {
             // Create data firestore
@@ -32,7 +32,7 @@ registerForm.addEventListener('submit', (e) => {
             registerForm.reset()
         }).catch(err => {
             // Catch error
-            alert(err.message)
+            M.toast({html: err.message, classes: 'bg-4b88a2'})
         })
     }
 })
@@ -54,7 +54,7 @@ loginForm.addEventListener('submit', (e) => {
         loginForm.reset()
     }).catch(err => {
         // Catch error
-        alert(err.message)
+        M.toast({html: err.message, classes: 'bg-4b88a2'})
     })
 })
 

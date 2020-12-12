@@ -48,19 +48,19 @@ function changePassword(user) {
         let newPwCf = prompt('Confirm your new password: ')
         if (newPw == newPwCf) {
             user.updatePassword(newPw).catch(err => {
-                alert(err.message)
+                M.toast({html: err.message, classes: 'bg-4b88a2'})
             })
         } else {
-            alert('Wrong new password confirmation')
+            M.toast({html: 'Wrong new password confirmation', classes: 'bg-4b88a2'})
         }
 
         return db.collection('users').doc(user.uid).update({
             password: newPw
         }).then(() => {
-            alert('Password has been changed')
+            M.toast({html: 'Password has been changed', classes: 'bg-4b88a2'})
         })
     }).catch(err => {
-        alert(err.message)
+        M.toast({html: err.message, classes: 'bg-4b88a2'})
     })
 }
 
@@ -68,9 +68,9 @@ function changePassword(user) {
 function forgotPassword() {
     let email = prompt('Enter your email: ')
     auth.sendPasswordResetEmail(email).then(() => {
-        alert('Please check your email')
+        M.toast({html: 'Please check your email', classes: 'bg-4b88a2'})
     }).catch(err => {
-        alert(err.message)
+        M.toast({html: err.message, classes: 'bg-4b88a2'})
     })
 }
 

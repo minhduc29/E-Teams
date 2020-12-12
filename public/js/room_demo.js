@@ -47,13 +47,13 @@ $("#create-room").submit(function (e) {
     e.preventDefault()
 
     if ($("#channel").val() == "") {
-        alert("Missing room name")
+        M.toast({html: "Missing room name", classes: 'bg-4b88a2'})
     } else {
         channelName = $("#channel").val()
         const roomRef = db.collection('rooms').doc(channelName)
         roomRef.get().then(doc => {
             if (doc.exists) {
-                alert('Please try another room name')
+                M.toast({html: 'Please try another room name', classes: 'bg-4b88a2'})
             } else {
                 roomRef.set({
                     ownerUID: auth.currentUser.uid,
@@ -87,9 +87,9 @@ $("#join-room").submit(function (e) {
     e.preventDefault()
 
     if ($("#channel-name").val() == "") {
-        alert("Missing room name")
+        M.toast({html: "Missing room name", classes: 'bg-4b88a2'})
     } else if ($("#token").val() == "") {
-        alert("Missing token")
+        M.toast({html: "Missing token", classes: 'bg-4b88a2'})
     } else {
         let option = {
             appID: appID,
