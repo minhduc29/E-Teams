@@ -18,6 +18,19 @@
 
 - You can delete your to-do list after that if you want by clicking the X button.
 ---
+#### Chat Room
+- Like normal chat apps. This is where you can create chat room and send messages.
+
+- Click the CREATE CHAT ROOM button and create your own chat room.
+
+- The length of your room name must be at least 1 character and room name must be unique.
+
+- You can add members to your chat room.
+
+- Only members of the chat room can see it.
+
+- Then just simply send your messages to your groups.
+---
 #### Account
 - You must have an account to use this website. Register and login are very simple.
 
@@ -110,6 +123,8 @@
 - 28/11/2020: Publish Playground functionality
 
 - 06/12/2020: Fully integrate Agora into E-Teams
+
+- 12/12/2020: Add Chat Room to E-Teams
 ---
 #### Other
 - This is where we state some rules, errors, anything that's not relevant to the main features above. This part is vital. Don't miss anything in here.
