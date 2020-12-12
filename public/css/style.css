@@ -237,3 +237,17 @@ body {
 .chat {
     display: none;
 }
+
+.chat-img {
+    max-width: 40px !important;
+}
+
+.username {
+    vertical-align: 10px;
+    padding-left: 10px;
+}
+
+.content {
+    padding-left: 50px;
+    vertical-align: 10px;
+}

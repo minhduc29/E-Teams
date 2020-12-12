@@ -52,8 +52,7 @@ chatRef.onSnapshot(snapshot => {
                         <div class="msg-display"></div>
                         <form class="col s12 send-msg">
                             <div class="input-field col s12">
-                                <input id="${chat.id}" type="text">
-                                <label for="${chat.id}">Message</label>
+                                <input class="msg" placeholder="Message" type="text">
                             </div>
                             <button class="btn">Send</button>
                         </form>
@@ -100,6 +99,42 @@ chatRef.onSnapshot(snapshot => {
                 })
             })
         })
+    }
+
+    // Send messages
+    let sendMsg = document.getElementsByClassName("send-msg")
+    let msgContainer = document.getElementsByClassName("msg")
+    let msgDisplay = document.getElementsByClassName("msg-display")
+    for (let i = 0; i < sendMsg.length; i++) {
+        sendMsg[i].addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            chatRef.doc(chats[i].id).set({
+                messages: firebase.firestore.FieldValue.arrayUnion({
+                    content: msgContainer[i].value,
+                    by: chats[i].uids.indexOf(auth.currentUser.uid)
+                })
+            }, {
+                merge: true
+            }).then(() => {
+                sendMsg[i].reset()
+            })
+        })
+    }
+
+    // Display messages
+    for (let i = 0; i < chats.length; i++) {
+        msgDisplay[i].innerHTML = ''
+        for (let j = 0; j < chats[i].messages.length; j++) {
+            let index = chats[i].messages[j].by
+            msgDisplay[i].innerHTML += `<div class="card">
+                                            <div class="card-content bg-2f3162">
+                                                <img src="${chats[i].infos[index].photoURL}" alt="${chats[i].infos[index].username}" class="circle chat-img responsive-img">
+                                                <span class="username teal-text text-accent-3">${chats[i].infos[index].username}</span>
+                                                <p class="content white-text">${chats[i].messages[j].content}</p>
+                                            </div>
+                                        </div>`
+        }
     }
 
     initialize()
