@@ -15,6 +15,7 @@ const COMPONENT = {
                     <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li class="login"><a class="font-size-18" href="./todo.html">To-Do</a></li>
+                        <li class="login"><a class="font-size-18" href="./chat.html">Chat Room</a></li>
                         <li class="login"><a class="font-size-18 modal-trigger" href="#profile-modal">Profile</a></li>
                         <li class="login"><a class="font-size-18" href="./class.html">Class</a></li>
                         <li class="login"><a class="font-size-18" href="./discussion.html">Discussion</a></li>
@@ -32,6 +33,7 @@ const COMPONENT = {
         <!-- Responsive side nav -->
         <ul class="sidenav bg-000033" id="mobile-demo">
             <li class="login"><a class="white-text font-size-18" href="./todo.html">To-Do</a></li>
+            <li class="login"><a class="white-text font-size-18" href="./chat.html">Chat Room</a></li>
             <li class="login"><a class="white-text font-size-18 modal-trigger" href="#profile-modal">Profile</a></li>
             <li class="login"><a class="white-text font-size-18" href="./class.html">Class</a></li>
             <li class="login"><a class="white-text font-size-18" href="./discussion.html">Discussion</a></li>
