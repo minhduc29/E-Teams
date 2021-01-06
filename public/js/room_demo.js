@@ -25,19 +25,19 @@ let Toast = {
     info: (msg) => {
         Toastify({
             text: msg,
-            classes: "info-toast"
+            classes: 'bg-4b88a2'
         })
     },
     notice: (msg) => {
         Toastify({
             text: msg,
-            classes: "notice-toast"
+            classes: 'bg-4b88a2'
         })
     },
     error: (msg) => {
         Toastify({
             text: msg,
-            classes: "error-toast"
+            classes: 'bg-4b88a2'
         })
     }
 }
