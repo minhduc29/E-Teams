@@ -1,3 +1,5 @@
+import { notice, closeModal, initialize } from './function.js'
+
 // Add class data to firebase
 const createClassForm = document.querySelector('#create-class')
 createClassForm.addEventListener('submit', (e) => {
@@ -10,7 +12,7 @@ createClassForm.addEventListener('submit', (e) => {
 
     // Check valid information
     if (clpwConfirmation !== clPassword) {
-        M.toast({html: 'Password and password confirmation must be the same', classes: 'bg-4b88a2'})
+        notice('Password and password confirmation must be the same')
     } else {
         // Reference
         const classRef = db.collection('classes').doc(className)
@@ -20,7 +22,7 @@ createClassForm.addEventListener('submit', (e) => {
         // Check valid class id
         classRef.get().then(doc => {
             if (doc.exists) {
-                M.toast({html: 'Please try another class name', classes: 'bg-4b88a2'})
+                notice('Please try another class name')
             } else {
                 // Add data to firestore
                 db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
@@ -31,8 +33,7 @@ createClassForm.addEventListener('submit', (e) => {
                         ownerUID: auth.currentUser.uid
                     }).then(() => {
                         // Reset form
-                        const modal = document.querySelector('#create-class-modal')
-                        M.Modal.getInstance(modal).close()
+                        closeModal('#create-class-modal')
                         createClassForm.reset()
                     })
                 }).then(() => {
@@ -70,7 +71,7 @@ enterClassForm.addEventListener('submit', (e) => {
                 // Check if user already in class
                 memRef.get().then(mem => {
                     if (mem.data().member.includes(auth.currentUser.uid)) {
-                        M.toast({html: 'You are already in this class', classes: 'bg-4b88a2'})
+                        notice('You are already in this class')
                     } else {
                         // Update class data in firestore
                         return memRef.set({
@@ -79,17 +80,16 @@ enterClassForm.addEventListener('submit', (e) => {
                             merge: true
                         }).then(() => {
                             // Reset form
-                            const modal = document.querySelector('#enter-class-modal')
-                            M.Modal.getInstance(modal).close()
+                            closeModal('#enter-class-modal')
                             enterClassForm.reset()
                         })
                     }
                 })
             } else {
-                M.toast({html: 'Wrong password', classes: 'bg-4b88a2'})
+                notice('Wrong password')
             }
         } else {
-            M.toast({html: `There is no class named ${className}`, classes: 'bg-4b88a2'})
+            notice(`There is no class named ${className}`)
         }
     })
 })
@@ -148,7 +148,7 @@ refClass.onSnapshot(snapshot => {
                     res.items.forEach(f => f.delete())
                 })
             } else {
-                M.toast({html: "You don't have permission to delete this class", classes: 'bg-4b88a2'})
+                notice("You don't have permission to delete this class")
             }
         })
     }

@@ -1,3 +1,5 @@
+import { notice, closeModal, initialize } from './function.js'
+
 // Add discussion data to firebase
 const discussionForm = document.querySelector('#discuss')
 discussionForm.addEventListener('submit', (e) => {
@@ -9,7 +11,7 @@ discussionForm.addEventListener('submit', (e) => {
 
     // Check blank value
     if (title == '' || description == '') {
-        M.toast({html: 'Missing title or description', classes: 'bg-4b88a2'})
+        notice('Missing title or description')
     } else {
         // Add data to firestore
         db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
@@ -20,11 +22,10 @@ discussionForm.addEventListener('submit', (e) => {
                 like: 0
             }).then(() => {
                 // Reset form
-                const modal = document.querySelector('#discuss-modal')
-                M.Modal.getInstance(modal).close()
+                closeModal('#discuss-modal')
                 discussionForm.reset()
             }).catch(err => {
-                M.toast({html: err.message, classes: 'bg-4b88a2'})
+                notice(err.message)
             })
         })
     }

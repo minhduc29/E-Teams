@@ -1,3 +1,5 @@
+import { notice, closeModal, initialize } from './function.js'
+
 // Reference
 const chatRef = db.collection("chats")
 
@@ -12,7 +14,7 @@ $("#create-chat").submit((e) => {
     if (chatName.length > 0) {
         chatRef.doc(chatName).get().then(doc => {
             if (doc.exists) {
-                M.toast({html: "Please try another chat room name", classes: 'bg-4b88a2'})
+                notice("Please try another chat room name")
             } else {
                 // Add data to firestore
                 db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
@@ -26,14 +28,13 @@ $("#create-chat").submit((e) => {
                     })
                 }).then(() => {
                     // Reset form
-                    const modal = document.querySelector('#create-chat-modal')
-                    M.Modal.getInstance(modal).close()
+                    closeModal('#create-chat-modal')
                     document.querySelector("#create-chat").reset()
                 })
             }
         })
     } else {
-        M.toast({html: "Invalid chat room name", classes: 'bg-4b88a2'})
+        notice("Invalid chat room name")
     }
 })
 
@@ -91,8 +92,7 @@ chatRef.onSnapshot(snapshot => {
                         }, {
                             merge: true
                         }).then(() => {
-                            const modal = document.querySelector('#add-mem-modal')
-                            M.Modal.getInstance(modal).close()
+                            closeModal('#add-mem-modal')
                             document.querySelector('#add-mem').reset()
                         })
                     })

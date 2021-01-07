@@ -1,3 +1,5 @@
+import { notice, closeModal, initialize } from './function.js'
+
 // Reference
 const topicRef = db.collection('topics')
 const entryRef = db.collection('entries')
@@ -12,7 +14,7 @@ topicForm.addEventListener('submit', (e) => {
 
     // Check blank value
     if (topicName == '') {
-        M.toast({html: 'Missing topic name', classes: 'bg-4b88a2'})
+        notice('Missing topic name')
     } else {
         // Add data to firestore
         topicRef.add({
@@ -20,11 +22,10 @@ topicForm.addEventListener('submit', (e) => {
             ownerUID: auth.currentUser.uid
         }).then(() => {
             // Reset form
-            const modal = document.querySelector('#add-topic-modal')
-            M.Modal.getInstance(modal).close()
+            closeModal('#add-topic-modal')
             topicForm.reset()
         }).catch(err => {
-            M.toast({html: err.message, classes: 'bg-4b88a2'})
+            notice(err.message)
         })
     }
 })

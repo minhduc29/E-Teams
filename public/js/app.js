@@ -1,102 +1,104 @@
-function initialize() {
-    M.AutoInit()
-}
+import { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal } from './function.js'
 
+// Initialize
 initialize()
 
 // Copyright
-let cpr = document.getElementById('cpr')
-let year = new Date().getFullYear()
-cpr.insertAdjacentHTML('beforeend', year)
+copyright()
 
-// Setup UI for specific part
-const logout = document.querySelectorAll('.logout')
-const login = document.querySelectorAll('.login')
-const profile = document.getElementById('profile')
-function setupUI(user) {
-    if (user) {
-        db.collection('users').doc(user.uid).get().then(doc => {
-            // Display profile
-            const html = `
-                <br><h5>Email: ${user.email}</h5>
-                <br><h5>Username: ${doc.data().username}</h5>`
-            profile.innerHTML = html
+// Register
+const registerForm = document.querySelector('#register')
+registerForm.addEventListener('submit', (e) => {
+    e.preventDefault()
 
-            if (doc.data().photoURL) {
-                $("#profile-pic").attr('src', doc.data().photoURL)
-            }
+    // Get user info
+    const username = registerForm['username'].value
+    const email = registerForm['email2'].value
+    const password = registerForm['password2'].value
+    const pwcf = registerForm['pwconfirmation'].value
+
+    // Register user
+    if (username == '') {
+        notice('Missing username')
+    } else if (username.length < 6) {
+        notice('Username must be at least 6 characters')
+    } else if (password !== pwcf) {
+        notice('Password and password confirmation must be the same')
+    } else if (password === pwcf) {
+        auth.createUserWithEmailAndPassword(email, password).then(cred => {
+            // Create data firestore
+            return db.collection('users').doc(cred.user.uid).set({
+                username: username,
+                email: email,
+                liked: [],
+                photoURL: 'https://firebasestorage.googleapis.com/v0/b/e-teams.appspot.com/o/users%2Fprofile_picture.png?alt=media&token=b81c9c34-010c-4249-aa74-3c36d7ca183b'
+            })
+        }).then(() => {
+            // Reset form
+            closeModal('#register-modal')
+            registerForm.reset()
+        }).catch(err => {
+            // Catch error
+            notice(err.message)
         })
-
-        // Toggle UI
-        login.forEach(item => item.style.display = 'block')
-        logout.forEach(item => item.style.display = 'none')
-    } else {
-        // Toggle UI
-        login.forEach(item => item.style.display = 'none')
-        logout.forEach(item => item.style.display = 'block')
     }
+})
+
+// Login
+const loginForm = document.querySelector('#login')
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    // Get user info
+    const email = loginForm['email'].value
+    const password = loginForm['password'].value
+
+    // Login user
+    auth.signInWithEmailAndPassword(email, password).then(() => {
+        // Reset form
+        closeModal('#login-modal')
+        loginForm.reset()
+    }).catch(err => {
+        // Catch error
+        notice(err.message)
+    })
+})
+
+// Logout
+const logoutBtn = document.getElementsByClassName('logout-btn')
+for (let i = 0; i < logoutBtn.length; i++) {
+    logoutBtn[i].addEventListener('click', (e) => {
+        e.preventDefault()
+        auth.signOut()
+    })
 }
+
+// Listen for auth status to setup UI
+auth.onAuthStateChanged(user => {
+    if (user) {
+        setupUI(user)
+    } else {
+        setupUI()
+    }
+})
 
 // Change password
-function changePassword(user) {
-    const credential = firebase.auth.EmailAuthProvider.credential(
-        email = prompt('Enter your email: '),
-        password = prompt('Enter your password: ')
-    )
-    user.reauthenticateWithCredential(credential).then(() => {
-        let newPw = prompt('Enter your new password: ')
-        let newPwCf = prompt('Confirm your new password: ')
-        if (newPw == newPwCf) {
-            user.updatePassword(newPw).catch(err => {
-                M.toast({html: err.message, classes: 'bg-4b88a2'})
-            })
-        } else {
-            M.toast({html: 'Wrong new password confirmation', classes: 'bg-4b88a2'})
-        }
-
-        return db.collection('users').doc(user.uid).update({
-            password: newPw
-        }).then(() => {
-            M.toast({html: 'Password has been changed', classes: 'bg-4b88a2'})
-        })
-    }).catch(err => {
-        M.toast({html: err.message, classes: 'bg-4b88a2'})
-    })
-}
+const changePw = document.getElementById('change-pw')
+changePw.addEventListener('click', (e) => {
+    e.preventDefault()
+    changePassword(auth.currentUser)
+})
 
 // Forgot password
-function forgotPassword() {
-    let email = prompt('Enter your email: ')
-    auth.sendPasswordResetEmail(email).then(() => {
-        M.toast({html: 'Please check your email', classes: 'bg-4b88a2'})
-    }).catch(err => {
-        M.toast({html: err.message, classes: 'bg-4b88a2'})
-    })
-}
+const forgotPw = document.getElementById('forgot-pw')
+forgotPw.addEventListener('click', (e) => {
+    e.preventDefault()
+    forgotPassword()
+})
 
 // Change profile picture
-async function changeProfilePic(e) {
-    let file = e.target.files[0]
-    userRef = db.collection('users').doc(auth.currentUser.uid)
-
-    if (file) {
-        $('body').removeClass('loaded')
-        M.Modal.getInstance($("#profile-modal")).close()
-
-        let fileRef = storageRef.child(`users/${auth.currentUser.uid}.jpg`)
-
-        await fileRef.put(file)
-        let url = await fileRef.getDownloadURL()
-
-        userRef.set({
-            photoURL: url
-        }, {
-            merge: true
-        })
-    }
-
-    userRef.onSnapshot(snapshot => {
-        $("#profile-pic").attr('src', snapshot.data().photoURL)
-        $('body').addClass('loaded')
-    })
-}
+const changePp = document.getElementById('change-pp')
+changePp.addEventListener('change', (e) => {
+    e.preventDefault()
+    changeProfilePic(e)
+})

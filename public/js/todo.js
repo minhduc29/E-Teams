@@ -1,3 +1,5 @@
+import { notice, closeModal } from './function.js'
+
 // Reference
 const todoRef = db.collection("todos")
 
@@ -17,11 +19,11 @@ $("#add-todo").submit((e) => {
             merge: true
         }).then(() => {
             // Reset form and close modal
-            M.Modal.getInstance($("#todo-modal")).close()
+            closeModal("#todo-modal")
             document.querySelector("#add-todo").reset()
         })
     } else {
-        M.toast({html: "The length of to-do must be more than 1 character", classes: 'bg-4b88a2'})
+        notice("The length of to-do must be more than 1 character")
     }
 })
 
