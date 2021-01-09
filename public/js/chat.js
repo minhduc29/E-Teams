@@ -1,4 +1,4 @@
-import { notice, closeModal, initialize } from './function.js'
+import { notice, closeModal, initialize, getDocument, setData, dataArr } from './function.js'
 
 // Reference
 const chatRef = db.collection("chats")
@@ -12,20 +12,21 @@ $("#create-chat").submit((e) => {
 
     // Check valid
     if (chatName.length > 0) {
-        chatRef.doc(chatName).get().then(doc => {
+        getDocument('chats', chatName).then(doc => {
             if (doc.exists) {
                 notice("Please try another chat room name")
             } else {
                 // Add data to firestore
-                db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
-                    return chatRef.doc(chatName).set({
+                getDocument('users', auth.currentUser.uid).then(doc => {
+                    const initialChatData = {
                         uids: [auth.currentUser.uid],
                         infos: [{
                             photoURL: doc.data().photoURL,
                             username: doc.data().username
                         }],
                         messages: []
-                    })
+                    }
+                    setData('chats', chatName, false, initialChatData)
                 }).then(() => {
                     // Reset form
                     closeModal('#create-chat-modal')
@@ -83,15 +84,15 @@ chatRef.onSnapshot(snapshot => {
                 let mail = $("#mem-email").val()
                 db.collection('users').where("email", "==", mail).get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
-                        return chatRef.doc(chatID).set({
-                            uids: firebase.firestore.FieldValue.arrayUnion(doc.id),
-                            infos: firebase.firestore.FieldValue.arrayUnion({
-                                photoURL: doc.data().photoURL,
-                                username: doc.data().username
-                            })
-                        }, {
-                            merge: true
-                        }).then(() => {
+                        const infos = {
+                            photoURL: doc.data().photoURL,
+                            username: doc.data().username
+                        }
+                        const memberData = {
+                            uids: dataArr(doc.id, 'union'),
+                            infos: dataArr(infos, 'union')
+                        }
+                        setData('chats', chatID, true, memberData).then(() => {
                             closeModal('#add-mem-modal')
                             document.querySelector('#add-mem').reset()
                         })
@@ -109,14 +110,14 @@ chatRef.onSnapshot(snapshot => {
         sendMsg[i].addEventListener('submit', (e) => {
             e.preventDefault()
 
-            chatRef.doc(chats[i].id).set({
-                messages: firebase.firestore.FieldValue.arrayUnion({
-                    content: msgContainer[i].value,
-                    by: chats[i].uids.indexOf(auth.currentUser.uid)
-                })
-            }, {
-                merge: true
-            }).then(() => {
+            const msgValue = {
+                content: msgContainer[i].value,
+                by: chats[i].uids.indexOf(auth.currentUser.uid)
+            }
+            const msg = {
+                messages: dataArr(msgValue, 'union')
+            }
+            setData('chats', chats[i].id, true, msg).then(() => {
                 sendMsg[i].reset()
             })
         })

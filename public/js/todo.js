@@ -1,4 +1,4 @@
-import { notice, closeModal } from './function.js'
+import { notice, closeModal, setData, dataArr } from './function.js'
 
 // Reference
 const todoRef = db.collection("todos")
@@ -13,11 +13,10 @@ $("#add-todo").submit((e) => {
     // Check length
     if (todo.length > 1) {
         // Add data
-        todoRef.doc(auth.currentUser.uid).set({
-            todo: firebase.firestore.FieldValue.arrayUnion(todo)
-        }, {
-            merge: true
-        }).then(() => {
+        const todoData = {
+            todo: dataArr(todo, 'union')
+        }
+        setData('todos', auth.currentUser.uid, true, todoData).then(() => {
             // Reset form and close modal
             closeModal("#todo-modal")
             document.querySelector("#add-todo").reset()
@@ -62,9 +61,10 @@ todoRef.onSnapshot(snapshot => {
     let delBtn = document.getElementsByClassName("del-btn")
     for (let i = 0; i < delBtn.length; i++) {
         delBtn[i].addEventListener("click", () => {
-            todoRef.doc(auth.currentUser.uid).update({
-                todo: firebase.firestore.FieldValue.arrayRemove(content[i])
-            })
+            const todoData = {
+                todo: dataArr(content[i], 'remove')
+            }
+            setData('todos', auth.currentUser.uid, true, todoData)
         })
     }
 })

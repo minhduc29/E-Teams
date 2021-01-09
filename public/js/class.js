@@ -1,4 +1,4 @@
-import { notice, closeModal, initialize } from './function.js'
+import { notice, closeModal, initialize, setData, getDocument, dataArr } from './function.js'
 
 // Add class data to firebase
 const createClassForm = document.querySelector('#create-class')
@@ -14,35 +14,36 @@ createClassForm.addEventListener('submit', (e) => {
     if (clpwConfirmation !== clPassword) {
         notice('Password and password confirmation must be the same')
     } else {
-        // Reference
-        const classRef = db.collection('classes').doc(className)
         const memRef = db.collection('members').doc(className)
         const urlRef = db.collection('downloadURL').doc(className)
 
         // Check valid class id
-        classRef.get().then(doc => {
+        getDocument('classes', className).then(doc => {
             if (doc.exists) {
                 notice('Please try another class name')
             } else {
                 // Add data to firestore
-                db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
-                    return classRef.set({
+                getDocument('users', auth.currentUser.uid).then(doc => {
+                    const initialClassData = {
                         name: className,
                         password: clPassword,
                         owner: doc.data().username,
                         ownerUID: auth.currentUser.uid
-                    }).then(() => {
+                    }
+                    setData('classes', className, false, initialClassData).then(() => {
                         // Reset form
                         closeModal('#create-class-modal')
                         createClassForm.reset()
                     })
                 }).then(() => {
-                    return memRef.set({
+                    const initialMemData = {
                         member: [auth.currentUser.uid]
-                    }).then(() => {
-                        return urlRef.set({
+                    }
+                    setData('members', className, false, initialMemData).then(() => {
+                        const initialUrlData = {
                             file: []
-                        })
+                        }
+                        setData('downloadURL', className, false, initialUrlData)
                     })
                 })
             }
@@ -59,26 +60,21 @@ enterClassForm.addEventListener('submit', (e) => {
     const className = enterClassForm['clname2'].value
     const clPassword = enterClassForm['clpassword2'].value
 
-    // Reference to data in firestore
-    const classRef = db.collection('classes').doc(className)
-    const memRef = db.collection('members').doc(className)
-
     // Check valid class id
-    classRef.get().then(doc => {
+    getDocument('classes', className).then(doc => {
         if (doc.exists) {
             // Check valid password
             if (doc.data().password == clPassword) {
                 // Check if user already in class
-                memRef.get().then(mem => {
+                getDocument('members', className).then(mem => {
                     if (mem.data().member.includes(auth.currentUser.uid)) {
                         notice('You are already in this class')
                     } else {
                         // Update class data in firestore
-                        return memRef.set({
-                            member: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.uid)
-                        }, {
-                            merge: true
-                        }).then(() => {
+                        const memData = {
+                            member: dataArr(auth.currentUser.uid, 'union')
+                        }
+                        setData('members', className, true, memData).then(() => {
                             // Reset form
                             closeModal('#enter-class-modal')
                             enterClassForm.reset()
@@ -168,7 +164,7 @@ refClass.onSnapshot(snapshot => {
             memberDisplay[i].innerHTML = ''
             for (let e = 0; e < members[i].member.length; e++) {
                 let uid = members[i].id
-                db.collection('users').doc(members[i].member[e]).get().then(doc => {
+                getDocument('users', members[i].member[e]).then(doc => {
                     mem_html += `<li class="col s12 m3">${doc.data().username}</li>`
                     for (let x = 0; x < id.length; x++) {
                         if (uid == id[x]) {
@@ -181,8 +177,7 @@ refClass.onSnapshot(snapshot => {
 
         let classed = document.getElementsByClassName('class')
         for (let i = 0; i < members.length; i++) {
-            const memRef = db.collection('members').doc(members[i].id)
-            memRef.get().then(doc => {
+            getDocument('members', members[i].id).then(doc => {
                 if (auth.currentUser) {
                     if (doc.data().member.includes(auth.currentUser.uid)) {
                         classed[i].style.display = 'block'
@@ -224,14 +219,14 @@ refClass.onSnapshot(snapshot => {
 
                     // Get download URL
                     let url = await fileRef.getDownloadURL()
-                    refURL.doc(id[i]).set({
-                        file: firebase.firestore.FieldValue.arrayUnion({
-                            fileName: file.name,
-                            url: url
-                        })
-                    }, {
-                        merge: true
-                    })
+                    const fileInfo = {
+                        fileName: file.name,
+                        url: url
+                    }
+                    const fileData = {
+                        file: dataArr(fileInfo, 'union')
+                    }
+                    setData('downloadURL', id[i], true, fileData)
                     $("body").addClass("loaded")
                 }
             }
@@ -262,8 +257,7 @@ auth.onAuthStateChanged(user => {
     let classed = document.getElementsByClassName('class')
     for (let i = 0; i < members.length; i++) {
         if (user) {
-            const memRef = db.collection('members').doc(members[i].id)
-            memRef.get().then(doc => {
+            getDocument('members', members[i].id).then(doc => {
                 if (doc.data().member.includes(auth.currentUser.uid)) {
                     classed[i].style.display = 'block'
                 } else {

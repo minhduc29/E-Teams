@@ -1,4 +1,4 @@
-import { notice, closeModal, initialize } from './function.js'
+import { notice, closeModal, initialize, getDocument, dataArr, setData } from './function.js'
 
 // Add discussion data to firebase
 const discussionForm = document.querySelector('#discuss')
@@ -14,7 +14,7 @@ discussionForm.addEventListener('submit', (e) => {
         notice('Missing title or description')
     } else {
         // Add data to firestore
-        db.collection('users').doc(auth.currentUser.uid).get().then(doc => {
+        getDocument('users', auth.currentUser.uid).then(doc => {
             db.collection('discussions').add({
                 title: title,
                 description: description,
@@ -79,23 +79,22 @@ ref.onSnapshot(snapshot => {
         // Define firestore data
         let user = db.collection('users').doc(auth.currentUser.uid)
         let discussion = db.collection('discussions').doc(id[i])
-        let comment = db.collection('comments').doc(id[i])
 
         // Like discussion
         likes[i].addEventListener('click', (e) => {
             e.preventDefault()
             $("body").removeClass("loaded")
 
-            return user.get().then(doc => {
+            getDocument('users', auth.currentUser.uid).then(doc => {
                 // Check if user hasn't already liked
                 if (doc.data().liked.includes(id[i])) {
                     // Update the array in user doc
                     return user.update({
-                        liked: firebase.firestore.FieldValue.arrayRemove(id[i])
+                        liked: dataArr(id[i], 'remove')
                     }).then(() => {
                         // Update the likes on the discussion
                         return discussion.update({
-                            like: firebase.firestore.FieldValue.increment(-1)
+                            like: dataArr(-1, 'increment')
                         }).then(() => {
                             $("body").addClass("loaded")
                         })
@@ -107,7 +106,7 @@ ref.onSnapshot(snapshot => {
                     }).then(() => {
                         // Update the likes on the discussion
                         return discussion.update({
-                            like: firebase.firestore.FieldValue.increment(1)
+                            like: dataArr(1, 'increment')
                         }).then(() => {
                             $("body").addClass("loaded")
                         })
@@ -120,15 +119,15 @@ ref.onSnapshot(snapshot => {
         commentForms[i].addEventListener('submit', (e) => {
             e.preventDefault()
 
-            return user.get().then(doc => {
-                return comment.set({
-                    comment: firebase.firestore.FieldValue.arrayUnion({
-                        owner: doc.data().username,
-                        comment: comments[i].value
-                    })
-                }, {
-                    merge: true
-                }).then(() => {
+            getDocument('users', auth.currentUser.uid).then(doc => {
+                const commentInfo = {
+                    owner: doc.data().username,
+                    comment: comments[i].value
+                }
+                const commentData = {
+                    comment: dataArr(commentInfo, 'union')
+                }
+                setData('comments', id[i], true, commentData).then(() => {
                     // Reset form
                     commentForms[i].reset()
                 })

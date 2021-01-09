@@ -1,4 +1,4 @@
-import { notice, closeModal, initialize } from './function.js'
+import { notice, closeModal, initialize, setData, dataArr } from './function.js'
 
 // Reference
 const topicRef = db.collection('topics')
@@ -77,18 +77,14 @@ topicRef.onSnapshot(snapshot => {
     let entryForms = document.getElementsByClassName('entry-form')
 
     for (let i = 0; i < topicID.length; i++) {
-        // Reference
-        let entry = db.collection('entries').doc(topicID[i])
-
         // Save entry to firestore
         entryForms[i].addEventListener('submit', (e) => {
             e.preventDefault()
 
-            return entry.set({
-                entry: firebase.firestore.FieldValue.arrayUnion(entries[i].value)
-            }, {
-                merge: true
-            }).then(() => {
+            const entryData = {
+                entry: dataArr(entries[i].value, 'union')
+            }
+            setData('entries', topicID[i], true, entryData).then(() => {
                 // Reset form
                 entryForms[i].reset()
             })

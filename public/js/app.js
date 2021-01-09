@@ -1,4 +1,4 @@
-import { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal } from './function.js'
+import { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal, setData } from './function.js'
 
 // Initialize
 initialize()
@@ -27,12 +27,13 @@ registerForm.addEventListener('submit', (e) => {
     } else if (password === pwcf) {
         auth.createUserWithEmailAndPassword(email, password).then(cred => {
             // Create data firestore
-            return db.collection('users').doc(cred.user.uid).set({
+            const initialData = {
                 username: username,
                 email: email,
                 liked: [],
                 photoURL: 'https://firebasestorage.googleapis.com/v0/b/e-teams.appspot.com/o/users%2Fprofile_picture.png?alt=media&token=b81c9c34-010c-4249-aa74-3c36d7ca183b'
-            })
+            }
+            setData('users', cred.user.uid, false, initialData)
         }).then(() => {
             // Reset form
             closeModal('#register-modal')

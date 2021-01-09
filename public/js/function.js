@@ -114,4 +114,31 @@ function closeModal(modalID) {
     M.Modal.getInstance(modal).close()
 }
 
-export { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal }
+// Set data firestore
+function setData(collection, doc, merge, data) {
+    if (merge) {
+        return db.collection(collection).doc(doc).set(data, { merge: true })
+    } else {
+        return db.collection(collection).doc(doc).set(data)
+    }
+}
+
+// Array union firestore
+function dataArr(data, type) {
+    if (type == 'union') {
+        return firebase.firestore.FieldValue.arrayUnion(data)
+    } else if (type == 'remove') {
+        return firebase.firestore.FieldValue.arrayRemove(data)
+    } else if (type == 'increment') {
+        return firebase.firestore.FieldValue.increment(data)
+    } else {
+        return notice("Invalid type")
+    }
+}
+
+// Get document firestore
+function getDocument(collection, doc) {
+    return db.collection(collection).doc(doc).get()
+}
+
+export { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal, setData, dataArr, getDocument }
