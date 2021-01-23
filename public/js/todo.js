@@ -1,4 +1,4 @@
-import { notice, closeModal, setData, dataArr } from './function.js'
+import { notice, closeModal, setData, dataArr } from './utils.js'
 
 // Reference
 const todoRef = db.collection("todos")

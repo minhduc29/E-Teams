@@ -1,4 +1,4 @@
-import { notice, closeModal, initialize, getDocument, setData, dataArr } from './function.js'
+import { notice, closeModal, initialize, getDocument, setData, dataArr } from './utils.js'
 
 // Reference
 const chatRef = db.collection("chats")

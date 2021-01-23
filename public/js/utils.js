@@ -141,4 +141,11 @@ function getDocument(collection, doc) {
     return db.collection(collection).doc(doc).get()
 }
 
-export { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal, setData, dataArr, getDocument }
+const css = `
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<style>
+    @import "../css/style.css"
+</style>`
+
+export { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal, setData, dataArr, getDocument, css }

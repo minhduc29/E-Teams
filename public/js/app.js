@@ -1,4 +1,4 @@
-import { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal, setData } from './function.js'
+import { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal, setData } from './utils.js'
 
 // Initialize
 initialize()

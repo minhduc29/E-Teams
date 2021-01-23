@@ -1,4 +1,4 @@
-import { notice, closeModal, initialize, getDocument, dataArr, setData } from './function.js'
+import { notice, closeModal, initialize, getDocument, dataArr, setData } from './utils.js'
 
 // Add discussion data to firebase
 const discussionForm = document.querySelector('#discuss')

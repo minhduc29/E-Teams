@@ -1,4 +1,4 @@
-import { notice, closeModal, initialize, setData, getDocument, dataArr } from './function.js'
+import { notice, closeModal, initialize, setData, getDocument, dataArr } from './utils.js'
 
 // Add class data to firebase
 const createClassForm = document.querySelector('#create-class')

@@ -1,4 +1,4 @@
-import { notice, closeModal, initialize, setData, dataArr } from './function.js'
+import { notice, closeModal, initialize, setData, dataArr } from './utils.js'
 
 // Reference
 const topicRef = db.collection('topics')
