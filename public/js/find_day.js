@@ -4,7 +4,7 @@ function calculateDay() {
     var YYYY = Number(prompt("Year: "))
 
     if (isValidDay(DD, MM, YYYY)) {
-        day(DD, MM, YYYY)
+        dayExe(DD, MM, YYYY)
     } else {
         alert("Wrong date!")
     }
@@ -46,7 +46,7 @@ function isValidDay(DD, MM, YYYY) {
 }
 
 let container = document.querySelector(".container")
-function day(DD, MM, YYYY) {
+function dayExe(DD, MM, YYYY) {
     let birthday = new Date(YYYY, MM-1, DD)
     let day = birthday.getDay()
 

@@ -1,4 +1,4 @@
-$("#clock").countdown('2021/1/1', function(e) {
+$("#clock").countdown('2022/1/1', function(e) {
     $(this).html(e.strftime(''
     + '<div><span>%m</span><span>Months</span></div>'
     + '<div><span>%n</span><span>Days</span></div>'
