@@ -114,12 +114,11 @@ class DiscussionScreen extends HTMLElement {
 
         // Display discussion
         const discussionRef = db.collection('discussions')
-        discussionRef.orderBy('date', 'desc').limit(50).onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-                const data = change.doc.data()
-                if (change.type == "added") {
-                    this._shadowRoot.querySelector('#discuss-display').innerHTML += `<discussion-item title="${data.title}" description="${data.description}" ownerPhoto="${data.ownerPhoto}" img="${data.photoURL}" time="${data.time}" file="${data.file}" owner="${data.owner}" like="${data.liked.length}" uid="${change.doc.id}"></discussion-item>`
-                }
+        discussionRef.orderBy('date', 'desc').onSnapshot(snapshot => {
+            this._shadowRoot.querySelector('#discuss-display').innerHTML = ""
+            snapshot.forEach(doc => {
+                const data = doc.data()
+                this._shadowRoot.querySelector('#discuss-display').innerHTML += `<discussion-item title="${data.title}" description="${data.description}" ownerPhoto="${data.ownerPhoto}" img="${data.photoURL}" time="${data.time}" file="${data.file}" owner="${data.owner}" like="${data.liked.length}" uid="${doc.id}"></discussion-item>`
             })
         })
     }

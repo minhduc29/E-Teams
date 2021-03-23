@@ -20,10 +20,12 @@ class ClassScreen extends HTMLElement {
         </div>
         <div id="class-display" class="container"></div>`
 
-        this._shadowRoot.querySelector("#create-class").onclick = () => {
+        this._shadowRoot.querySelector("#create-class").onclick = (e) => {
+            e.preventDefault()
             this._shadowRoot.querySelector(".m12").innerHTML = "<create-class></create-class>"
         }
-        this._shadowRoot.querySelector("#enter-class").onclick = () => {
+        this._shadowRoot.querySelector("#enter-class").onclick = (e) => {
+            e.preventDefault()
             this._shadowRoot.querySelector(".m12").innerHTML = "<enter-class></enter-class>"
         }
 

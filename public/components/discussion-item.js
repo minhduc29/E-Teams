@@ -49,7 +49,7 @@ class DiscussionItem extends HTMLElement {
                 </div>
             </div>
             <form class="col s12">
-                <textarea class="materialize-textarea" placeholder="Comment"></textarea>
+                <textarea class="materialize-textarea text-4b88a2" placeholder="Comment"></textarea>
                 <div class="row">
                     <div class="input-field col s12">
                         <input type="file" id="file">
@@ -168,11 +168,10 @@ class DiscussionItem extends HTMLElement {
         // Display comments
         const commentDisplay = this._shadowRoot.querySelector("#comment-display")
         db.collection('comments').doc(this.id).collection('comments').orderBy('date', 'desc').limit(50).onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-                const data = change.doc.data()
-                if (change.type == "added") {
-                    commentDisplay.innerHTML += `<comment-item content="${data.comment}" ownerPhoto="${data.ownerPhoto}" img="${data.photoURL}" time="${data.time}" file="${data.file}" owner="${data.owner}"></comment-item>`
-                }
+            commentDisplay.innerHTML = ""
+            snapshot.forEach(doc => {
+                const data = doc.data()
+                commentDisplay.innerHTML += `<comment-item content="${data.comment}" ownerPhoto="${data.ownerPhoto}" img="${data.photoURL}" time="${data.time}" file="${data.file}" owner="${data.owner}"></comment-item>`
             })
         })
     }
