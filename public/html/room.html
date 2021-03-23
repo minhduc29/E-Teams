@@ -20,6 +20,15 @@
 </head>
 
 <body>
+    <!-- Nav bar -->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper bg-000033">
+                <a href="../index.html" class="brand-logo center">E-Teams</a>
+            </div>
+        </nav>
+    </div>
+
     <!-- Main content -->
     <div id="body">
         <!-- Main title -->
@@ -29,11 +38,6 @@
                 <h1 class="header center text-4b88a2">Room</h1>
                 <div class="row center">
                     <h5 class="header col s12 light">Where people can make video call and voice chat</h5>
-                    <h5 class="logout header col s12 light">Login or Register to get more information</h5>
-                </div>
-                <div class="logout row center">
-                    <a href="#register-modal" class="btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Get
-                        Started</a>
                 </div>
                 <div class="login row center">
                     <div class="col s12 m4">
@@ -64,7 +68,7 @@
                         <span class="white-text">Room Name: </span>
                         <span id="channel-name-display" class="white-text"></span><br>
                         <p class="white-text">Token: </p>
-                        <p id="token-display" class="white-text"></p>
+                        <p id="token-display" class="white-text" style="overflow-wrap: break-word;"></p>
                         <button class="btn waves-effect waves-light bg-4b88a2" id="copy">Copy Token</button>
                     </div>
                 </div>
@@ -93,7 +97,7 @@
                     <form id="create-room" class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="channel" type="text">
+                                <input id="channel" class="text-4b88a2" type="text">
                                 <label for="channel">Room Name</label>
                             </div>
                         </div>
@@ -111,13 +115,13 @@
                     <form id="join-room" class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="channel-name" type="text">
+                                <input id="channel-name" class="text-4b88a2" type="text">
                                 <label for="channel-name">Room Name</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="token" type="text">
+                                <input id="token" class="text-4b88a2" type="text">
                                 <label for="token">Token</label>
                             </div>
                         </div>
@@ -127,6 +131,82 @@
             </div>
         </div>
     </div>
+
+    <div id="contact-modal" class="modal bg-gradient white-text">
+        <div class="modal-content">
+            <h4 class="center">Contact</h4>
+            <div>
+                <h5>Facebook</h5>
+                <p><a class="white-text" target="_blank"
+                        href="https://www.facebook.com/profile.php?id=100009400054425">Nguyen Minh Duc</a></p>
+            </div><br>
+            <div>
+                <h5>Phone number</h5>
+                <p>Nguyen Minh Duc: 0981062376</p>
+            </div><br>
+            <div>
+                <h5>Email</h5>
+                <p>Nguyen Minh Duc: ngmductm@gmail.com</p>
+            </div><br>
+            <div>
+                <h5>Discord</h5>
+                <p>Nguyen Minh Duc: The Master#3287</p>
+            </div><br>
+            <div>
+                <h5>Github</h5>
+                <p><a class="white-text" target="_blank" href="https://github.com/minhduc29">Nguyen Minh Duc</a></p>
+            </div><br>
+            <div>
+                <h5>LinkedIn</h5>
+                <p><a class="white-text" target="_blank" href="https://www.linkedin.com/in/duc-nguyen-178297205/">Nguyen
+                        Minh Duc</a></p>
+            </div><br>
+            <div>
+                <h5>Discord</h5>
+                <p>Nguyen Minh Duc: The Master#3287</p>
+            </div><br>
+            <div>
+                <h5>Instagram</h5>
+                <p>Nguyen Minh Duc: ngnmduc</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer bg-000033">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">About</h5>
+                    <p class="white-text about">Revolutionizing the tech industry - one step at a time. And E-Teams is
+                        exactly
+                        what you
+                        need. Discussion posts, learning logs, real-time virtual meeting, and much more. Jump onto our
+                        site,
+                        register for an account, and enjoy the benefit of this professional application today!</p>
+                    <p class="white-text about">Third Prize MindX Grand Hackathon 2020</p>
+                    <p class="white-text about">First Prize MindX Hackathon 2020</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Contact</h5>
+                    <ul>
+                        <li class="white-text about">Whether you have a question about information, demo or anything
+                            else, our team
+                            is
+                            ready and happy to answer all your questions</li><br>
+                        <li><a class="white-text modal-trigger" href="#contact-modal">Contact</a></li>
+                        <li><a class="white-text" target="_blank" href="./our_team.html">Our Team</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container" id="cpr">
+                <p>Favicon was designed by To Thien Bao</p>
+                Copyright &#169;
+            </div>
+        </div>
+    </footer>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
@@ -162,9 +242,21 @@
         const db = firebase.firestore()
         const storage = firebase.storage()
         const storageRef = storage.ref()
+
+        auth.onAuthStateChanged(user => {
+            const logout = document.querySelectorAll('.logout')
+            const login = document.querySelectorAll('.login')
+            if (user) {
+                // Toggle UI
+                login.forEach(item => item.style.display = 'block')
+                logout.forEach(item => item.style.display = 'none')
+            } else {
+                // Toggle UI
+                login.forEach(item => item.style.display = 'none')
+                logout.forEach(item => item.style.display = 'block')
+            }
+        })
     </script>
-    <script src="../js/component.js"></script>
-    <script src="../js/app.js" type="module"></script>
     <script src="../js/room.js" type="module"></script>
 </body>
 
