@@ -125,6 +125,8 @@
 - 06/12/2020: Fully integrate Agora into E-Teams
 
 - 12/12/2020: Add Chat Room to E-Teams
+
+- 23/03/2021: Fully update a new version of E-Teams
 ---
 #### Other
 - This is where we state some rules, errors, anything that's not relevant to the main features above. This part is vital. Don't miss anything in here.

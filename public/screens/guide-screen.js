@@ -106,6 +106,7 @@ class GuideScreen extends HTMLElement {
             <p class="text-2f3162">28/11/2020: Publish Playground functionality</p>
             <p class="text-2f3162">06/12/2020: Fully integrate Agora into E-Teams</p>
             <p class="text-2f3162">12/12/2020: Add Chat Room to E-Teams</p>
+            <p class="text-2f3162">23/03/2021: Fully update a new version of E-Teams</p>
         </div><br>
 
         <div class="container">
