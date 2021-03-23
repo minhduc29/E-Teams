@@ -1,4 +1,4 @@
-import { initialize, copyright, notice, setupUI, checkUserData, listen } from './utils.js'
+import { initialize, copyright, notice, setupUI, checkUserData } from './utils.js'
 import '../components/chat-item.js'
 import '../components/class-item.js'
 import '../components/comment-item.js'
@@ -22,15 +22,13 @@ import '../screens/home-screen.js'
 import '../screens/learninglog-screen.js'
 import '../screens/playground-screen.js'
 import '../screens/todo-screen.js'
+import './navigo.js'
 
 // Initialize
 initialize()
 
 // Copyright
 copyright()
-
-// Listen to request to change screen
-listen()
 
 // Logout
 const logoutBtn = document.getElementsByClassName('logout-btn')

@@ -39,17 +39,17 @@
   <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper bg-000033">
-        <a href="#" class="brand-logo home">E-Teams</a>
+        <a href="#" class="brand-logo">E-Teams</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li class="login"><a class="font-size-18 todo" href="#">To-Do</a></li>
-          <li class="login"><a class="font-size-18 chat" href="#">Chat Room</a></li>
+        <ul id="nav-mobile" class="right">
+          <li class="login"><a class="font-size-18" href="/todo" data-navigo>To-Do</a></li>
+          <li class="login"><a class="font-size-18" href="/chat" data-navigo>Chat Room</a></li>
           <li class="login"><a class="font-size-18 modal-trigger" href="#profile-modal">Profile</a></li>
-          <li class="login"><a class="font-size-18 class" href="#">Class</a></li>
-          <li class="login"><a class="font-size-18 discussion" href="#">Discussion</a></li>
+          <li class="login"><a class="font-size-18" href="/class" data-navigo>Class</a></li>
+          <li class="login"><a class="font-size-18" href="/discussion" data-navigo>Discussion</a></li>
           <li class="login"><a class="font-size-18" href="./html/room.html" target="_blank">Room</a></li>
-          <li class="login"><a class="font-size-18 learninglog" href="#">Learning Log</a></li>
-          <li class="login"><a class="font-size-18 playground" href="#">Playground</a></li>
+          <li class="login"><a class="font-size-18" href="/learninglog" data-navigo>Learning Log</a></li>
+          <li class="login"><a class="font-size-18" href="/playground" data-navigo>Playground</a></li>
           <li class="login"><a class="font-size-18 logout-btn" href="#">Logout</a></li>
           <li class="logout"><a class="font-size-18 modal-trigger" href="#login-modal">Login</a></li>
           <li class="logout"><a class="font-size-18 modal-trigger" href="#register-modal">Register</a></li>
@@ -60,14 +60,14 @@
 
   <!-- Responsive side nav -->
   <ul class="sidenav bg-000033" id="mobile-demo">
-    <li class="login"><a class="white-text font-size-18 todo" href="#">To-Do</a></li>
-    <li class="login"><a class="white-text font-size-18 chat" href="#">Chat Room</a></li>
+    <li class="login"><a class="white-text font-size-18" href="/todo" data-navigo>To-Do</a></li>
+    <li class="login"><a class="white-text font-size-18" href="/chat" data-navigo>Chat Room</a></li>
     <li class="login"><a class="white-text font-size-18 modal-trigger" href="#profile-modal">Profile</a></li>
-    <li class="login"><a class="white-text font-size-18 class" href="#">Class</a></li>
-    <li class="login"><a class="white-text font-size-18 discussion" href="#">Discussion</a></li>
+    <li class="login"><a class="white-text font-size-18" href="/class" data-navigo>Class</a></li>
+    <li class="login"><a class="white-text font-size-18" href="/discussion" data-navigo>Discussion</a></li>
     <li class="login"><a class="white-text font-size-18" href="./html/room.html" target="_blank">Room</a></li>
-    <li class="login"><a class="white-text font-size-18 learninglog" href="#">Learning Log</a></li>
-    <li class="login"><a class="white-text font-size-18 playground" href="#">Playground</a></li>
+    <li class="login"><a class="white-text font-size-18" href="/learninglog" data-navigo>Learning Log</a></li>
+    <li class="login"><a class="white-text font-size-18" href="/playground" data-navigo>Playground</a></li>
     <li class="login"><a class="white-text font-size-18 logout-btn" href="#">Logout</a></li>
     <li class="logout"><a class="white-text font-size-18 modal-trigger" href="#login-modal">Login</a></li>
     <li class="logout"><a class="white-text font-size-18 modal-trigger" href="#register-modal">Register</a></li>
@@ -177,7 +177,7 @@
               ready and happy to answer all your questions</li><br>
             <li><a class="white-text modal-trigger" href="#contact-modal">Contact</a></li>
             <li><a class="white-text" target="_blank" href="./html/our_team.html">Our Team</a></li>
-            <li><a class="white-text guide login" href="#">User Guide</a></li>
+            <li><a class="white-text login" href="/guide" data-navigo>User Guide</a></li>
           </ul>
         </div>
       </div>
@@ -201,6 +201,9 @@
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <!-- Navigo -->
+  <script src="https://unpkg.com/navigo@6.0.2/lib/navigo.min.js"></script>
 
   <script>
     // Your web app's Firebase configuration
