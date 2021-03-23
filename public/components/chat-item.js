@@ -1,4 +1,4 @@
-import { css, dataArr, getDocument, notice, setData } from '../js/utils.js'
+import { css, dataArr, notice, setData } from '../js/utils.js'
 
 class ChatItem extends HTMLElement {
     constructor() {
@@ -16,7 +16,7 @@ class ChatItem extends HTMLElement {
                 </div>
             </div>
             <form class="col s12">
-                <textarea class="materialize-textarea" placeholder="Messages"></textarea>
+                <textarea class="materialize-textarea text-4b88a2" placeholder="Messages"></textarea>
                 <div class="row">
                     <div class="input-field col s12">
                         <input type="file" id="file">
@@ -28,7 +28,7 @@ class ChatItem extends HTMLElement {
                 <div id="comment-display" class="bg-gradient-2"></div>
             </div>
             <form class="col s12 add-pp">
-                <input id="mem-email" type="email" autocomplete="off" placeholder="Email">
+                <input id="mem-email" type="email" class="text-4b88a2" autocomplete="off" placeholder="Email">
                 <button class="btn">Add</button>
             </form>
         </div>`

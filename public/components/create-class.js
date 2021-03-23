@@ -70,8 +70,8 @@ class CreateClass extends HTMLElement {
 
                         // Set data
                         const initialClassData = {
-                            name: className,
-                            password: clPassword,
+                            name: className.trim(),
+                            password: clPassword.trim(),
                             owner: auth.currentUser.displayName,
                             ownerPhoto: auth.currentUser.photoURL,
                             ownerUID: auth.currentUser.uid, 

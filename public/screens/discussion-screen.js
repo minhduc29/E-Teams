@@ -74,8 +74,8 @@ class DiscussionScreen extends HTMLElement {
                 let data
                 if (isImage) {
                     data = {
-                        title: title,
-                        description: description,
+                        title: title.trim(),
+                        description: description.trim(),
                         owner: auth.currentUser.displayName,
                         ownerPhoto: auth.currentUser.photoURL,
                         liked: [],
@@ -87,8 +87,8 @@ class DiscussionScreen extends HTMLElement {
                     }
                 } else {
                     data = {
-                        title: title,
-                        description: description,
+                        title: title.trim(),
+                        description: description.trim(),
                         owner: auth.currentUser.displayName,
                         ownerPhoto: auth.currentUser.photoURL,
                         liked: [],

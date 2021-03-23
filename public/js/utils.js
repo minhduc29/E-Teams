@@ -19,21 +19,7 @@ function notice(msg) {
 function setupUI(user) {
     const logout = document.querySelectorAll('.logout')
     const login = document.querySelectorAll('.login')
-    const profile = document.getElementById('profile')
-
     if (user) {
-        db.collection('users').doc(user.uid).get().then(doc => {
-            // Display profile
-            const html = `
-                <br><h5>Email: ${user.email}</h5>
-                <br><h5>Username: ${doc.data().username}</h5>`
-            profile.innerHTML = html
-
-            if (doc.data().photoURL) {
-                $("#profile-pic").attr('src', doc.data().photoURL)
-            }
-        })
-
         // Toggle UI
         login.forEach(item => item.style.display = 'block')
         logout.forEach(item => item.style.display = 'none')
@@ -46,26 +32,21 @@ function setupUI(user) {
 
 // Change password
 function changePassword(user) {
-    const credential = firebase.auth.EmailAuthProvider.credential(
-        email = prompt('Enter your email: '),
-        password = prompt('Enter your password: ')
-    )
+    const email = prompt('Enter your email: ')
+    const password = prompt('Enter your password: ')
+    const credential = firebase.auth.EmailAuthProvider.credential(email, password)
     user.reauthenticateWithCredential(credential).then(() => {
         let newPw = prompt('Enter your new password: ')
         let newPwCf = prompt('Confirm your new password: ')
-        if (newPw == newPwCf) {
-            user.updatePassword(newPw).catch(err => {
+        if (newPw == newPwCf && newPw.trim() !== "") {
+            user.updatePassword(newPw).then(() => {
+                notice('Password has been changed')
+            }).catch(err => {
                 notice(err.message)
             })
         } else {
-            notice('Wrong new password confirmation')
+            notice('Wrong new password confirmation or invalid password')
         }
-
-        return db.collection('users').doc(user.uid).update({
-            password: newPw
-        }).then(() => {
-            notice('Password has been changed')
-        })
     }).catch(err => {
         notice(err.message)
     })
@@ -73,7 +54,7 @@ function changePassword(user) {
 
 // Forgot password
 function forgotPassword() {
-    let email = prompt('Enter your email: ')
+    const email = prompt('Enter your email: ')
     auth.sendPasswordResetEmail(email).then(() => {
         notice('Please check your email')
     }).catch(err => {
@@ -84,28 +65,178 @@ function forgotPassword() {
 // Change profile picture
 async function changeProfilePic(e) {
     let file = e.target.files[0]
-    let userRef = db.collection('users').doc(auth.currentUser.uid)
 
     if (file) {
+        if (file.type.startsWith("image")) {
+            $('body').removeClass('loaded')
+            closeModal("#profile-modal")
+
+            let fileRef = storageRef.child(`users/${auth.currentUser.uid}.jpg`)
+
+            await fileRef.put(file)
+            let url = await fileRef.getDownloadURL()
+
+            const data = {
+                photoURL: url
+            }
+            setData('users', auth.currentUser.uid, true, data).then(() => {
+                $('body').addClass('loaded')
+            })
+            auth.currentUser.updateProfile(data)
+            const datum = {
+                ownerPhoto: url
+            }
+
+            db.collection("discussions").where("ownerUID", "==", auth.currentUser.uid).get().then(doc => {
+                doc.forEach(data => {
+                    setData('discussions', data.id, true, datum)
+                })
+            })
+
+            db.collection('comments').get().then(doc => {
+                doc.forEach(subdoc => {
+                    db.collection('comments').doc(subdoc.id).collection('comments').where("ownerUID", "==", auth.currentUser.uid).get().then(data => {
+                        data.forEach(dataa => {
+                            db.collection('comments').doc(subdoc.id).collection('comments').doc(dataa.id).set(datum, {
+                                merge: true
+                            })
+                        })
+                    })
+                })
+            })
+
+            db.collection('classes').where("ownerUID", "==", auth.currentUser.uid).get().then(doc => {
+                doc.forEach(data => {
+                    setData('classes', data.id, true, datum)
+                })
+            })
+
+            db.collection("members").where('member', 'array-contains', auth.currentUser.uid).get().then(doc => {
+                doc.forEach(data => {
+                    const infos = data.data()
+                    const index = infos.member.indexOf(auth.currentUser.uid)
+                    setData('members', data.id, true, {
+                        member: dataArr(infos.member[index], 'remove'),
+                        info: dataArr(infos.info[index], 'remove')
+                    })
+                    setData('members', data.id, true, {
+                        member: dataArr(auth.currentUser.uid, 'union'),
+                        info: dataArr({
+                            photoURL: url,
+                            username: auth.currentUser.displayName
+                        }, 'union')
+                    })
+                })
+            })
+
+            db.collection('messages').where('member', 'array-contains', auth.currentUser.uid).get().then(doc => {
+                doc.forEach(data => {
+                    const infos = data.data()
+                    const index = infos.member.indexOf(auth.currentUser.uid)
+                    setData('messages', data.id, true, {
+                        member: dataArr(infos.member[index], 'remove'),
+                        info: dataArr(infos.info[index], 'remove')
+                    })
+                    setData('messages', data.id, true, {
+                        member: dataArr(auth.currentUser.uid, 'union'),
+                        info: dataArr({
+                            photoURL: url,
+                            username: auth.currentUser.displayName
+                        }, 'union')
+                    })
+                })
+            })
+        } else {
+            notice("Please choose an image")
+        }
+    }
+}
+
+// Change username
+function changeUsername() {
+    const username = prompt("Enter your new username: ")
+    if (username.trim() == "") {
+        notice("Please input valid username")
+    } else if (username.trim().length < 6) {
+        notice("Username must be at least 6 characters")
+    } else if (username.trim() == auth.currentUser.displayName) {
+        notice("New username must be different from current username")
+    } else {
         $('body').removeClass('loaded')
-        M.Modal.getInstance($("#profile-modal")).close()
+        closeModal("#profile-modal")
 
-        let fileRef = storageRef.child(`users/${auth.currentUser.uid}.jpg`)
+        setData('users', auth.currentUser.uid, true, {
+            username: username
+        }).then(() => {
+            $('body').addClass('loaded')
+        })
+        auth.currentUser.updateProfile({
+            displayName: username
+        })
+        const datum = {
+            owner: username
+        }
 
-        await fileRef.put(file)
-        let url = await fileRef.getDownloadURL()
+        db.collection("discussions").where("ownerUID", "==", auth.currentUser.uid).get().then(doc => {
+            doc.forEach(data => {
+                setData('discussions', data.id, true, datum)
+            })
+        })
 
-        userRef.set({
-            photoURL: url
-        }, {
-            merge: true
+        db.collection('comments').get().then(doc => {
+            doc.forEach(subdoc => {
+                db.collection('comments').doc(subdoc.id).collection('comments').where("ownerUID", "==", auth.currentUser.uid).get().then(data => {
+                    data.forEach(dataa => {
+                        db.collection('comments').doc(subdoc.id).collection('comments').doc(dataa.id).set(datum, {
+                            merge: true
+                        })
+                    })
+                })
+            })
+        })
+
+        db.collection("classes").where("ownerUID", "==", auth.currentUser.uid).get().then(doc => {
+            doc.forEach(data => {
+                setData('classes', data.id, true, datum)
+            })
+        })
+
+        db.collection("members").where('member', 'array-contains', auth.currentUser.uid).get().then(doc => {
+            doc.forEach(data => {
+                const infos = data.data()
+                const index = infos.member.indexOf(auth.currentUser.uid)
+                setData('members', data.id, true, {
+                    member: dataArr(infos.member[index], 'remove'),
+                    info: dataArr(infos.info[index], 'remove')
+                })
+                setData('members', data.id, true, {
+                    member: dataArr(auth.currentUser.uid, 'union'),
+                    info: dataArr({
+                        photoURL: auth.currentUser.photoURL,
+                        username: username
+                    }, 'union')
+                })
+            })
+        })
+
+        db.collection('messages').where('member', 'array-contains', auth.currentUser.uid).get().then(doc => {
+            doc.forEach(data => {
+                const infos = data.data()
+                const index = infos.member.indexOf(auth.currentUser.uid)
+                setData('messages', data.id, true, {
+                    member: dataArr(infos.member[index], 'remove'),
+                    info: dataArr(infos.info[index], 'remove')
+                })
+                setData('messages', data.id, true, {
+                    member: dataArr(auth.currentUser.uid, 'union'),
+                    info: dataArr({
+                        photoURL: auth.currentUser.photoURL,
+                        username: username
+                    }, 'union')
+                })
+            })
         })
     }
-
-    userRef.onSnapshot(snapshot => {
-        $("#profile-pic").attr('src', snapshot.data().photoURL)
-        $('body').addClass('loaded')
-    })
 }
 
 // Close modal
@@ -131,8 +262,6 @@ function dataArr(data, type) {
         return firebase.firestore.FieldValue.arrayRemove(data)
     } else if (type == 'increment') {
         return firebase.firestore.FieldValue.increment(data)
-    } else {
-        return notice("Invalid type")
     }
 }
 
@@ -141,11 +270,129 @@ function getDocument(collection, doc) {
     return db.collection(collection).doc(doc).get()
 }
 
+// CSS for web component
 const css = `
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <style>
-    @import "../css/style.css"
+    @import "./css/style.css"
 </style>`
 
-export { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal, setData, dataArr, getDocument, css }
+// Check user data completion
+function checkUserData() {
+    if (!auth.currentUser.displayName) {
+        db.collection("users").doc(auth.currentUser.uid).get().then(doc => {
+            auth.currentUser.updateProfile({
+                displayName: doc.data().username,
+                photoURL: doc.data().photoURL
+            })
+        })
+    }
+    if (!auth.currentUser.emailVerified) {
+        notice("Please verify your email!")
+        auth.currentUser.sendEmailVerification()
+    }
+}
+
+// Redirect
+function redirect(screen) {
+    const doc = document.querySelector("title")
+    const main = document.querySelector("#body")
+    const title = document.querySelector("#title")
+    const description = document.querySelector("#description")
+    if (screen == "home") {
+        doc.innerHTML = "E-Teams"
+        main.innerHTML = "<home-screen></home-screen>"
+        title.innerHTML = "E-Teams"
+        description.innerHTML = "A modern website mainly for online learning"
+    } else if (screen == "class") {
+        doc.innerHTML = "E-Teams | Class"
+        main.innerHTML = "<class-screen></class-screen>"
+        title.innerHTML = "Class"
+        description.innerHTML = "Where teachers assign homework for students"
+    } else if (screen == "discussion") {
+        doc.innerHTML = "E-Teams | Discussion"
+        main.innerHTML = "<discussion-screen></discussion-screen>"
+        title.innerHTML = "Discussion"
+        description.innerHTML = "Where people discuss a topic or a question"
+    } else if (screen == "learninglog") {
+        doc.innerHTML = "E-Teams | Learning Log"
+        main.innerHTML = "<learninglog-screen></learninglog-screen>"
+        title.innerHTML = "Learning Log"
+        description.innerHTML = "Keep track of your learning about specific topic"
+    } else if (screen == "todo") {
+        doc.innerHTML = "E-Teams | To-Do"
+        main.innerHTML = "<todo-screen></todo-screen>"
+        title.innerHTML = "To-Do"
+        description.innerHTML = "Where people take note and make to-do list"
+    } else if (screen == "playground") {
+        doc.innerHTML = "E-Teams | Playground"
+        main.innerHTML = "<playground-screen></playground-screen>"
+        title.innerHTML = "Playground"
+        description.innerHTML = "Where people spend some time to relax after stressful hours of studying"
+    } else if (screen == "chat") {
+        doc.innerHTML = "E-Teams | Chat Room"
+        main.innerHTML = "<chat-screen></chat-screen>"
+        title.innerHTML = "Chat Room"
+        description.innerHTML = "Where people create chat room and send messages"
+    } else if (screen == "guide") {
+        doc.innerHTML = "E-Teams | User Guide"
+        main.innerHTML = "<guide-screen></guide-screen>"
+        title.innerHTML = "User Guide"
+        description.innerHTML = "User guide, instruction, usage and update for this website"
+    }
+}
+
+// Listen to request screen
+function listen() {
+    const home = document.getElementsByClassName("home")
+    for (const screen of home) {
+        screen.addEventListener('click', () => {
+            redirect('home')
+        })
+    }
+    const classes = document.getElementsByClassName("class")
+    for (const screen of classes) {
+        screen.addEventListener('click', () => {
+            redirect('class')
+        })
+    }
+    const discussion = document.getElementsByClassName("discussion")
+    for (const screen of discussion) {
+        screen.addEventListener('click', () => {
+            redirect('discussion')
+        })
+    }
+    const learninglog = document.getElementsByClassName("learninglog")
+    for (const screen of learninglog) {
+        screen.addEventListener('click', () => {
+            redirect('learninglog')
+        })
+    }
+    const todo = document.getElementsByClassName("todo")
+    for (const screen of todo) {
+        screen.addEventListener('click', () => {
+            redirect('todo')
+        })
+    }
+    const playground = document.getElementsByClassName("playground")
+    for (const screen of playground) {
+        screen.addEventListener('click', () => {
+            redirect('playground')
+        })
+    }
+    const chat = document.getElementsByClassName("chat")
+    for (const screen of chat) {
+        screen.addEventListener('click', () => {
+            redirect('chat')
+        })
+    }
+    const guide = document.getElementsByClassName("guide")
+    for (const screen of guide) {
+        screen.addEventListener('click', () => {
+            redirect('guide')
+        })
+    }
+}
+
+export { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal, setData, dataArr, getDocument, css, checkUserData, redirect, listen, changeUsername }

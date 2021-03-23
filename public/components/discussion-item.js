@@ -138,7 +138,7 @@ class DiscussionItem extends HTMLElement {
                 let data
                 if (isImage) {
                     data = {
-                        comment: content,
+                        comment: content.trim(),
                         owner: auth.currentUser.displayName,
                         ownerPhoto: auth.currentUser.photoURL,
                         photoURL: url,
@@ -149,7 +149,7 @@ class DiscussionItem extends HTMLElement {
                     }
                 } else {
                     data = {
-                        comment: content,
+                        comment: content.trim(),
                         owner: auth.currentUser.displayName,
                         ownerPhoto: auth.currentUser.photoURL,
                         photoURL: "",

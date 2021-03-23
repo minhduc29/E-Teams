@@ -1,4 +1,4 @@
-import { css, changeProfilePic, changePassword } from '../js/utils.js'
+import { css, changeProfilePic, changePassword, changeUsername } from '../js/utils.js'
 
 class ProfileItem extends HTMLElement {
     constructor() {
@@ -10,6 +10,7 @@ class ProfileItem extends HTMLElement {
         <h2 class="center text-4b88a2">Profile</h2>
         <div id="profile"></div><br>
         <button class="btn" id="change-pw">Change password</button>
+        <button class="btn" id="change-name">Change username</button>
         <input type="file" id="change-pp">`
 
         // Change profile picture
@@ -27,6 +28,13 @@ class ProfileItem extends HTMLElement {
             changePassword(auth.currentUser)
         })
 
+        // Change username
+        const changeName = this._shadowRoot.querySelector("#change-name")
+        changeName.addEventListener('click', (e) => {
+            e.preventDefault()
+            changeUsername()
+        })
+
         // Check and change data for current user
         auth.onAuthStateChanged(user => {
             if (user) {
@@ -39,6 +47,9 @@ class ProfileItem extends HTMLElement {
                 // Realtime update photoURL
                 db.collection('users').doc(user.uid).onSnapshot(snapshot => {
                     this._shadowRoot.querySelector("#profile-pic").src = snapshot.data().photoURL
+                    this._shadowRoot.querySelector("#profile").innerHTML = `
+                    <br><h5 class="text-2f3162">Email: ${snapshot.data().email}</h5>
+                    <br><h5 class="text-2f3162">Username: ${snapshot.data().username}</h5>`
                 })
             }
         })

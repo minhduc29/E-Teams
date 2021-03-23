@@ -4,7 +4,7 @@ body {
     height: 100%;
     background-color: #f1edff;
 }
-#body {
+.min-height {
     min-height: 100%;
 }
 .font-size-18 {
@@ -13,10 +13,32 @@ body {
 .height-140 {
     height: 140px;
 }
+.des-img img {
+    margin-top: 5%;
+}
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img-content {
+    margin-bottom: 1%;
+    max-height: 700px;
+}
+.img-comment {
+    margin-bottom: 1%;
+    max-height: 400px;
+}
+.comment-section {
+    height: 300px;
+    overflow: auto;
+    display: none;
+    margin-top: 1%;
+}
 .login,
 .logout,
-.class,
-.topic {
+.topic,
+.add-pp {
     display: none;
 }
 .float-right {
@@ -31,6 +53,7 @@ body {
 #change-pw,
 #change-pp,
 #forgot-pw,
+#change-name,
 .double {
     margin: 10.5px;
 }
@@ -71,15 +94,7 @@ body {
 .chat-btn {
     float: right;
     cursor: pointer;
-    margin-top: -75px;
-    margin-right: 15px;
-}
-@media screen and (max-width: 405px) {
-    .ll-del-btn {
-        float: right;
-        cursor: pointer;
-        margin-top: -130px;
-    }
+    margin-top: -50px;
 }
 @media screen and (max-width: 600px) {
     .del-btn {
@@ -251,10 +266,6 @@ body {
 .collapsible-body {
     max-height: 500px;
     overflow: auto;
-}
-
-.chat {
-    display: none;
 }
 
 .chat-img {

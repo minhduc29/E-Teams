@@ -1,4 +1,27 @@
-import { initialize, copyright, notice, setupUI, changePassword, forgotPassword, changeProfilePic, closeModal, setData } from './utils.js'
+import { initialize, copyright, notice, setupUI, checkUserData, listen } from './utils.js'
+import '../components/chat-item.js'
+import '../components/class-item.js'
+import '../components/comment-item.js'
+import '../components/contact-item.js'
+import '../components/create-class.js'
+import '../components/description-item.js'
+import '../components/discussion-item.js'
+import '../components/enter-class.js'
+import '../components/entry-item.js'
+import '../components/login-form.js'
+import '../components/play-item.js'
+import '../components/profile-item.js'
+import '../components/register-form.js'
+import '../components/todo-item.js'
+import '../components/topic-item.js'
+import '../screens/chat-screen.js'
+import '../screens/class-screen.js'
+import '../screens/discussion-screen.js'
+import '../screens/guide-screen.js'
+import '../screens/home-screen.js'
+import '../screens/learninglog-screen.js'
+import '../screens/playground-screen.js'
+import '../screens/todo-screen.js'
 
 // Initialize
 initialize()
@@ -6,64 +29,8 @@ initialize()
 // Copyright
 copyright()
 
-// Register
-const registerForm = document.querySelector('#register')
-registerForm.addEventListener('submit', (e) => {
-    e.preventDefault()
-
-    // Get user info
-    const username = registerForm['username'].value
-    const email = registerForm['email2'].value
-    const password = registerForm['password2'].value
-    const pwcf = registerForm['pwconfirmation'].value
-
-    // Register user
-    if (username == '') {
-        notice('Missing username')
-    } else if (username.length < 6) {
-        notice('Username must be at least 6 characters')
-    } else if (password !== pwcf) {
-        notice('Password and password confirmation must be the same')
-    } else if (password === pwcf) {
-        auth.createUserWithEmailAndPassword(email, password).then(cred => {
-            // Create data firestore
-            const initialData = {
-                username: username,
-                email: email,
-                liked: [],
-                photoURL: 'https://firebasestorage.googleapis.com/v0/b/e-teams.appspot.com/o/users%2Fprofile_picture.png?alt=media&token=b81c9c34-010c-4249-aa74-3c36d7ca183b'
-            }
-            setData('users', cred.user.uid, false, initialData)
-        }).then(() => {
-            // Reset form
-            closeModal('#register-modal')
-            registerForm.reset()
-        }).catch(err => {
-            // Catch error
-            notice(err.message)
-        })
-    }
-})
-
-// Login
-const loginForm = document.querySelector('#login')
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault()
-
-    // Get user info
-    const email = loginForm['email'].value
-    const password = loginForm['password'].value
-
-    // Login user
-    auth.signInWithEmailAndPassword(email, password).then(() => {
-        // Reset form
-        closeModal('#login-modal')
-        loginForm.reset()
-    }).catch(err => {
-        // Catch error
-        notice(err.message)
-    })
-})
+// Listen to request to change screen
+listen()
 
 // Logout
 const logoutBtn = document.getElementsByClassName('logout-btn')
@@ -78,28 +45,9 @@ for (let i = 0; i < logoutBtn.length; i++) {
 auth.onAuthStateChanged(user => {
     if (user) {
         setupUI(user)
+        notice(`Welcome back ${user.displayName}`)
+        checkUserData()
     } else {
         setupUI()
     }
-})
-
-// Change password
-const changePw = document.getElementById('change-pw')
-changePw.addEventListener('click', (e) => {
-    e.preventDefault()
-    changePassword(auth.currentUser)
-})
-
-// Forgot password
-const forgotPw = document.getElementById('forgot-pw')
-forgotPw.addEventListener('click', (e) => {
-    e.preventDefault()
-    forgotPassword()
-})
-
-// Change profile picture
-const changePp = document.getElementById('change-pp')
-changePp.addEventListener('change', (e) => {
-    e.preventDefault()
-    changeProfilePic(e)
 })

@@ -29,11 +29,11 @@ class TodoScreen extends HTMLElement {
 
             // Check valid
             if (todo.trim() == "") {
-                notice("Please input valid to-do!")
+                notice("Please input valid to-do")
             } else {
                 // Add data
                 const todoData = {
-                    todo: dataArr(todo, 'union')
+                    todo: dataArr(todo.trim(), 'union')
                 }
                 setData('todos', auth.currentUser.uid, true, todoData).then(() => {
                     // Reset form
