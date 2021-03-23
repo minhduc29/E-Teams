@@ -14,9 +14,12 @@ service cloud.firestore {
     	allow read, create, update;
       allow delete: if false;
     }
+    match /comments/{discussionID}/comments/{commentsID} {
+    	allow read, create, update;
+      allow delete: if false;
+    }
     match /classes/{classID} {
-    	allow read, delete, create;
-      allow update: if false; 
+    	allow read, write;
     }
     match /members/{classID} {
     	allow read, write;
@@ -41,6 +44,10 @@ service cloud.firestore {
     }
     match /chats/{chatID} {
     	allow create, update, read;
+      allow delete: if false;
+    }
+    match /messages/{messageID} {
+    	allow read, create, update;
       allow delete: if false;
     }
   }
