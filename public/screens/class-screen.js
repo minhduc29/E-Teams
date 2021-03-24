@@ -3,7 +3,7 @@ import { css } from '../js/utils.js'
 class ClassScreen extends HTMLElement {
     constructor() {
         super()
-        this._shadowRoot = this.attachShadow({mode: 'open'})
+        this._shadowRoot = this.attachShadow({ mode: 'open' })
         this._shadowRoot.innerHTML = `
         ${css}
         <div class="row center">
@@ -20,20 +20,24 @@ class ClassScreen extends HTMLElement {
         </div>
         <div id="class-display" class="container"></div>`
 
-        this._shadowRoot.querySelector("#create-class").onclick = (e) => {
-            e.preventDefault()
-            this._shadowRoot.querySelector(".m12").innerHTML = "<create-class></create-class>"
-        }
-        this._shadowRoot.querySelector("#enter-class").onclick = (e) => {
-            e.preventDefault()
-            this._shadowRoot.querySelector(".m12").innerHTML = "<enter-class></enter-class>"
-        }
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                this._shadowRoot.querySelector("#create-class").onclick = (e) => {
+                    e.preventDefault()
+                    this._shadowRoot.querySelector(".m12").innerHTML = "<create-class></create-class>"
+                }
+                this._shadowRoot.querySelector("#enter-class").onclick = (e) => {
+                    e.preventDefault()
+                    this._shadowRoot.querySelector(".m12").innerHTML = "<enter-class></enter-class>"
+                }
 
-        db.collection('classes').where('member', 'array-contains', auth.currentUser.uid).onSnapshot(snapshot => {
-            this._shadowRoot.querySelector("#class-display").innerHTML = ""
-            snapshot.forEach(doc => {
-                this._shadowRoot.querySelector("#class-display").innerHTML += `<class-item uid="${doc.id}" ownerUID="${doc.data().ownerUID}" name="${doc.data().name}" time="${doc.data().time}" owner="${doc.data().owner}" ownerPhoto="${doc.data().ownerPhoto}"></class-item>`
-            })
+                db.collection('classes').where('member', 'array-contains', user.uid).onSnapshot(snapshot => {
+                    this._shadowRoot.querySelector("#class-display").innerHTML = ""
+                    snapshot.forEach(doc => {
+                        this._shadowRoot.querySelector("#class-display").innerHTML += `<class-item uid="${doc.id}" ownerUID="${doc.data().ownerUID}" name="${doc.data().name}" time="${doc.data().time}" owner="${doc.data().owner}" ownerPhoto="${doc.data().ownerPhoto}"></class-item>`
+                    })
+                })
+            }
         })
     }
 }

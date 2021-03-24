@@ -20,35 +20,39 @@ class ChatScreen extends HTMLElement {
         </div>
         <div id="room-display" class="container"></div>`
 
-        this._shadowRoot.querySelector("#create-chat").addEventListener("submit", (e) => {
-            e.preventDefault()
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                this._shadowRoot.querySelector("#create-chat").addEventListener("submit", (e) => {
+                    e.preventDefault()
 
-            const roomName = this._shadowRoot.querySelector("#chat-name").value
-            if (roomName.trim().length == 0) {
-                notice("Please input valid chat room name")
-            } else {
-                db.collection('messages').add({
-                    member: [auth.currentUser.uid],
-                    info: [{
-                        photoURL: auth.currentUser.photoURL,
-                        username: auth.currentUser.displayName
-                    }],
-                    message: []
-                }).then(doc => {
-                    setData('chats', doc.id, false, {
-                        member: [auth.currentUser.uid],
-                        name: roomName.trim()
+                    const roomName = this._shadowRoot.querySelector("#chat-name").value
+                    if (roomName.trim().length == 0) {
+                        notice("Please input valid chat room name")
+                    } else {
+                        db.collection('messages').add({
+                            member: [user.uid],
+                            info: [{
+                                photoURL: user.photoURL,
+                                username: user.displayName
+                            }],
+                            message: []
+                        }).then(doc => {
+                            setData('chats', doc.id, false, {
+                                member: [user.uid],
+                                name: roomName.trim()
+                            })
+                            this._shadowRoot.querySelector("#create-chat").reset()
+                        })
+                    }
+                })
+
+                db.collection('chats').where('member', 'array-contains', user.uid).onSnapshot(snapshot => {
+                    this._shadowRoot.querySelector("#room-display").innerHTML = ""
+                    snapshot.forEach(doc => {
+                        this._shadowRoot.querySelector("#room-display").innerHTML += `<chat-item uid="${doc.id}" name="${doc.data().name}"></chat-item>`
                     })
-                    this._shadowRoot.querySelector("#create-chat").reset()
                 })
             }
-        })
-
-        db.collection('chats').where('member', 'array-contains', auth.currentUser.uid).onSnapshot(snapshot => {
-            this._shadowRoot.querySelector("#room-display").innerHTML = ""
-            snapshot.forEach(doc => {
-                this._shadowRoot.querySelector("#room-display").innerHTML += `<chat-item uid="${doc.id}" name="${doc.data().name}"></chat-item>`
-            })
         })
     }
 }

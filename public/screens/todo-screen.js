@@ -19,37 +19,42 @@ class TodoScreen extends HTMLElement {
             </div>
         </div>
         <div id="todo-display" class="container"></div>`
-        // Add todo data to firestore
-        const addTodoForm = this._shadowRoot.querySelector("#add-todo")
-        addTodoForm.addEventListener('submit', (e) => {
-            e.preventDefault()
 
-            // Get value
-            const todo = this._shadowRoot.querySelector("#todo").value
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // Add todo data to firestore
+                const addTodoForm = this._shadowRoot.querySelector("#add-todo")
+                addTodoForm.addEventListener('submit', (e) => {
+                    e.preventDefault()
 
-            // Check valid
-            if (todo.trim() == "") {
-                notice("Please input valid to-do")
-            } else {
-                // Add data
-                const todoData = {
-                    todo: dataArr(todo.trim(), 'union')
-                }
-                setData('todos', auth.currentUser.uid, true, todoData).then(() => {
-                    // Reset form
-                    addTodoForm.reset()
+                    // Get value
+                    const todo = this._shadowRoot.querySelector("#todo").value
+
+                    // Check valid
+                    if (todo.trim() == "") {
+                        notice("Please input valid to-do")
+                    } else {
+                        // Add data
+                        const todoData = {
+                            todo: dataArr(todo.trim(), 'union')
+                        }
+                        setData('todos', user.uid, true, todoData).then(() => {
+                            // Reset form
+                            addTodoForm.reset()
+                        })
+                    }
+                })
+
+                // Realtime firestore
+                const todoDisplay = this._shadowRoot.querySelector("#todo-display")
+                db.collection("todos").doc(user.uid).onSnapshot(snapshot => {
+                    todoDisplay.innerHTML = ''
+
+                    snapshot.data().todo.forEach(doc => {
+                        todoDisplay.innerHTML += `<todo-item content="${doc}"></todo-item>`
+                    })
                 })
             }
-        })
-
-        // Realtime firestore
-        const todoDisplay = this._shadowRoot.querySelector("#todo-display")
-        db.collection("todos").doc(auth.currentUser.uid).onSnapshot(snapshot => {
-            todoDisplay.innerHTML = ''
-            
-            snapshot.data().todo.forEach(doc => {
-                todoDisplay.innerHTML += `<todo-item content="${doc}"></todo-item>`
-            })
         })
     }
 }
