@@ -7,6 +7,11 @@ class DiscussionScreen extends HTMLElement {
         this._shadowRoot.innerHTML = `
         ${css}
         <div class="container">
+            <div class="row center">
+                <div class="col s12 m12">
+                    <a href="#" id="s_btn" class="btn-large waves-effect waves-light bg-4b88a2">Search</a>
+                </div>
+            </div>
             <div class="row">
                 <form id="discuss" class="col s12">
                     <div class="row">
@@ -26,9 +31,93 @@ class DiscussionScreen extends HTMLElement {
                     </div>
                     <button class="btn">Post</button>
                 </form>
+                <form id="search" class="col s12 topic">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="sbt" class="materialize-textarea text-4b88a2" placeholder="Search by title"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="sba" class="materialize-textarea text-4b88a2" placeholder="Search by author"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn"><i class="material-icons">search</i></button>
+                </form>
             </div>
         </div>
         <div id="discuss-display" class="container"></div>`
+
+        const searchForm = this._shadowRoot.querySelector('#search')
+
+        this._shadowRoot.querySelector('#s_btn').addEventListener('click', (e) => {
+            e.preventDefault()
+
+            if (searchForm.style.display == "none") {
+                searchForm.style.display = 'block'
+            } else {
+                searchForm.style.display = "none"
+            }
+        })
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            const title = this._shadowRoot.querySelector("#sbt").value
+            const author = this._shadowRoot.querySelector("#sba").value
+
+            if (title.trim() == "" && author.trim() == "") {
+                notice("Please input valid search information")
+            } else if (title.trim() != "" && author.trim() == "") {
+                let exist = false
+                db.collection('discussions').get().then(doc => {
+                    this._shadowRoot.querySelector('#discuss-display').innerHTML = ""
+                    doc.docs.forEach(data => {
+                        if (data.data().title.includes(title.trim())) {
+                            exist = true
+                            this._shadowRoot.querySelector('#discuss-display').innerHTML += `<discussion-item title="${data.data().title}" description="${data.data().description}" ownerPhoto="${data.data().ownerPhoto}" img="${data.data().photoURL}" time="${data.data().time}" file="${data.data().file}" owner="${data.data().owner}" like="${data.data().liked.length}" uid="${data.id}"></discussion-item>`
+                        }
+                    })
+                    if (!exist) {
+                        this._shadowRoot.querySelector('#discuss-display').innerHTML = `<h3 class="center text-4b88a2">No search result</h3>`
+                    }
+                }).then(() => {
+                    searchForm.reset()
+                })
+            } else if (title.trim() == "" && author.trim() != "") {
+                let exist = false
+                db.collection('discussions').get().then(doc => {
+                    this._shadowRoot.querySelector('#discuss-display').innerHTML = ""
+                    doc.docs.forEach(data => {
+                        if (data.data().owner.includes(author.trim())) {
+                            exist = true
+                            this._shadowRoot.querySelector('#discuss-display').innerHTML += `<discussion-item title="${data.data().title}" description="${data.data().description}" ownerPhoto="${data.data().ownerPhoto}" img="${data.data().photoURL}" time="${data.data().time}" file="${data.data().file}" owner="${data.data().owner}" like="${data.data().liked.length}" uid="${data.id}"></discussion-item>`
+                        }
+                    })
+                    if (!exist) {
+                        this._shadowRoot.querySelector('#discuss-display').innerHTML = `<h3 class="center text-4b88a2">No search result</h3>`
+                    }
+                }).then(() => {
+                    searchForm.reset()
+                })
+            } else if (title.trim() != "" && author.trim() != "") {
+                let exist = false
+                db.collection('discussions').get().then(doc => {
+                    this._shadowRoot.querySelector('#discuss-display').innerHTML = ""
+                    doc.docs.forEach(data => {
+                        if (data.data().owner.includes(author.trim()) || data.data().title.includes(title.trim())) {
+                            exist = true
+                            this._shadowRoot.querySelector('#discuss-display').innerHTML += `<discussion-item title="${data.data().title}" description="${data.data().description}" ownerPhoto="${data.data().ownerPhoto}" img="${data.data().photoURL}" time="${data.data().time}" file="${data.data().file}" owner="${data.data().owner}" like="${data.data().liked.length}" uid="${data.id}"></discussion-item>`
+                        }
+                    })
+                    if (!exist) {
+                        this._shadowRoot.querySelector('#discuss-display').innerHTML = `<h3 class="center text-4b88a2">No search result</h3>`
+                    }
+                }).then(() => {
+                    searchForm.reset()
+                })
+            }
+        })
 
         const discussionForm = this._shadowRoot.querySelector('#discuss')
         discussionForm.addEventListener('submit', async (e) => {
