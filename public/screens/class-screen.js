@@ -8,10 +8,10 @@ class ClassScreen extends HTMLElement {
         ${css}
         <div class="row center">
             <div class="col s12 m6">
-                <a href="#" id="create-class" class="double btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Create Class</a>
+                <a href="#" id="create-class" class="double btn-large waves-effect waves-light bg-4b88a2">Create Class</a>
             </div>
             <div class="col s12 m6">
-                <a href="#" id="enter-class" class="double btn-large waves-effect waves-light bg-4b88a2 modal-trigger">Enter Class</a>
+                <a href="#" id="enter-class" class="double btn-large waves-effect waves-light bg-4b88a2">Enter Class</a>
             </div>
         </div>
         <br><br>

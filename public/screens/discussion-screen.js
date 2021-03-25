@@ -8,12 +8,15 @@ class DiscussionScreen extends HTMLElement {
         ${css}
         <div class="container">
             <div class="row center">
-                <div class="col s12 m12">
-                    <a href="#" id="s_btn" class="btn-large waves-effect waves-light bg-4b88a2">Search</a>
+                <div class="col s12 m6">
+                    <a href="#" id="s_btn" class="double btn-large waves-effect waves-light bg-4b88a2">Search</a>
+                </div>
+                <div class="col s12 m6">
+                    <a href="#" id="p_btn" class="double btn-large waves-effect waves-light bg-4b88a2">Post</a>
                 </div>
             </div>
-            <div class="row">
-                <form id="discuss" class="col s12">
+            <div class="row display">
+                <form id="discuss" class="col s12 topic">
                     <div class="row">
                         <div class="input-field col s12">
                             <textarea id="title" class="materialize-textarea text-4b88a2" placeholder="Title"></textarea>
@@ -49,14 +52,27 @@ class DiscussionScreen extends HTMLElement {
         <div id="discuss-display" class="container"></div>`
 
         const searchForm = this._shadowRoot.querySelector('#search')
+        const discussionForm = this._shadowRoot.querySelector('#discuss')
 
         this._shadowRoot.querySelector('#s_btn').addEventListener('click', (e) => {
             e.preventDefault()
 
+            discussionForm.style.display = "none"
             if (searchForm.style.display == "none") {
                 searchForm.style.display = 'block'
             } else {
                 searchForm.style.display = "none"
+            }
+        })
+
+        this._shadowRoot.querySelector('#p_btn').addEventListener('click', (e) => {
+            e.preventDefault()
+
+            searchForm.style.display = "none"
+            if (discussionForm.style.display == "none") {
+                discussionForm.style.display = 'block'
+            } else {
+                discussionForm.style.display = "none"
             }
         })
 
@@ -119,7 +135,6 @@ class DiscussionScreen extends HTMLElement {
             }
         })
 
-        const discussionForm = this._shadowRoot.querySelector('#discuss')
         discussionForm.addEventListener('submit', async (e) => {
             e.preventDefault()
 
@@ -188,7 +203,7 @@ class DiscussionScreen extends HTMLElement {
                         ownerUID: auth.currentUser.uid
                     }
                 }
-                
+
                 db.collection('comments').add({}).then(doc => {
                     setData('discussions', doc.id, false, data).then(() => {
                         discussionForm.reset()
