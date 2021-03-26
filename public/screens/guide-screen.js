@@ -9,18 +9,17 @@ class GuideScreen extends HTMLElement {
         <div class="container">
             <h5 class="text-4b88a2">To-Do</h5>
             <p class="text-2f3162">Like normal to-do apps. This is where you can take note and make to-do list.</p>
-            <p class="text-2f3162">Click the ADD TO-DO button and create your to-do list.</p>
-            <p class="text-2f3162">The length of your to-do must be more than 1 character.</p>
+            <p class="text-2f3162">Input task and press ENTER or click ADD button to create your to-do.</p>
+            <p class="text-2f3162">To-do must have value, not blank space.</p>
             <p class="text-2f3162">You can delete your to-do list after that if you want by clicking the X button.</p>
         </div><br>
 
         <div class="container">
             <h5 class="text-4b88a2">Chat Room</h5>
             <p class="text-2f3162">Like normal chat apps. This is where you can create chat room and send messages.</p>
-            <p class="text-2f3162">Click the CREATE CHAT ROOM button and create your own chat room.</p>
-            <p class="text-2f3162">The length of your room name must be at least 1 character and room name must be unique.</p>
-            <p class="text-2f3162">You can add members to your chat room.</p>
-            <p class="text-2f3162">Only members of the chat room can see it.</p>
+            <p class="text-2f3162">Input chat room name and click the CREATE button to create your chat room.</p>
+            <p class="text-2f3162">Chat room name must be valid like to-do.</p>
+            <p class="text-2f3162">You can add members to your chat room by email.</p>
             <p class="text-2f3162">Then just simply send your messages to your groups.</p>
         </div><br>
 
@@ -33,29 +32,26 @@ class GuideScreen extends HTMLElement {
             <p class="text-2f3162">Your information are absolutely confidential. Even our team cannot
                 know it.</p>
             <p class="text-2f3162">Your account may be deleted due to toxic behaviors.</p>
-            <p class="text-2f3162">We'll soon update verifying email so make sure you use a real email.
+            <p class="text-2f3162">You'll have to verify your email so make sure you're using a real and accessible email.
             </p>
         </div><br>
 
         <div class="container">
             <h5 class="text-4b88a2">Class</h5>
-            <p class="text-2f3162">You can create class very easily with class name and password. Class
-                name must be unique.</p>
+            <p class="text-2f3162">You can create class very easily with class name and password.</p>
             <p class="text-2f3162">To enter a class, you must type a class name and password. If that
                 class is already existed, you'll be in that class. You just need to enter a specific class only once.
             </p>
-            <p class="text-2f3162">Only the members of a class can see that class.</p>
-            <p class="text-2f3162">This is where you can upload your files and get download URLs,
-                pretty similar to Google Classroom.</p>
+            <p class="text-2f3162">This is where you can upload your files and get download URLs.</p>
             <p class="text-2f3162">You can use this for working, studying or even playing.</p>
-            <p class="text-2f3162">We're working to develop the functionality of messaging in class.
-            </p>
+            <p class="text-2f3162">We're working to develop the functionality of class.</p>
         </div><br>
 
         <div class="container">
             <h5 class="text-4b88a2">Discussion</h5>
             <p class="text-2f3162">This is where you post a discussion for everyone to discuss it
                 through comment section (click the description and/or title to see the comments), like a forum.</p>
+            <p class="text-2f3162">You can search post through title, description, author name or time.</p>
             <p class="text-2f3162">Discussions with bad content may be deleted by our team.</p>
             <p class="text-2f3162">Everyone who is authenticated can see discussions.</p>
             <p class="text-2f3162">We'll soon have admin team to check discussions and users.</p>
@@ -68,15 +64,18 @@ class GuideScreen extends HTMLElement {
             <p class="text-2f3162">We have only implemented the basic functionality of a video call.</p>
             <p class="text-2f3162">We are working as hard as possible to implement more functionality.</p>
             <p class="text-2f3162">You have to create a room first and the room name must be unique.</p>
-            <p class="text-2f3162">Send your token for others and join the meeting.</p>
+            <p class="text-2f3162">The room you created will be deleted after you press LEAVE.</p>
+            <p class="text-2f3162">You should press LEAVE after you create and use the room because it's not reusable.</p>
+            <p class="text-2f3162">Every room will last for 24 hours.</p>
+            <p class="text-2f3162">Send your token and room name for others and join the meeting.</p>
         </div><br>
 
         <div class="container">
             <h5 class="text-4b88a2">Learning Log</h5>
             <p class="text-2f3162">This is where you keep track of your learning.</p>
             <p class="text-2f3162">Create your topics and everytime you learn something new, add a new
-                entry to the suitable topic. Only you can see your topics and entries.</p>
-            <p class="text-2f3162">Click the topic name and/or Entry to see your entries.</p>
+                entry to the suitable topic.</p>
+            <p class="text-2f3162">Click the topic to see your entries.</p>
             <p class="text-2f3162">You can now delete the topic and its entries.</p>
         </div><br>
 
@@ -115,8 +114,8 @@ class GuideScreen extends HTMLElement {
                 relevant to the main features above. This part is vital. Don't miss anything in here.</p>
             <p class="text-2f3162">There maybe some errors or bugs that we haven't known, if they
                 occur, don't worry, just easily reload the page. If it still occur, please contact us.</p>
-            <p class="text-2f3162">This website is currently in experiments. We're working really hard
-                to improve our website.</p>
+            <p class="text-2f3162">You may click twice on some button to activate its functionality.</p>
+            <p class="text-2f3162">This website is currently in experiments. We're working really hard to improve and update our website.</p>
             <p class="text-2f3162">We're really happy that we've received some positive feedback from
                 users. Thanks you guys!</p>
             <p class="text-2f3162">For more information or should you have any questions or maybe you

@@ -1,6 +1,6 @@
 # E-Teams
 #### _Project #4_ 
-- A web application mainly for online learning using **_Firebase_**, **_Agora_**, **_Browserify_**, **_Materialize CSS_** and **_jQuery_**
+- A web application mainly for online learning using **_Firebase_**, **_Agora_**, **_Browserify_**, **_Materialize CSS_**, **_jQuery_** and **_Navigo_**
 
 ## Demo
 - [E-Teams](https://e-teams.web.app/)
@@ -12,22 +12,20 @@
 #### To-Do
 - Like normal to-do apps. This is where you can take note and make to-do list.
 
-- Click the ADD TO-DO button and create your to-do list.
+- Input task and press **ENTER** or click *ADD* button to create your to-do.
 
-- The length of your to-do must be more than 1 character.
+- To-do must have value, not blank space.
 
-- You can delete your to-do list after that if you want by clicking the X button.
+- You can delete your to-do list after that if you want by clicking the *X* button.
 ---
 #### Chat Room
 - Like normal chat apps. This is where you can create chat room and send messages.
 
-- Click the CREATE CHAT ROOM button and create your own chat room.
+- Input chat room name and click *CREATE* button to create your chat room.
 
-- The length of your room name must be at least 1 character and room name must be unique.
+- Chat room name must be valid like to-do.
 
-- You can add members to your chat room.
-
-- Only members of the chat room can see it.
+- You can add members to your chat room by email.
 
 - Then just simply send your messages to your groups.
 ---
@@ -40,23 +38,23 @@
 
 - Your account may be deleted due to toxic behaviors.
 
-- We'll soon update verifying email so make sure you use a real email.
+- You'll have to verify your email so make sure you're using a real and accessible email.
 ---
 #### Class
-- You can create class very easily with class name and password. Class name must be unique.
+- You can create class very easily with class name and password.
 
 - To enter a class, you must type a class name and password. If that class is already existed, you'll be in that class. You just need to enter a specific class only once.
 
-- Only the members of a class can see that class.
-
-- This is where you can upload your files and get download URLs, pretty similar to Google Classroom.
+- This is where you can upload your files and get download URLs.
 
 - You can use this for working, studying or even playing.
 
-- We're working to develop the functionality of messaging in class.
+- We're working to develop the functionality of class.
 ---
 #### Discussion
 - This is where you post a discussion for everyone to discuss it through comment section (click the description and/or title to see the comments), like a forum.
+
+- You can search post through title, description, author name or time.
 
 - Discussions with bad content may be deleted by our team.
 
@@ -74,15 +72,21 @@
 - We are working as hard as possible to implement more functionality.
   
 - You have to create a room first and the room name must be unique.
+
+- The room you created will be deleted after you press *LEAVE*.
+
+- You should press *LEAVE* after you create and use the room because it's not reusable.
+
+- Every room will last for 24 hours.
   
-- Send your token for others and join the meeting.
+- Send your token and room name for others and join the meeting.
 ---
 #### Learning Log
 - This is where you keep track of your learning.
 
-- Create your topics and everytime you learn something new, add a new entry to the suitable topic. Only you can see your topics and entries.
+- Create your topics and everytime you learn something new, add a new entry to the suitable topic.
 
-- Click the topic name and/or Entry to see your entries.
+- Click the topic to see your entries.
 
 - You can now delete the topic and its entries.
 ---
@@ -133,7 +137,9 @@
 
 - There maybe some errors or bugs that we haven't known, if they occur, don't worry, just easily reload the page. If it still occur, please contact us.
 
-- This website is currently in experiments. We're working really hard to improve our website.
+- You may click twice on some button to activate its functionality.
+
+- This website is currently in experiments. We're working really hard to improve and update our website.
 
 - We're really happy that we've received some positive feedback from users. Thanks you guys!
 
