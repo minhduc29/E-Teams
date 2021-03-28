@@ -44,6 +44,9 @@ body {
 .cursor {
     cursor: pointer;
 }
+.bold {
+    font-weight: 600 !important;
+}
 .float-right {
     float: right;
 }
