@@ -10,7 +10,7 @@ class TopicItem extends HTMLElement {
         this._shadowRoot.innerHTML = `
         ${css}
         <div class="col s12 m12 row">
-            <div class="card bg-2f3162">
+            <div class="card cursor bg-2f3162">
                 <div class="card-content white-text">
                     <h4 style="margin-top: 0;" class="white-text center">${this.topic}</h4>
                     <p class="blue-grey-text text-lighten-3 center">${this.time}</p>

@@ -13,7 +13,7 @@ class ClassItem extends HTMLElement {
         this._shadowRoot.innerHTML = `
         ${css}
         <div class="col s12 m12 row">
-            <div class="card bg-2f3162">
+            <div class="card cursor bg-2f3162">
                 <div class="card-content white-text">
                     <h4 style="margin-top: 0;" class="center white-text">${this.name}</h4>
                     <img src="${this.ownerPhoto}" class="circle chat-img responsive-img">

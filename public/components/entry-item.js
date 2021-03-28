@@ -11,7 +11,7 @@ class EntryItem extends HTMLElement {
         <div class="row col s12 m12">
             <div class="card">
                 <div class="card-content bg-2f3162">
-                    <p class="white-text">${this.content}</p><br>
+                    <p class="white-text" style="overflow-wrap: break-word;">${this.content}</p><br>
                     <button class="del-btn btn"><i class="material-icons">clear</i></button>
                 </div>
             </div>

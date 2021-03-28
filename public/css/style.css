@@ -41,6 +41,9 @@ body {
 .add-pp {
     display: none;
 }
+.cursor {
+    cursor: pointer;
+}
 .float-right {
     float: right;
 }

@@ -30,7 +30,7 @@ class CommentItem extends HTMLElement {
         <div class="col s8 m8 row">
             <div class="card bg-2f3162">
                 <div class="card-content white-text">
-                    <p class="white-text">${this.content}</p><br>
+                    <p class="white-text" style="overflow-wrap: break-word;">${this.content}</p><br>
                     ${img}
                     ${file}
                     <img src="${this.ownerPhoto}" class="circle chat-img responsive-img">

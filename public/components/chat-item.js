@@ -9,7 +9,7 @@ class ChatItem extends HTMLElement {
         this._shadowRoot.innerHTML = `
         ${css}
         <div class="col s12 m12 row">
-            <div class="card bg-2f3162">
+            <div class="card cursor bg-2f3162">
                 <div class="card-content white-text">
                     <h4 style="margin-top: 0;" class="white-text">${this.name}</h4>
                     <button class="chat-btn btn"><i class="material-icons">person_add</i></button>
@@ -69,7 +69,7 @@ class ChatItem extends HTMLElement {
             e.preventDefault()
 
             const mail = this._shadowRoot.querySelector("#mem-email").value
-            
+
             if (mail.trim() == "") {
                 notice("Please input valid email")
             } else {
@@ -147,11 +147,15 @@ class ChatItem extends HTMLElement {
                 }
             }
 
-            setData('messages', this.uid, true, {
-                message: dataArr(data, 'union')
-            }).then(() => {
-                this._shadowRoot.querySelector("form").reset()
-            })
+            if (!data.content && !data.file && !data.photoURL) {
+                notice("Please input message or upload file/image")
+            } else {
+                setData('messages', this.uid, true, {
+                    message: dataArr(data, 'union')
+                }).then(() => {
+                    this._shadowRoot.querySelector("form").reset()
+                })
+            }
         })
     }
 }
