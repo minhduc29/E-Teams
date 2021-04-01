@@ -14,6 +14,16 @@ class TodoScreen extends HTMLElement {
                             <input id="todo" type="text" class="text-4b88a2" placeholder="To-Do">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="time" type="text" class="text-4b88a2" placeholder="Time to complete this task (hour):">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="date" type="text" class="text-4b88a2" placeholder="Days left until deadline">
+                        </div>
+                    </div>
                     <button class="btn">Add</button>
                 </form>
             </div>
@@ -29,14 +39,25 @@ class TodoScreen extends HTMLElement {
 
                     // Get value
                     const todo = this._shadowRoot.querySelector("#todo").value
+                    const time = this._shadowRoot.querySelector("#time").value
+                    const date = this._shadowRoot.querySelector("#date").value
+
+                    function isNumeric(str) {
+                        if (typeof str != "string") return false
+                        return !isNaN(str) && !isNaN(parseFloat(str))
+                    }
 
                     // Check valid
-                    if (todo.trim() == "") {
-                        notice("Please input valid to-do")
+                    if (todo.trim() == "" || time.trim() == "" || date.trim() == "" || !isNumeric(time.trim()) || !isNumeric(date.trim())) {
+                        notice("Please input valid information")
                     } else {
                         // Add data
                         const todoData = {
-                            todo: dataArr(todo.trim(), 'union')
+                            todo: dataArr({
+                                content: todo.trim(),
+                                time: Number(time.trim()),
+                                date: Number(date.trim())
+                            }, 'union')
                         }
                         setData('todos', user.uid, true, todoData).then(() => {
                             // Reset form
@@ -50,8 +71,18 @@ class TodoScreen extends HTMLElement {
                 db.collection("todos").doc(user.uid).onSnapshot(snapshot => {
                     todoDisplay.innerHTML = ''
 
-                    snapshot.data().todo.forEach(doc => {
-                        todoDisplay.innerHTML += `<todo-item content="${doc}"></todo-item>`
+                    function prioritize(a, b) {
+                        if (a.date != b.date) {
+                            return a.date - b.date
+                        } else {
+                            return a.time - b.time
+                        }
+                    }
+
+                    let todos = snapshot.data().todo
+                    todos.sort(prioritize)
+                    todos.forEach(doc => {
+                        todoDisplay.innerHTML += `<todo-item content="${doc.content}" time="${doc.time}" date="${doc.date}"></todo-item>`
                     })
                 })
             }
