@@ -15,7 +15,15 @@ class HomeScreen extends HTMLElement {
                     <description-item title="Discussion" description="Where people discuss a topic or a question" link="Discuss or ask a question" redirect="discussion"></description-item>
                 </div>
                 <div class="col s12 m6">
-                    <description-item title="Room" description="Where people can make video call and voice chat" link="Video call and voice chat" redirect="room"></description-item>
+                    <div class="card bg-2f3162">
+                        <div class="card-content white-text height-140">
+                            <span class="card-title">Room</span>
+                            <p>Where people can make video call and voice chat</p>
+                        </div>
+                        <div class="card-action">
+                            <a id="redirect" class="teal-text text-accent-3" href="./html/room.html" target="_blank">Video call and voice chat</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="col s12 m6">
                     <description-item title="Learning Log" description="Keep track of your learning about specific topic" link="Keep track" redirect="learninglog"></description-item>

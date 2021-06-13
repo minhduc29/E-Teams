@@ -19,7 +19,8 @@ class DescriptionItem extends HTMLElement {
                 <a id="redirect" class="teal-text text-accent-3" href="#">${this.link}</a>
             </div>
         </div>`
-        this._shadowRoot.querySelector("#redirect").addEventListener('click', () => {
+        this._shadowRoot.querySelector("#redirect").addEventListener('click', (e) => {
+            e.preventDefault()
             redirect(this.redirect)
         })
     }
