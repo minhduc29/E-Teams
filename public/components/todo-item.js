@@ -7,6 +7,10 @@ class TodoItem extends HTMLElement {
         this.content = this.getAttribute("content")
         this.time = this.getAttribute("time")
         this.date = this.getAttribute("date")
+        let days = Math.round((this.date - new Date()) / 864e5)
+        if (days < 0) {
+            days = 0
+        }
         this._shadowRoot.innerHTML = `
         ${css}
         <div class="row col s12 m12">
@@ -14,7 +18,7 @@ class TodoItem extends HTMLElement {
                 <div class="card-content bg-2f3162">
                     <p class="white-text">TASK: ${this.content}</p><br>
                     <p class="white-text">TIME TO COMPLETE (HOUR): ${this.time}</p><br>
-                    <p class="white-text">DAYS LEFT: ${this.date}</p><br>
+                    <p class="white-text">DAYS LEFT: ${days}</p><br>
                     <button class="todo-del-btn btn"><i class="material-icons">clear</i></button>
                 </div>
             </div>

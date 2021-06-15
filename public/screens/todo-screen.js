@@ -21,7 +21,7 @@ class TodoScreen extends HTMLElement {
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="date" type="text" class="text-4b88a2" placeholder="Days left until deadline">
+                            <input id="date" type="text" class="text-4b88a2" placeholder="Deadline (year-month-day)">
                         </div>
                     </div>
                     <button class="btn">Add</button>
@@ -41,14 +41,18 @@ class TodoScreen extends HTMLElement {
                     const todo = this._shadowRoot.querySelector("#todo").value
                     const time = this._shadowRoot.querySelector("#time").value
                     const date = this._shadowRoot.querySelector("#date").value
-
+                    let deadline
+                    if (date.trim() == "")
+                        deadline = new Date().getTime()
+                    else
+                        deadline = new Date(date).getTime()
                     function isNumeric(str) {
                         if (typeof str != "string") return false
                         return !isNaN(str) && !isNaN(parseFloat(str))
                     }
 
                     // Check valid
-                    if (todo.trim() == "" || time.trim() == "" || date.trim() == "" || !isNumeric(time.trim()) || !isNumeric(date.trim())) {
+                    if (todo.trim() == "" || time.trim() == "" || !isNumeric(time.trim()) || isNaN(deadline)) {
                         notice("Please input valid information")
                     } else {
                         // Add data
@@ -56,7 +60,7 @@ class TodoScreen extends HTMLElement {
                             todo: dataArr({
                                 content: todo.trim(),
                                 time: Number(time.trim()),
-                                date: Number(date.trim())
+                                date: deadline
                             }, 'union')
                         }
                         setData('todos', user.uid, true, todoData).then(() => {
