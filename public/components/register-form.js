@@ -52,27 +52,39 @@ class RegisterForm extends HTMLElement {
             } else if (password !== pwcf) {
                 notice('Password and password confirmation must be the same')
             } else if (password === pwcf) {
-                auth.createUserWithEmailAndPassword(email, password).then(cred => {
-                    auth.currentUser.sendEmailVerification()
-                    // Create data firestore
-                    const initialData = {
-                        username: username,
-                        email: email,
-                        photoURL: 'https://firebasestorage.googleapis.com/v0/b/e-teams.appspot.com/o/users%2Fprofile_picture.png?alt=media&token=b81c9c34-010c-4249-aa74-3c36d7ca183b'
-                    }
-                    setData('users', cred.user.uid, false, initialData)
-                    auth.currentUser.updateProfile({
-                        displayName: username,
-                        photoURL: 'https://firebasestorage.googleapis.com/v0/b/e-teams.appspot.com/o/users%2Fprofile_picture.png?alt=media&token=b81c9c34-010c-4249-aa74-3c36d7ca183b'
+                let exist = false
+                db.collection('users').where('username', '==', username.trim()).get().then(doc => {
+                    doc.forEach(data => {
+                        if (data.exists) {
+                            exist = true
+                        }
                     })
-                    notice(`User ${username} successfully registered`)
-                }).then(() => {
-                    // Reset form
-                    closeModal('#register-modal')
-                    registerForm.reset()
-                }).catch(err => {
-                    // Catch error
-                    notice(err.message)
+                    if (!exist) {
+                        auth.createUserWithEmailAndPassword(email, password).then(cred => {
+                            auth.currentUser.sendEmailVerification()
+                            // Create data firestore
+                            const initialData = {
+                                username: username,
+                                email: email,
+                                photoURL: 'https://firebasestorage.googleapis.com/v0/b/e-teams.appspot.com/o/users%2Fprofile_picture.png?alt=media&token=b81c9c34-010c-4249-aa74-3c36d7ca183b'
+                            }
+                            setData('users', cred.user.uid, false, initialData)
+                            auth.currentUser.updateProfile({
+                                displayName: username,
+                                photoURL: 'https://firebasestorage.googleapis.com/v0/b/e-teams.appspot.com/o/users%2Fprofile_picture.png?alt=media&token=b81c9c34-010c-4249-aa74-3c36d7ca183b'
+                            })
+                            notice(`User ${username} successfully registered`)
+                        }).then(() => {
+                            // Reset form
+                            closeModal('#register-modal')
+                            registerForm.reset()
+                        }).catch(err => {
+                            // Catch error
+                            notice(err.message)
+                        })
+                    } else {
+                        notice("This username has already been taken")
+                    }
                 })
             }
         })

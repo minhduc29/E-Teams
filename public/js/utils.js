@@ -162,79 +162,90 @@ function changeUsername() {
     } else if (username.trim() == auth.currentUser.displayName) {
         notice("New username must be different from current username")
     } else {
-        $('body').removeClass('loaded')
         closeModal("#profile-modal")
-
-        setData('users', auth.currentUser.uid, true, {
-            username: username
-        }).then(() => {
-            $('body').addClass('loaded')
-        })
-        auth.currentUser.updateProfile({
-            displayName: username
-        })
-        const datum = {
-            owner: username
-        }
-
-        db.collection("discussions").where("ownerUID", "==", auth.currentUser.uid).get().then(doc => {
+        let exist = false
+        db.collection('users').where('username', '==', username.trim()).get().then(doc => {
             doc.forEach(data => {
-                setData('discussions', data.id, true, datum)
+                if (data.exists) {
+                    exist = true
+                }
             })
-        })
+            if (exist) {
+                notice("This username has already been taken")
+            } else {
+                $('body').removeClass('loaded')
+                setData('users', auth.currentUser.uid, true, {
+                    username: username
+                }).then(() => {
+                    $('body').addClass('loaded')
+                })
+                auth.currentUser.updateProfile({
+                    displayName: username
+                })
+                const datum = {
+                    owner: username
+                }
 
-        db.collection('comments').get().then(doc => {
-            doc.forEach(subdoc => {
-                db.collection('comments').doc(subdoc.id).collection('comments').where("ownerUID", "==", auth.currentUser.uid).get().then(data => {
-                    data.forEach(dataa => {
-                        db.collection('comments').doc(subdoc.id).collection('comments').doc(dataa.id).set(datum, {
-                            merge: true
+                db.collection("discussions").where("ownerUID", "==", auth.currentUser.uid).get().then(doc => {
+                    doc.forEach(data => {
+                        setData('discussions', data.id, true, datum)
+                    })
+                })
+
+                db.collection('comments').get().then(doc => {
+                    doc.forEach(subdoc => {
+                        db.collection('comments').doc(subdoc.id).collection('comments').where("ownerUID", "==", auth.currentUser.uid).get().then(data => {
+                            data.forEach(dataa => {
+                                db.collection('comments').doc(subdoc.id).collection('comments').doc(dataa.id).set(datum, {
+                                    merge: true
+                                })
+                            })
                         })
                     })
                 })
-            })
-        })
 
-        db.collection("classes").where("ownerUID", "==", auth.currentUser.uid).get().then(doc => {
-            doc.forEach(data => {
-                setData('classes', data.id, true, datum)
-            })
-        })
+                db.collection("classes").where("ownerUID", "==", auth.currentUser.uid).get().then(doc => {
+                    doc.forEach(data => {
+                        setData('classes', data.id, true, datum)
+                    })
+                })
 
-        db.collection("members").where('member', 'array-contains', auth.currentUser.uid).get().then(doc => {
-            doc.forEach(data => {
-                const infos = data.data()
-                const index = infos.member.indexOf(auth.currentUser.uid)
-                setData('members', data.id, true, {
-                    member: dataArr(infos.member[index], 'remove'),
-                    info: dataArr(infos.info[index], 'remove')
+                db.collection("members").where('member', 'array-contains', auth.currentUser.uid).get().then(doc => {
+                    doc.forEach(data => {
+                        const infos = data.data()
+                        const index = infos.member.indexOf(auth.currentUser.uid)
+                        setData('members', data.id, true, {
+                            member: dataArr(infos.member[index], 'remove'),
+                            info: dataArr(infos.info[index], 'remove')
+                        })
+                        setData('members', data.id, true, {
+                            member: dataArr(auth.currentUser.uid, 'union'),
+                            info: dataArr({
+                                photoURL: auth.currentUser.photoURL,
+                                username: username
+                            }, 'union')
+                        })
+                    })
                 })
-                setData('members', data.id, true, {
-                    member: dataArr(auth.currentUser.uid, 'union'),
-                    info: dataArr({
-                        photoURL: auth.currentUser.photoURL,
-                        username: username
-                    }, 'union')
-                })
-            })
-        })
 
-        db.collection('messages').where('member', 'array-contains', auth.currentUser.uid).get().then(doc => {
-            doc.forEach(data => {
-                const infos = data.data()
-                const index = infos.member.indexOf(auth.currentUser.uid)
-                setData('messages', data.id, true, {
-                    member: dataArr(infos.member[index], 'remove'),
-                    info: dataArr(infos.info[index], 'remove')
+                db.collection('messages').where('member', 'array-contains', auth.currentUser.uid).get().then(doc => {
+                    doc.forEach(data => {
+                        const infos = data.data()
+                        const index = infos.member.indexOf(auth.currentUser.uid)
+                        setData('messages', data.id, true, {
+                            member: dataArr(infos.member[index], 'remove'),
+                            info: dataArr(infos.info[index], 'remove')
+                        })
+                        setData('messages', data.id, true, {
+                            member: dataArr(auth.currentUser.uid, 'union'),
+                            info: dataArr({
+                                photoURL: auth.currentUser.photoURL,
+                                username: username
+                            }, 'union')
+                        })
+                    })
                 })
-                setData('messages', data.id, true, {
-                    member: dataArr(auth.currentUser.uid, 'union'),
-                    info: dataArr({
-                        photoURL: auth.currentUser.photoURL,
-                        username: username
-                    }, 'union')
-                })
-            })
+            }
         })
     }
 }
