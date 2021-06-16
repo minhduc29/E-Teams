@@ -75,15 +75,20 @@ class DiscussionScreen extends HTMLElement {
             e.preventDefault()
 
             const searchValue = this._shadowRoot.querySelector("#search-value").value
+            const value = searchValue.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase()
 
-            if (searchValue.trim() == "") {
+            if (value == "") {
                 notice("Please input valid search information")
             } else {
                 let exist = false
                 db.collection('discussions').get().then(doc => {
                     this._shadowRoot.querySelector('#discuss-display').innerHTML = ""
                     doc.docs.forEach(data => {
-                        if (data.data().owner.includes(searchValue.trim()) || data.data().title.includes(searchValue.trim()) || data.data().description.includes(searchValue.trim()) || data.data().time.includes(searchValue.trim())) {
+                        const ownerSearch = data.data().owner.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase()
+                        const titleSearch = data.data().title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase()
+                        const descriptionSearch = data.data().description.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase()
+                        const timeSearch = data.data().time.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").toLowerCase()
+                        if (ownerSearch.includes(value) || titleSearch.includes(value) || descriptionSearch.includes(value) || timeSearch.includes(value)) {
                             exist = true
                             this._shadowRoot.querySelector('#discuss-display').innerHTML += `<discussion-item title="${data.data().title}" description="${data.data().description}" ownerPhoto="${data.data().ownerPhoto}" img="${data.data().photoURL}" time="${data.data().time}" file="${data.data().file}" owner="${data.data().owner}" like="${data.data().liked.length}" uid="${data.id}"></discussion-item>`
                         }
