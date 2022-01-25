@@ -68,3 +68,4 @@ node_modules/
 *.json
 *.rules
 functions/
+.firebaserc
